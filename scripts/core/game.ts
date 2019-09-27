@@ -1,88 +1,95 @@
+// Immediate Invoked Anonymous Function
+
 (function() {
-"use strict";
 
+    // Global Game Variables
+    let canvas = document.getElementById("canvas");
+    let stage:createjs.Stage;
 
-// Global Game Variables
-let canvas = document.getElementById("canvas");
+    let assetManager:createjs.LoadQueue;
+    let assetManifest: any[];
 
-let stage: createjs.Stage;
-let currentState: number;
-let currentScene: objects.Scene;
+    // Store current scene and state information
+    let currentScene:objects.Scene;
+    let currentState:number
 
+    assetManifest = [
+        {id: "backButton", src:"./Assets/BackButton.png"},
+        {id: "nextButton", src:"./Assets/NextButton.png"},
+        {id: "background", src:"./Assets/background.png"},
+        {id: "player", src:"./Assets/Spaceship.png"},
+        {id: "enemy", src:"./Assets/ship.png"}
+    ];
 
-let queue: createjs.LoadQueue; // assetManager
+    function Init() {
+        console.log("Initialization Start");
+        // Start();
 
-let assetManifest: any[];
+        assetManager = new createjs.LoadQueue();
+        assetManager.installPlugin(createjs.Sound);
+        assetManager.loadManifest(assetManifest);
+        assetManager.on("complete", Start, this);
+    }
 
+    function Start() {
+        console.log("Starting Application...");
 
-assetManifest = [
-    { id: "clickMeButton", src: "./assets/ClickMeButton.png" },
-    { id: "nextButton", src: "./assets/NextButton.png" },
-    { id: "backButton", src: "./assets/BackButton.png" },
-    // { id: "", src: "./assets/outerSpace" }
-];
+        // Initialize CreateJS
+        stage = new createjs.Stage(canvas);
+        // Freqeuncy of checks. Computationally expensive. Turn on in menus, Turn off in game
+        stage.enableMouseOver(20); 
+        createjs.Ticker.framerate = 60; // 60 FPS
+        createjs.Ticker.on("tick", Update);
 
-function Init() {
-    
-    console.log("Initialization Started...");
-    queue = new createjs.LoadQueue();
+        // Set up default game state
+        // Create a global reference to our stage object
+        objects.Game.stage = stage;
+        objects.Game.currentScene = config.Scene.START;
+        currentState = config.Scene.START; 
 
-    queue.installPlugin(createjs.Sound);
-    queue.loadManifest(assetManifest);
-    queue.on("complete", Start, this);
-    
-    // Start();
-}
-
-
-function Start() {
-    console.log("Starting Application...");
-
-    // Init CreateJS
-    stage = new createjs.Stage(canvas);
-    stage.enableMouseOver(20); // frequency of checks. expensive. turn on in menu, off in game.
-    createjs.Ticker.framerate = 60;
-    createjs.Ticker.on("tick", Update);
-
-    objects.Game.currentScene = currentState = config.Scene.START;
-    
-    Main();
-}
-
-
-function Update() {
-    if (currentState != objects.Game.currentScene) {
-        currentState = objects.Game.currentScene;
         Main();
     }
 
-    currentScene.Update();
+    function Update() {
+        // Has my state changed since the last check?
+        if(currentState != objects.Game.currentScene) {
+            console.log("Changing scenes to" + objects.Game.currentScene);
+            Main();
+        }
 
-    stage.update();
-}
+        currentScene.Update();
 
-function Main() {
-    // Finite state machine
-    switch (objects.Game.currentScene) {
-        case config.Scene.START:
-            stage.removeAllChildren();
-            currentScene = new scenes.StartScene(queue);
-            stage.addChild(currentScene);
-            break;
-        case config.Scene.GAME:
-            stage.removeAllChildren();
-            currentScene = new scenes.PlayScene(queue);
-            stage.addChild(currentScene);
-            break;
-        case config.Scene.OVER:
-            stage.removeAllChildren();
-            currentScene = new scenes.OverScene(queue);
-            stage.addChild(currentScene);
-            break;
+        stage.update();
     }
-}
 
+    function clickableButtonMouseClick():void {
+        console.log("AHHHHHHH");
+    }
 
-window.onload = Init;
+    function Main() {
+        console.log("Game Start...");
 
+        // Finite State Machine
+        switch(objects.Game.currentScene) {
+            case config.Scene.START:
+                stage.removeAllChildren();
+                currentScene = new scenes.StartScene(assetManager);
+                stage.addChild(currentScene);
+            break;
+            case config.Scene.GAME:
+                stage.removeAllChildren();
+                currentScene = new scenes.PlayScene(assetManager);
+                stage.addChild(currentScene);
+            break;
+            case config.Scene.OVER:
+                stage.removeAllChildren();
+                currentScene = new scenes.GameOverScene(assetManager);
+                stage.addChild(currentScene);
+            break;
+        }
+
+        currentState = objects.Game.currentScene;
+    }
+
+    window.onload = Init;
 })();

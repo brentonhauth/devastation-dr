@@ -10,30 +10,34 @@
 <body>
   <!-- Canvas -->
   <canvas id="canvas" width="640" height="900"></canvas>
-
-  <!-- Dependencies -->
   <script src="./node_modules/easeljs/lib/easeljs.min.js"></script>
-  <script src="./node_modules/preloadjs/lib/preloadjs.min.js"></script>
   <script src="./node_modules/soundjs/lib/soundjs.min.js"></script>
+  <script src="./node_modules/preloadjs/lib/preloadjs.min.js"></script>
 
+  <!--GAME SCRIPTS-->
+  <!--Configuration Files-->
+  <script src="./scripts/config/scene.js"></script>
+  <script src="./scripts/math/vec2.js"></script>
 
   <!-- Object Scripts -->
+  <script src="./scripts/objects/game.js"></script>
   <script src="./scripts/objects/button.js"></script>
   <script src="./scripts/objects/label.js"></script>
-  <script src="./scripts/objects/game.js"></script>
   <script src="./scripts/objects/scene.js"></script>
+
+  <!-- Game Object -->
+  <script src="./scripts/objects/gameobject.js"></script>
   <script src="./scripts/objects/background.js"></script>
+  <script src="./scripts/objects/player.js"></script>
+  <script src="./scripts/objects/enemy.js"></script>
 
-  <!-- Config Scripts -->
-  <script src="./scripts/config/scene.js"></script>
+  <!-- Game Managers -->
+  <script src="./scripts/managers/collision.js"></script>
 
-  <!-- Core Scripts -->
-  <script src="./scripts/core/game.js"></script>
-
-
-  <!-- Scenes -->
+  <!-- Scene Scripts -->
+  <script src="./scripts/scenes/gameover.js"></script>
   <script src="./scripts/scenes/play.js"></script>
   <script src="./scripts/scenes/start.js"></script>
-  <script src="./scripts/scenes/over.js"></script>
-</body>
+
+  <script src="./scripts/core/game.js"></script>
 </html>

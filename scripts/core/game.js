@@ -1,62 +1,76 @@
+// Immediate Invoked Anonymous Function
 (function () {
-    "use strict";
     // Global Game Variables
     var canvas = document.getElementById("canvas");
     var stage;
-    var currentState;
-    var currentScene;
-    var queue; // assetManager
+    var assetManager;
     var assetManifest;
+    // Store current scene and state information
+    var currentScene;
+    var currentState;
     assetManifest = [
-        { id: "clickMeButton", src: "./assets/ClickMeButton.png" },
-        { id: "nextButton", src: "./assets/NextButton.png" },
         { id: "backButton", src: "./assets/BackButton.png" },
+        { id: "nextButton", src: "./assets/NextButton.png" },
+        { id: "background", src: "./assets/background.png" },
+        { id: "player", src: "./assets/car.png" },
+        { id: "enemy", src: "./assets/ship.png" }
     ];
     function Init() {
-        console.log("Initialization Started...");
-        queue = new createjs.LoadQueue();
-        queue.installPlugin(createjs.Sound);
-        queue.loadManifest(assetManifest);
-        queue.on("complete", Start, this);
+        console.log("Initialization Start");
         // Start();
+        assetManager = new createjs.LoadQueue();
+        assetManager.installPlugin(createjs.Sound);
+        assetManager.loadManifest(assetManifest);
+        assetManager.on("complete", Start, this);
     }
     function Start() {
         console.log("Starting Application...");
-        // Init CreateJS
+        // Initialize CreateJS
         stage = new createjs.Stage(canvas);
-        stage.enableMouseOver(20); // frequency of checks. expensive. turn on in menu, off in game.
-        createjs.Ticker.framerate = 60;
+        // Freqeuncy of checks. Computationally expensive. Turn on in menus, Turn off in game
+        stage.enableMouseOver(20);
+        createjs.Ticker.framerate = 60; // 60 FPS
         createjs.Ticker.on("tick", Update);
-        objects.Game.currentScene = currentState = config.Scene.START;
+        // Set up default game state
+        // Create a global reference to our stage object
+        objects.Game.stage = stage;
+        objects.Game.currentScene = config.Scene.START;
+        currentState = config.Scene.START;
         Main();
     }
     function Update() {
+        // Has my state changed since the last check?
         if (currentState != objects.Game.currentScene) {
-            currentState = objects.Game.currentScene;
+            console.log("Changing scenes to" + objects.Game.currentScene);
             Main();
         }
         currentScene.Update();
         stage.update();
     }
+    function clickableButtonMouseClick() {
+        console.log("AHHHHHHH");
+    }
     function Main() {
-        // Finite state machine
+        console.log("Game Start...");
+        // Finite State Machine
         switch (objects.Game.currentScene) {
             case config.Scene.START:
                 stage.removeAllChildren();
-                currentScene = new scenes.StartScene(queue);
+                currentScene = new scenes.StartScene(assetManager);
                 stage.addChild(currentScene);
                 break;
             case config.Scene.GAME:
                 stage.removeAllChildren();
-                currentScene = new scenes.PlayScene(queue);
+                currentScene = new scenes.PlayScene(assetManager);
                 stage.addChild(currentScene);
                 break;
             case config.Scene.OVER:
                 stage.removeAllChildren();
-                currentScene = new scenes.OverScene(queue);
+                currentScene = new scenes.GameOverScene(assetManager);
                 stage.addChild(currentScene);
                 break;
         }
+        currentState = objects.Game.currentScene;
     }
     window.onload = Init;
 })();

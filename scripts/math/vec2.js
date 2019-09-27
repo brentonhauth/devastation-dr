@@ -11,22 +11,23 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var objects;
-(function (objects) {
-    var Scene = /** @class */ (function (_super) {
-        __extends(Scene, _super);
+var math;
+(function (math) {
+    var Vec2 = /** @class */ (function (_super) {
+        __extends(Vec2, _super);
+        // Variables
         // Constructor
-        function Scene(assetManager) {
-            var _this = _super.call(this) || this;
-            _this.assetManager = assetManager;
-            return _this;
+        function Vec2(x, y) {
+            if (x === void 0) { x = 0; }
+            if (y === void 0) { y = 0; }
+            return _super.call(this, x, y) || this;
         }
         // Methods
-        Scene.prototype.Start = function () { };
-        Scene.prototype.Update = function () { };
-        Scene.prototype.Main = function () { };
-        return Scene;
-    }(createjs.Container));
-    objects.Scene = Scene;
-})(objects || (objects = {}));
-//# sourceMappingURL=scene.js.map
+        Vec2.Distance = function (P1, P2) {
+            return Math.floor(Math.sqrt(Math.pow(P2.x - P1.x, 2) + Math.pow(P2.y - P1.y, 2)));
+        };
+        return Vec2;
+    }(createjs.Point));
+    math.Vec2 = Vec2;
+})(math || (math = {}));
+//# sourceMappingURL=vec2.js.map

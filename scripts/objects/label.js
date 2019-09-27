@@ -13,7 +13,6 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var objects;
 (function (objects) {
-    // export == public
     var Label = /** @class */ (function (_super) {
         __extends(Label, _super);
         // Variables
@@ -22,15 +21,13 @@ var objects;
             if (x === void 0) { x = 0; }
             if (y === void 0) { y = 0; }
             if (isCentered === void 0) { isCentered = false; }
-            var _this = 
-            // super call
-            _super.call(this, labelString, fontSize + " " + fontFamily, fontColor) || this;
-            // set registration point if true to be middle
+            var _this = _super.call(this, labelString, fontSize + " " + fontFamily, fontColor) || this;
+            // Set the registration point if true to be in the middle
             if (isCentered) {
-                _this.regX = _this.getMeasuredWidth() * .5;
-                _this.regY = _this.getMeasuredHeight() * .5;
+                _this.regX = _this.getMeasuredWidth() * 0.5;
+                _this.regY = _this.getMeasuredHeight() * 0.5;
             }
-            // set initial position
+            // Set initial position
             _this.x = x;
             _this.y = y;
             return _this;

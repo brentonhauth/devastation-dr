@@ -15,28 +15,44 @@ var scenes;
 (function (scenes) {
     var PlayScene = /** @class */ (function (_super) {
         __extends(PlayScene, _super);
+        // Constructor
         function PlayScene(assetManager) {
             var _this = _super.call(this, assetManager) || this;
             _this.Start();
             return _this;
         }
+        // Methods
         PlayScene.prototype.Start = function () {
-            // init objects
-            this.welcomeLabel = new objects.Label("welcome to School!", "60px", "Consolas", "firebrick", 320, 240, true);
-            this.startButton = new objects.Button(this.assetManager, "backButton", 320, 300);
-            this.nextButton = new objects.Button(this.assetManager, "nextButton", 360, 300);
+            // Initialize our variables
+            this.background = new objects.Background(this.assetManager);
+            this.player = new objects.Player(this.assetManager);
+            // this.enemy = new objects.Enemy(this.assetManager);
+            this.enemies = new Array();
+            this.enemyNum = 5;
+            for (var i = 0; i < this.enemyNum; i++) {
+                this.enemies[i] = new objects.Enemy(this.assetManager);
+            }
             this.Main();
         };
-        PlayScene.prototype.Update = function() { };
-        PlayScene.prototype.Main = function() {
-            this.addChild(this.welcomeLabel);
-            this.addChild(this.startButton);
-            this.addChild(this.nextButton);
-            this.startButton.on("click", function() {
-                objects.Game.currentScene = config.Scene.START;
+        PlayScene.prototype.Update = function () {
+            var _this = this;
+            // Update the background here
+            this.background.Update();
+            this.player.Update();
+            // this.enemy.Update();
+            this.enemies.forEach(function (e) {
+                e.Update();
+                managers.Collision.Check(_this.player, e);
             });
-            this.nextButton.on("click", function() {
-                objects.Game.currentScene = config.Scene.OVER;
+        };
+        PlayScene.prototype.Main = function () {
+            var _this = this;
+            // Order matters when adding game objects.
+            this.addChild(this.background);
+            this.addChild(this.player);
+            // this.addChild(this.enemy);
+            this.enemies.forEach(function (e) {
+                _this.addChild(e);
             });
         };
         return PlayScene;

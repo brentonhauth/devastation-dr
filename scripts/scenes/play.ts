@@ -1,37 +1,54 @@
 module scenes {
     export class PlayScene extends objects.Scene {
+        // Variables
+        private background:objects.Background;
+        private player:objects.Player;
+        // private enemy:objects.Enemy;
+        private enemies:objects.Enemy[];
+        private enemyNum:number;
 
-        private welcomeLabel: objects.Label;
-        private startButton: objects.Button;
-        private nextButton: objects.Button;
-
-        constructor(assetManager: createjs.LoadQueue) {
+        // Constructor
+        constructor(assetManager:createjs.LoadQueue) {
             super(assetManager);
+
             this.Start();
         }
 
+        // Methods
         public Start(): void {
-            // init objects
-            this.welcomeLabel = new objects.Label("welcome to School!", "60px", "Consolas", "firebrick", 320, 240, true);
-            this.startButton = new objects.Button(this.assetManager, "backButton", 320, 300);
-            this.nextButton = new objects.Button(this.assetManager, "nextButton", 360, 300);
+            // Initialize our variables
+            this.background = new objects.Background(this.assetManager);
+            this.player = new objects.Player(this.assetManager);
+            // this.enemy = new objects.Enemy(this.assetManager);
+            this.enemies = new Array<objects.Enemy>();
+            this.enemyNum = 5;
+            for(let i = 0; i < this.enemyNum; i++) {
+                this.enemies[i] = new objects.Enemy(this.assetManager);
+            }
+
             this.Main();
         }
 
-        public Update(): void {}
+        public Update(): void {
+            // Update the background here
+            this.background.Update();
+            this.player.Update();
+            // this.enemy.Update();
 
+            this.enemies.forEach(e => {
+                e.Update();
+                managers.Collision.Check(this.player, e);
+            });
+        }
 
         public Main(): void {
-            this.addChild(this.welcomeLabel);
-            this.addChild(this.startButton);
-            this.addChild(this.nextButton);
-            this.startButton.on("click", function() {
-                objects.Game.currentScene = config.Scene.START;
-            });
-            this.nextButton.on("click", function() {
-                objects.Game.currentScene = config.Scene.OVER;
+            // Order matters when adding game objects.
+            this.addChild(this.background);
+            this.addChild(this.player);
+            // this.addChild(this.enemy);
+            this.enemies.forEach(e => {
+                this.addChild(e);
             });
         }
     }
-
 }

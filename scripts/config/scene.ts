@@ -1,5 +1,7 @@
 module config {
     export enum Scene {
-        START, GAME, OVER
+        START,
+        GAME,
+        OVER
     }
 }
