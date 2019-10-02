@@ -6,19 +6,19 @@ module scenes {
         private startButton: objects.Button;
 
         // Constructor
-        constructor(assetManager:createjs.LoadQueue) {
-            super(assetManager);
+        constructor() {
+            super();
             this.Start();
         }
 
         public Start():void {
             // Initialize our objects for this scene
-            this.background = new objects.Background(this.assetManager);
+            this.background = new objects.Background();
 
             this.welcomeLabel = new objects.Label(
                 "Welcome to School!", "60px", "Consolas", "#FFFFFF", 320, 240, true);
 
-            this.startButton = new objects.Button(this.assetManager, "nextButton", 320, 300);
+            this.startButton = new objects.Button("nextButton", 320, 300);
             this.Main();
         }
         public Update():void {

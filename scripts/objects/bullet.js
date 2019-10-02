@@ -15,8 +15,8 @@ var objects;
 (function (objects) {
     var Bullet = /** @class */ (function (_super) {
         __extends(Bullet, _super);
-        function Bullet(am) {
-            var _this = _super.call(this, am, "bullet") || this;
+        function Bullet() {
+            var _this = _super.call(this, "bullet") || this;
             _this.isDestroyed = false;
             _this.Start();
             return _this;

@@ -4,8 +4,8 @@ module objects {
 
         public isDestroyed: boolean = false;
 
-        constructor(am: createjs.LoadQueue) {
-            super(am, "bullet");
+        constructor() {
+            super("bullet");
             this.Start();
         }
 

@@ -16,8 +16,8 @@ var scenes;
     var PlayScene = /** @class */ (function (_super) {
         __extends(PlayScene, _super);
         // Constructor
-        function PlayScene(assetManager) {
-            var _this = _super.call(this, assetManager) || this;
+        function PlayScene() {
+            var _this = _super.call(this) || this;
             _this.Start();
             return _this;
         }
@@ -25,19 +25,19 @@ var scenes;
         PlayScene.prototype.Start = function () {
             var _this = this;
             // Initialize our variables
-            this.background = new objects.Background(this.assetManager);
-            this.player = new objects.Player(this.assetManager);
+            this.background = new objects.Background();
+            this.player = new objects.Player();
             // this.enemy = new objects.Enemy(this.assetManager);
             this.enemies = new Array();
             this.enemyNum = 5;
             this.bullets = new Array(0);
             for (var i = 0; i < this.enemyNum; i++) {
-                this.enemies[i] = new objects.Enemy(this.assetManager);
+                this.enemies[i] = new objects.Enemy();
             }
             window.addEventListener("keypress", function (e) {
                 if (e.key == ' ') {
                     console.log('Bullet!!!');
-                    var bullet = new objects.Bullet(_this.assetManager);
+                    var bullet = new objects.Bullet();
                     bullet.x = _this.player.x;
                     bullet.y = _this.player.y;
                     _this.bullets.push(bullet);

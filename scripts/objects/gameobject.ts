@@ -10,8 +10,8 @@ module objects {
         public halfH: number;   // Half-height
         public isColliding: boolean;
         // Constructor
-        constructor(assetManager:createjs.LoadQueue, imageString:string) {
-            super(assetManager.getResult(imageString));
+        constructor(imageString:string) {
+            super(objects.Game.assetManager.getResult(imageString));
 
             this.name = imageString;
 

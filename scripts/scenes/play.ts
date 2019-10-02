@@ -9,27 +9,27 @@ module scenes {
         private enemyNum: number;
 
         // Constructor
-        constructor(assetManager:createjs.LoadQueue) {
-            super(assetManager);
+        constructor() {
+            super();
             this.Start();
         }
 
         // Methods
         public Start(): void {
             // Initialize our variables
-            this.background = new objects.Background(this.assetManager);
-            this.player = new objects.Player(this.assetManager);
+            this.background = new objects.Background();
+            this.player = new objects.Player();
             // this.enemy = new objects.Enemy(this.assetManager);
             this.enemies = new Array<objects.Enemy>();
             this.enemyNum = 5;
             this.bullets = new Array<objects.Bullet>(0);
             for(let i = 0; i < this.enemyNum; i++) {
-                this.enemies[i] = new objects.Enemy(this.assetManager);
+                this.enemies[i] = new objects.Enemy();
             }
             window.addEventListener("keypress", (e: any) => {
                 if (e.key == ' ') {
                     console.log('Bullet!!!');
-                    let bullet: objects.Bullet = new objects.Bullet(this.assetManager);
+                    let bullet: objects.Bullet = new objects.Bullet();
                     bullet.x = this.player.x;
                     bullet.y = this.player.y;
                     this.bullets.push(bullet);

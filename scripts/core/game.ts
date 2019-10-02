@@ -4,16 +4,16 @@
 
     // Global Game Variables
     let canvas = document.getElementById("canvas");
-    let stage:createjs.Stage;
+    let stage: createjs.Stage;
 
-    let assetManager:createjs.LoadQueue;
-    let assetManifest: any[];
+    let assetManager: createjs.LoadQueue;
+    let manifest: any[];
 
     // Store current scene and state information
     let currentScene:objects.Scene;
     let currentState:number
 
-    assetManifest = [
+    manifest = [
         { id: "backButton", src: "./assets/BackButton.png" },
         { id: "nextButton", src: "./assets/NextButton.png" },
         { id: "background", src: "./assets/background.png" },
@@ -26,7 +26,7 @@
         console.log("Initialization Start");
         assetManager = new createjs.LoadQueue();
         assetManager.installPlugin(createjs.Sound);
-        assetManager.loadManifest(assetManifest);
+        assetManager.loadManifest(manifest);
         assetManager.on("complete", Start, this);
     }
 
@@ -44,6 +44,7 @@
         // Create a global reference to our stage object
         objects.Game.stage = stage;
         objects.Game.currentScene = config.Scene.START;
+        objects.Game.assetManager = assetManager;
         currentState = config.Scene.START; 
 
         Main();
@@ -72,17 +73,17 @@
         switch (objects.Game.currentScene) {
             case config.Scene.START:
                 stage.removeAllChildren();
-                currentScene = new scenes.StartScene(assetManager);
+                currentScene = new scenes.StartScene();
                 stage.addChild(currentScene);
             break;
             case config.Scene.GAME:
                 stage.removeAllChildren();
-                currentScene = new scenes.PlayScene(assetManager);
+                currentScene = new scenes.PlayScene();
                 stage.addChild(currentScene);
             break;
             case config.Scene.OVER:
                 stage.removeAllChildren();
-                currentScene = new scenes.GameOverScene(assetManager);
+                currentScene = new scenes.GameOverScene();
                 stage.addChild(currentScene);
             break;
         }
