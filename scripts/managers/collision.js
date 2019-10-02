@@ -11,6 +11,7 @@ var managers;
                 if (!object2.isColliding) {
                     // React to our collision
                     console.log("Collision with " + object2.name);
+                    object1.OnCollision(object2);
                     object2.isColliding = true;
                 }
             }

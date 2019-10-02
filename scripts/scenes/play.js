@@ -23,15 +23,33 @@ var scenes;
         }
         // Methods
         PlayScene.prototype.Start = function () {
+            var _this = this;
             // Initialize our variables
             this.background = new objects.Background(this.assetManager);
             this.player = new objects.Player(this.assetManager);
             // this.enemy = new objects.Enemy(this.assetManager);
             this.enemies = new Array();
             this.enemyNum = 5;
+            this.bullets = new Array(0);
             for (var i = 0; i < this.enemyNum; i++) {
                 this.enemies[i] = new objects.Enemy(this.assetManager);
             }
+            window.addEventListener("keypress", function (e) {
+                if (e.key == ' ') {
+                    console.log('Bullet!!!');
+                    var bullet = new objects.Bullet(_this.assetManager);
+                    bullet.x = _this.player.x;
+                    bullet.y = _this.player.y;
+                    _this.bullets.push(bullet);
+                    _this.addChild(bullet);
+                    //var fn: any = bullet.Destroy;
+                    bullet.Destroy = function () {
+                        var b = _this.bullets.shift();
+                        b.isDestroyed = true;
+                        _this.removeChild(b);
+                    };
+                }
+            });
             this.Main();
         };
         PlayScene.prototype.Update = function () {
@@ -43,6 +61,14 @@ var scenes;
             this.enemies.forEach(function (e) {
                 e.Update();
                 managers.Collision.Check(_this.player, e);
+            });
+            this.bullets.forEach(function (b) {
+                if (!b.isDestroyed) {
+                    b.Update();
+                    _this.enemies.forEach(function (e) {
+                        managers.Collision.Check(b, e);
+                    });
+                }
             });
         };
         PlayScene.prototype.Main = function () {

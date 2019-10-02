@@ -32,10 +32,11 @@ module objects {
             this.isColliding = false;
         }
 
-        public Start():void {}
-        public Update():void {}
-        public Reset():void {}
-        public Move():void {}
-        public CheckBound():void {}
+        public Start(): void {}
+        public Update(): void {}
+        public Reset(): void {}
+        public Move(): void {}
+        public CheckBound(): void {}
+        public OnCollision(_gameObject: GameObject): void {}
     }
 }

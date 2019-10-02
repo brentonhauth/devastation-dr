@@ -1,16 +1,16 @@
 module scenes {
     export class PlayScene extends objects.Scene {
         // Variables
-        private background:objects.Background;
-        private player:objects.Player;
+        private background: objects.Background;
+        private player: objects.Player;
         // private enemy:objects.Enemy;
-        private enemies:objects.Enemy[];
-        private enemyNum:number;
+        private enemies: objects.Enemy[];
+        private bullets: objects.Bullet[];
+        private enemyNum: number;
 
         // Constructor
         constructor(assetManager:createjs.LoadQueue) {
             super(assetManager);
-
             this.Start();
         }
 
@@ -22,10 +22,26 @@ module scenes {
             // this.enemy = new objects.Enemy(this.assetManager);
             this.enemies = new Array<objects.Enemy>();
             this.enemyNum = 5;
+            this.bullets = new Array<objects.Bullet>(0);
             for(let i = 0; i < this.enemyNum; i++) {
                 this.enemies[i] = new objects.Enemy(this.assetManager);
             }
-
+            window.addEventListener("keypress", (e: any) => {
+                if (e.key == ' ') {
+                    console.log('Bullet!!!');
+                    let bullet: objects.Bullet = new objects.Bullet(this.assetManager);
+                    bullet.x = this.player.x;
+                    bullet.y = this.player.y;
+                    this.bullets.push(bullet);
+                    this.addChild(bullet);
+                    //var fn: any = bullet.Destroy;
+                    bullet.Destroy = () => {
+                        let b = this.bullets.shift();
+                        b.isDestroyed = true;
+                        this.removeChild(b);
+                    };
+                }
+            });
             this.Main();
         }
 
@@ -35,9 +51,19 @@ module scenes {
             this.player.Update();
             // this.enemy.Update();
 
+            
             this.enemies.forEach(e => {
                 e.Update();
                 managers.Collision.Check(this.player, e);
+            });
+
+            this.bullets.forEach(b => {
+                if (!b.isDestroyed) {
+                    b.Update();
+                    this.enemies.forEach(e => {
+                        managers.Collision.Check(b, e);
+                    });
+                }
             });
         }
 

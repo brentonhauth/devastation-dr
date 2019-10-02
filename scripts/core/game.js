@@ -13,11 +13,11 @@
         { id: "nextButton", src: "./assets/NextButton.png" },
         { id: "background", src: "./assets/background.png" },
         { id: "player", src: "./assets/car.png" },
-        { id: "enemy", src: "./assets/ship.png" }
+        { id: "enemy", src: "./assets/ship.png" },
+        { id: "bullet", src: "./assets/bullet.png" }
     ];
     function Init() {
         console.log("Initialization Start");
-        // Start();
         assetManager = new createjs.LoadQueue();
         assetManager.installPlugin(createjs.Sound);
         assetManager.loadManifest(assetManifest);

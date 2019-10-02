@@ -14,17 +14,16 @@
     let currentState:number
 
     assetManifest = [
-        {id: "backButton", src:"./Assets/BackButton.png"},
-        {id: "nextButton", src:"./Assets/NextButton.png"},
-        {id: "background", src:"./Assets/background.png"},
-        {id: "player", src:"./Assets/Spaceship.png"},
-        {id: "enemy", src:"./Assets/ship.png"}
+        { id: "backButton", src: "./assets/BackButton.png" },
+        { id: "nextButton", src: "./assets/NextButton.png" },
+        { id: "background", src: "./assets/background.png" },
+        { id: "player", src: "./assets/car.png" },
+        { id: "enemy", src: "./assets/ship.png" },
+        { id: "bullet", src: "./assets/bullet.png" }
     ];
 
     function Init() {
         console.log("Initialization Start");
-        // Start();
-
         assetManager = new createjs.LoadQueue();
         assetManager.installPlugin(createjs.Sound);
         assetManager.loadManifest(assetManifest);
@@ -70,7 +69,7 @@
         console.log("Game Start...");
 
         // Finite State Machine
-        switch(objects.Game.currentScene) {
+        switch (objects.Game.currentScene) {
             case config.Scene.START:
                 stage.removeAllChildren();
                 currentScene = new scenes.StartScene(assetManager);
