@@ -3,6 +3,7 @@ module scenes {
         // Variables
         private background: objects.Background;
         private player: objects.Player;
+        private lifeCounter: hud.LifeCounter;
         // private enemy:objects.Enemy;
         private enemies: objects.Enemy[];
         private bullets: objects.Bullet[];
@@ -19,6 +20,7 @@ module scenes {
             // Initialize our variables
             this.background = new objects.Background();
             this.player = new objects.Player();
+            this.lifeCounter = new hud.LifeCounter();
             // this.enemy = new objects.Enemy(this.assetManager);
             this.enemies = new Array<objects.Enemy>();
             this.enemyNum = 5;
@@ -51,7 +53,8 @@ module scenes {
             this.player.Update();
             // this.enemy.Update();
 
-            
+            this.lifeCounter.text("" + this.player.lives);
+
             this.enemies.forEach(e => {
                 e.Update();
                 managers.Collision.Check(this.player, e);
@@ -71,6 +74,7 @@ module scenes {
             // Order matters when adding game objects.
             this.addChild(this.background);
             this.addChild(this.player);
+            this.addChild(this.lifeCounter);
             // this.addChild(this.enemy);
             this.enemies.forEach(e => {
                 this.addChild(e);
