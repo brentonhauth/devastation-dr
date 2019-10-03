@@ -25,8 +25,8 @@ var scenes;
         PlayScene.prototype.Start = function () {
             var _this = this;
             // Initialize our variables
-            this.background = new objects.Background(this.assetManager);
-            this.player = new objects.Player(this.assetManager);
+            this.background = new objects.Background();
+            this.player = new objects.Player();
             this.lifeCounter = new hud.LifeCounter();
             // this.enemy = new objects.Enemy(this.assetManager);
             this.enemies = new Array();
