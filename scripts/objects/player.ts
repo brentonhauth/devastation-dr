@@ -1,6 +1,8 @@
 module objects {
     export class Player extends objects.GameObject {
         // Variables
+        private lives:number;
+
         // Constructor
         constructor(assetManager:createjs.LoadQueue) {
             super(assetManager, "player");
@@ -11,6 +13,7 @@ module objects {
             // Set the initial position
             this.y = 700;
             this.x = 320;
+            this.lives = 3;
 
             //this.scaleX = 0.25;
             //this.scaleY = 0.25;
@@ -35,6 +38,15 @@ module objects {
             // Left boundary
             if(this.x <= this.halfW) {
                 this.x = this.halfW;
+            }
+        }
+
+        public OnCollision(_gameObject:objects.GameObject):void {
+            this.lives -= 1;
+            if (this.lives == 0)
+            {
+                objects.Game.currentScene = config.Scene.OVER;
+                console.log("dead");
             }
         }
     }
