@@ -27,6 +27,7 @@ var scenes;
             // Initialize our variables
             this.background = new objects.Background(this.assetManager);
             this.player = new objects.Player(this.assetManager);
+            this.lifeCounter = new hud.LifeCounter();
             // this.enemy = new objects.Enemy(this.assetManager);
             this.enemies = new Array();
             this.enemyNum = 5;
@@ -58,6 +59,7 @@ var scenes;
             this.background.Update();
             this.player.Update();
             // this.enemy.Update();
+            this.lifeCounter.text("" + this.player.lives);
             this.enemies.forEach(function (e) {
                 e.Update();
                 managers.Collision.Check(_this.player, e);
@@ -76,6 +78,7 @@ var scenes;
             // Order matters when adding game objects.
             this.addChild(this.background);
             this.addChild(this.player);
+            this.addChild(this.lifeCounter);
             // this.addChild(this.enemy);
             this.enemies.forEach(function (e) {
                 _this.addChild(e);

@@ -1,7 +1,7 @@
 module objects {
     export class Player extends objects.GameObject {
         // Variables
-        private lives:number;
+        public lives:number;
 
         // Constructor
         constructor(assetManager:createjs.LoadQueue) {
@@ -46,7 +46,7 @@ module objects {
             if (this.lives == 0)
             {
                 objects.Game.currentScene = config.Scene.OVER;
-                console.log("dead");
+                console.log("dead"); 
             }
         }
     }
