@@ -38,6 +38,7 @@ var scenes;
             this.lifeCounter.text("" + this.player.lives);
             this.playerBulletHandler.Update();
             this.enemyHandler.Update();
+            this.enemyBulletHandler.Update();
             this.enemyHandler.CheckCollision();
             this.enemyBulletHandler.CheckCollision();
             this.playerBulletHandler.CheckCollision();

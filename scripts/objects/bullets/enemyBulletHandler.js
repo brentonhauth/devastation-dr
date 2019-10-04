@@ -12,14 +12,15 @@ var objects;
             this.enemyBullets.push(enemyBullet);
             return enemyBullet;
         };
-        EnemyBulletHandler.prototype.CheckCollision = function () {
+        EnemyBulletHandler.prototype.Update = function () {
             this.enemyBullets.forEach(function (eb) {
-                if (!eb.isDestroyed) {
-                    eb.Update();
-                    if (objects.Game.currentSceneRef instanceof scenes.PlayScene) {
-                        managers.Collision.Check(objects.Game.currentSceneRef.player, eb);
-                    }
-                }
+                eb.Update();
+            });
+        };
+        EnemyBulletHandler.prototype.CheckCollision = function () {
+            var _this = this;
+            this.enemyBullets.forEach(function (eb) {
+                managers.Collision.Check(_this.playScene.player, eb);
             });
         };
         return EnemyBulletHandler;

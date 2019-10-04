@@ -18,15 +18,16 @@ module objects {
 
             return enemyBullet;
         }
+        
+        public Update() {
+            this.enemyBullets.forEach(eb => {
+                eb.Update();
+            });
+        }
 
         public CheckCollision(){
             this.enemyBullets.forEach(eb => {
-                if (!eb.isDestroyed) {
-                    eb.Update();
-                    if (objects.Game.currentSceneRef instanceof scenes.PlayScene) {
-                        managers.Collision.Check(objects.Game.currentSceneRef.player, eb);
-                    }
-                }
+                managers.Collision.Check(this.playScene.player, eb); 
             });
         }
     }

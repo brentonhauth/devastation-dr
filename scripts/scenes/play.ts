@@ -38,6 +38,7 @@ module scenes {
 
             this.playerBulletHandler.Update();
             this.enemyHandler.Update();
+            this.enemyBulletHandler.Update();
 
             this.enemyHandler.CheckCollision();
             this.enemyBulletHandler.CheckCollision();
