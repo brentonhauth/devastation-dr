@@ -1,78 +1,48 @@
 module scenes {
     export class PlayScene extends objects.Scene {
-        // Variables
+
         private background: objects.Background;
         public player: objects.Player;
         private lifeCounter: hud.LifeCounter;
         public score: hud.Score;
-        // private enemy:objects.Enemy;
-        private enemies: objects.Spider[];
-        private bullets: objects.Bullet[];
-        private enemyNum: number;
 
-        // Constructor
+        public playerBulletHandler: objects.PlayerBulletHandler;
+        public enemyBulletHandler: objects.EnemyBulletHandler;
+        public enemyHandler: objects.EnemyHandler; 
+
         constructor() {
             super();
             this.Start();
         }
 
-        // Methods
         public Start(): void {
-            // Initialize our variables
             this.background = new objects.Background();
             this.player = new objects.Player();
             this.lifeCounter = new hud.LifeCounter();
-            // this.enemy = new objects.Enemy(this.assetManager);
-            this.enemies = new Array<objects.Spider>();
             this.score = new hud.Score();
-            this.enemyNum = 5;
-            this.bullets = new Array<objects.Bullet>(0);
-            for(let i = 0; i < this.enemyNum; i++) {
-                if (i == 0) {
-                    this.enemies[i] = new objects.Lizard();
-                } else {
-                    this.enemies[i] = new objects.Spider();
-                }
-            }
-            managers.Input.keypress(' ', () => {
-                let bullet = new objects.Bullet(this.player.x, this.player.y);
-                this.bullets.push(bullet);
-                this.addChild(bullet);
-                //var fn: any = bullet.Destroy;
-                bullet.Destroy = () => {
-                    let b = this.bullets.shift();
-                    if (!b) return;
-                    b.isDestroyed = true;
-                    this.removeChild(b);
-                };
-            });
+
+            this.playerBulletHandler = new objects.PlayerBulletHandler(this);
+            this.enemyBulletHandler = new objects.EnemyBulletHandler(this);
+            this.enemyHandler = new objects.EnemyHandler(this);
+            this.initEventHandlers();
+
             this.Main();
         }
 
         public Update(): void {
-            // Update the background here
             this.background.Update();
             this.player.Update();
-            // this.enemy.Update();
             this.score.updateText();
+
             this.lifeCounter.text("" + this.player.lives);
 
-            this.enemies.forEach(e => {
-                if (e instanceof objects.Lizard) {
-                    e.setLastPlayerPos(this.player.x, this.player.y);
-                }
-                e.Update();
-                managers.Collision.Check(this.player, e);
-            });
+            this.playerBulletHandler.Update();
+            this.enemyHandler.Update();
 
-            this.bullets.forEach(b => {
-                if (!b.isDestroyed) {
-                    b.Update();
-                    this.enemies.forEach(e => {
-                        managers.Collision.Check(b, e);
-                    });
-                }
-            });
+            this.enemyHandler.CheckCollision();
+            this.enemyBulletHandler.CheckCollision();
+            this.playerBulletHandler.CheckCollision();
+
         }
 
         public Main(): void {
@@ -81,10 +51,27 @@ module scenes {
             this.addChild(this.player);
             this.addChild(this.lifeCounter);
             this.addChild(this.score);
-            // this.addChild(this.enemy);
-            this.enemies.forEach(e => {
+            this.enemyHandler.enemies.forEach(e => {
                 this.addChild(e);
             });
+        }
+
+        public initEventHandlers(): void {
+            let playScene = this;
+            managers.Input.keypress(" ", function(){playScene.AddBullet(playScene); });
+        }
+
+        public AddBullet(playScene:scenes.PlayScene) {
+            let bullet = playScene.playerBulletHandler.SpawnBullet();
+            playScene.addChild(bullet);
+        }
+
+        public RemoveBullet(bullet:objects.PlayerBullet) {
+            this.removeChild(bullet)
+        }
+
+        public RemoveEnemyBullet(bullet:objects.EnemyBullet) {
+            this.removeChild(bullet)
         }
     }
 }

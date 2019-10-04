@@ -1,6 +1,6 @@
 module objects {
     // change so that Spider extends Enemy
-    export class Spider extends objects.GameObject {
+    export class Spider extends objects.Enemy {
 
         private movementSeed: number;
         private currentMovePatter: Function;
@@ -31,8 +31,7 @@ module objects {
             this.movementSeed = Math.random();
             this.yCenterAxis = math.randRange(250, 350);
             this.cosWave = math.cosWaveFunction(math.randRange(20, 50), math.randRange(50, 250));
-            this.currentMovePatter = (Math.random() < .5) ?
-            this.movementPattern01 : this.movementPattern02;
+            this.currentMovePatter = (Math.random() < .5) ? this.movementPattern01 : this.movementPattern02;
             this.x = Math.floor(Math.random() * 550) + 50;
             this.y = Math.floor(Math.random() * -800) - 50;
         }

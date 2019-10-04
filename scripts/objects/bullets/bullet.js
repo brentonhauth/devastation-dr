@@ -15,7 +15,7 @@ var objects;
 (function (objects) {
     var Bullet = /** @class */ (function (_super) {
         __extends(Bullet, _super);
-        function Bullet(x, y) {
+        function Bullet(x, y, bulletType) {
             var _this = _super.call(this, "bullet") || this;
             _this.isDestroyed = false;
             _this.x = x;
@@ -23,6 +23,8 @@ var objects;
             _this.Start();
             return _this;
         }
+        Bullet.prototype.setInitialPosition = function () {
+        };
         Bullet.prototype.Start = function () {
             var _this = this;
             setTimeout(function () {
@@ -35,7 +37,6 @@ var objects;
         };
         Bullet.prototype.Move = function () {
             this.y -= 7;
-            //console.log('(' +this.x+', ' +this.y+')');
         };
         Bullet.prototype.CheckBounds = function () {
         };
@@ -43,26 +44,6 @@ var objects;
             this.isDestroyed = true;
         };
         Bullet.prototype.OnCollision = function (obj) {
-            if (obj instanceof objects.Enemy ||
-                obj instanceof objects.Spider) {
-                obj.Reset();
-                this.Destroy();
-                objects.Game.currentSceneRef.removeChild(this);
-                if (objects.Game.currentSceneRef instanceof scenes.PlayScene) {
-                    var points = 100;
-                    if (obj instanceof objects.Lizard) {
-                        points = 300;
-                    }
-                    objects.Game.currentSceneRef.score.addPoints(points);
-                }
-            }
-            else if (obj instanceof objects.EnemyBullet) {
-                obj.Destroy();
-                this.Destroy();
-                if (objects.Game.currentSceneRef instanceof scenes.PlayScene) {
-                    objects.Game.currentSceneRef.score.addPoints(10);
-                }
-            }
         };
         return Bullet;
     }(objects.GameObject));

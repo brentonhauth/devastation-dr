@@ -38,8 +38,7 @@ var objects;
             this.movementSeed = Math.random();
             this.yCenterAxis = math.randRange(250, 350);
             this.cosWave = math.cosWaveFunction(math.randRange(20, 50), math.randRange(50, 250));
-            this.currentMovePatter = (Math.random() < .5) ?
-                this.movementPattern01 : this.movementPattern02;
+            this.currentMovePatter = (Math.random() < .5) ? this.movementPattern01 : this.movementPattern02;
             this.x = Math.floor(Math.random() * 550) + 50;
             this.y = Math.floor(Math.random() * -800) - 50;
         };
@@ -65,7 +64,7 @@ var objects;
             return Math.cos((this.y / r1)) * r2;
         };
         return Spider;
-    }(objects.GameObject));
+    }(objects.Enemy));
     objects.Spider = Spider;
 })(objects || (objects = {}));
 //# sourceMappingURL=spider.js.map

@@ -26,6 +26,19 @@ var math;
         Vec2.Distance = function (P1, P2) {
             return Math.floor(Math.sqrt(Math.pow(P2.x - P1.x, 2) + Math.pow(P2.y - P1.y, 2)));
         };
+        Vec2.determineAngle = function () {
+            /*let dx = target.x - pos.x;
+            let dy = target.y - pos.y;
+
+            let mag = Math.sqrt((dx * dx) + (dy * dy));
+
+            if (mag != 0) {
+                dx /= mag;
+                dy /= mag;
+            }
+
+            this.dir = new math.Vec2(dx, dy);*/
+        };
         return Vec2;
     }(createjs.Point));
     math.Vec2 = Vec2;

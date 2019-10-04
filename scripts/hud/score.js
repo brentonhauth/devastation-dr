@@ -26,9 +26,10 @@ var hud;
         };
         Score.prototype.addPoints = function (amount) {
             Score.currentScore += amount;
+            this.updateText();
         };
         Score.prototype.updateText = function () {
-            this.display.text = "score: " + (Score.savedScore + Score.currentScore);
+            this.display.text = "Score: " + String(Score.savedScore + Score.currentScore);
         };
         Score.prototype.saveCurrentScore = function () {
             Score.savedScore += Score.currentScore;

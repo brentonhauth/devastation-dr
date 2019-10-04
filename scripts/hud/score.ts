@@ -17,10 +17,11 @@ module hud {
 
         public addPoints(amount: number) {
             Score.currentScore += amount;
+            this.updateText();
         }
 
         public updateText() {
-            this.display.text = `score: ${Score.savedScore + Score.currentScore}`;
+            this.display.text = "Score: " + String(Score.savedScore + Score.currentScore);
         }
 
 
