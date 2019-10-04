@@ -23,10 +23,19 @@ var objects;
         }
         // Methods
         Player.prototype.Start = function () {
+            var _this = this;
             // Set the initial position
             this.y = 700;
             this.x = 320;
             this.lives = 3;
+            managers.Input.keypress('a', function () {
+                _this.x -= 15;
+                _this.CheckBound();
+            });
+            managers.Input.keypress('d', function () {
+                _this.x += 15;
+                _this.CheckBound();
+            });
             //this.scaleX = 0.25;
             //this.scaleY = 0.25;
         };
@@ -37,7 +46,7 @@ var objects;
         Player.prototype.Reset = function () { };
         Player.prototype.Move = function () {
             // We reference the stage object and get mouse position
-            this.x = objects.Game.stage.mouseX;
+            //this.x = objects.Game.stage.mouseX;
             // This is evetually replaced with keyboard input
             // Maybe xbox controller...
         };

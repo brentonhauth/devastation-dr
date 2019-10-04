@@ -6,7 +6,7 @@ module objects {
             super();
         }
         // Methods
-        public Start():void {}
+        public Start(): void {}
         public Update(): void {}
         public Main(): void {}
     }

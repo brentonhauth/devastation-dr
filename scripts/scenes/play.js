@@ -33,23 +33,18 @@ var scenes;
             this.enemyNum = 5;
             this.bullets = new Array(0);
             for (var i = 0; i < this.enemyNum; i++) {
-                this.enemies[i] = new objects.Enemy();
+                this.enemies[i] = new objects.Spider();
             }
-            window.addEventListener("keypress", function (e) {
-                if (e.key == ' ') {
-                    console.log('Bullet!!!');
-                    var bullet = new objects.Bullet();
-                    bullet.x = _this.player.x;
-                    bullet.y = _this.player.y;
-                    _this.bullets.push(bullet);
-                    _this.addChild(bullet);
-                    //var fn: any = bullet.Destroy;
-                    bullet.Destroy = function () {
-                        var b = _this.bullets.shift();
-                        b.isDestroyed = true;
-                        _this.removeChild(b);
-                    };
-                }
+            managers.Input.keypress(' ', function () {
+                var bullet = new objects.Bullet(_this.player.x, _this.player.y);
+                _this.bullets.push(bullet);
+                _this.addChild(bullet);
+                //var fn: any = bullet.Destroy;
+                bullet.Destroy = function () {
+                    var b = _this.bullets.shift();
+                    b.isDestroyed = true;
+                    _this.removeChild(b);
+                };
             });
             this.Main();
         };

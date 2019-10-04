@@ -46,7 +46,7 @@
         objects.Game.currentScene = config.Scene.START;
         objects.Game.assetManager = assetManager;
         currentState = config.Scene.START; 
-
+        managers.Input.listen();
         Main();
     }
 
@@ -60,10 +60,6 @@
         currentScene.Update();
 
         stage.update();
-    }
-
-    function clickableButtonMouseClick():void {
-        console.log("AHHHHHHH");
     }
 
     function Main() {

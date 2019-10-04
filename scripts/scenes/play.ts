@@ -5,7 +5,7 @@ module scenes {
         private player: objects.Player;
         private lifeCounter: hud.LifeCounter;
         // private enemy:objects.Enemy;
-        private enemies: objects.Enemy[];
+        private enemies: objects.Spider[];
         private bullets: objects.Bullet[];
         private enemyNum: number;
 
@@ -22,27 +22,22 @@ module scenes {
             this.player = new objects.Player();
             this.lifeCounter = new hud.LifeCounter();
             // this.enemy = new objects.Enemy(this.assetManager);
-            this.enemies = new Array<objects.Enemy>();
+            this.enemies = new Array<objects.Spider>();
             this.enemyNum = 5;
             this.bullets = new Array<objects.Bullet>(0);
             for(let i = 0; i < this.enemyNum; i++) {
-                this.enemies[i] = new objects.Enemy();
+                this.enemies[i] = new objects.Spider();
             }
-            window.addEventListener("keypress", (e: any) => {
-                if (e.key == ' ') {
-                    console.log('Bullet!!!');
-                    let bullet: objects.Bullet = new objects.Bullet();
-                    bullet.x = this.player.x;
-                    bullet.y = this.player.y;
-                    this.bullets.push(bullet);
-                    this.addChild(bullet);
-                    //var fn: any = bullet.Destroy;
-                    bullet.Destroy = () => {
-                        let b = this.bullets.shift();
-                        b.isDestroyed = true;
-                        this.removeChild(b);
-                    };
-                }
+            managers.Input.keypress(' ', () => {
+                let bullet: objects.Bullet = new objects.Bullet(this.player.x, this.player.y);
+                this.bullets.push(bullet);
+                this.addChild(bullet);
+                //var fn: any = bullet.Destroy;
+                bullet.Destroy = () => {
+                    let b = this.bullets.shift();
+                    b.isDestroyed = true;
+                    this.removeChild(b);
+                };
             });
             this.Main();
         }

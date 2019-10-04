@@ -37,6 +37,7 @@
         objects.Game.currentScene = config.Scene.START;
         objects.Game.assetManager = assetManager;
         currentState = config.Scene.START;
+        managers.Input.listen();
         Main();
     }
     function Update() {
@@ -47,9 +48,6 @@
         }
         currentScene.Update();
         stage.update();
-    }
-    function clickableButtonMouseClick() {
-        console.log("AHHHHHHH");
     }
     function Main() {
         console.log("Game Start...");

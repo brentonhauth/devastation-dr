@@ -15,9 +15,11 @@ var objects;
 (function (objects) {
     var Bullet = /** @class */ (function (_super) {
         __extends(Bullet, _super);
-        function Bullet() {
+        function Bullet(x, y) {
             var _this = _super.call(this, "bullet") || this;
             _this.isDestroyed = false;
+            _this.x = x;
+            _this.y = y;
             _this.Start();
             return _this;
         }
@@ -41,7 +43,8 @@ var objects;
             this.isDestroyed = true;
         };
         Bullet.prototype.OnCollision = function (obj) {
-            if (obj instanceof objects.Enemy) {
+            if (obj instanceof objects.Enemy ||
+                obj instanceof objects.Spider) {
                 obj.Reset();
                 this.Destroy();
             }

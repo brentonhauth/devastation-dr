@@ -4,8 +4,10 @@ module objects {
 
         public isDestroyed: boolean = false;
 
-        constructor() {
+        constructor(x: number, y: number) {
             super("bullet");
+            this.x = x;
+            this.y = y;
             this.Start();
         }
 
@@ -33,7 +35,8 @@ module objects {
         }
 
         public OnCollision(obj: objects.GameObject): void {
-            if (obj instanceof objects.Enemy) {
+            if (obj instanceof objects.Enemy ||
+                obj instanceof objects.Spider) {
                 obj.Reset();
                 this.Destroy();
             }
