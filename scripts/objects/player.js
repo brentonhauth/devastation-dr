@@ -85,9 +85,11 @@ var objects;
             if (this.y <= this.halfH) {
                 this.y = this.halfH;
             }
+            /*
             if (this.y >= 900 - this.halfH) {
                 this.y = this.halfH;
             }
+            */
         };
         Player.prototype.OnCollision = function (_gameObject) {
             this.lives -= 1;
