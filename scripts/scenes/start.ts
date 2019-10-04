@@ -31,10 +31,17 @@ module scenes {
         }
 
         public Main():void {
+
+            let logo = new createjs.Bitmap(objects.Game.assetManager.getResult("logo"));
+
+            logo.x = 320;
+            logo.y = 240;
+
             // Add items to our scene
             this.addChild(this.background);
-            this.addChild(this.welcomeLabel);
+            this.addChildAt(logo, 0);
             this.addChild(this.startButton);
+
             this.startButton.on("click", this.startButtonClick);
         }
     }

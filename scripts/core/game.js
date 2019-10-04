@@ -9,12 +9,15 @@
     var currentScene;
     var currentState;
     manifest = [
+        { id: "logo", src: "./assets/devastation-dr.PNG" },
         { id: "backButton", src: "./assets/BackButton.png" },
         { id: "nextButton", src: "./assets/NextButton.png" },
-        { id: "background", src: "./assets/background.png" },
+        { id: "background", src: "./assets/road1.png" },
         { id: "player", src: "./assets/car.png" },
         { id: "enemy", src: "./assets/ship.png" },
-        { id: "bullet", src: "./assets/bullet.png" }
+        { id: "bullet", src: "./assets/bullet.png" },
+        { id: "basicEnemy", src: "./assets/enemy.png" },
+        { id: "spider", src: "./assets/spider1.png" }
     ];
     function Init() {
         console.log("Initialization Start");
@@ -54,22 +57,19 @@
         // Finite State Machine
         switch (objects.Game.currentScene) {
             case config.Scene.START:
-                stage.removeAllChildren();
                 currentScene = new scenes.StartScene();
-                stage.addChild(currentScene);
                 break;
             case config.Scene.GAME:
-                stage.removeAllChildren();
                 currentScene = new scenes.PlayScene();
-                stage.addChild(currentScene);
                 break;
             case config.Scene.OVER:
-                stage.removeAllChildren();
                 currentScene = new scenes.GameOverScene();
-                stage.addChild(currentScene);
                 break;
         }
+        stage.removeAllChildren();
+        objects.Game.currentSceneRef = currentScene;
         currentState = objects.Game.currentScene;
+        stage.addChild(currentScene);
     }
     window.onload = Init;
 })();

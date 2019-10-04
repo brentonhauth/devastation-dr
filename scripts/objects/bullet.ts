@@ -39,6 +39,22 @@ module objects {
                 obj instanceof objects.Spider) {
                 obj.Reset();
                 this.Destroy();
+                objects.Game.currentSceneRef.removeChild(this);
+                if (objects.Game.currentSceneRef instanceof scenes.PlayScene) {
+                    let points = 100;
+                    if (obj instanceof objects.Lizard) {
+                        points = 300;
+                    }
+
+                    objects.Game.currentSceneRef.score.addPoints(points);
+                }
+            } else if (obj instanceof objects.EnemyBullet) {
+                obj.Destroy();
+                this.Destroy();
+                if (objects.Game.currentSceneRef instanceof scenes.PlayScene) {
+                    objects.Game.currentSceneRef.score.addPoints(10);
+
+                }
             }
         }
 

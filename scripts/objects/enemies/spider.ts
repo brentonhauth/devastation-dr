@@ -4,9 +4,15 @@ module objects {
 
         private movementSeed: number;
         private currentMovePatter: Function;
+        private cosWave: Function;
+        private yCenterAxis: number;
 
         constructor() {
-            super("enemy");
+            super("spider");
+            // this.scaleX *= .25;
+            // this.scaleY *= .25;
+            // this.halfW = this.width * .5;
+            // this.halfH = this.height * .5;
             this.Start();
         }
 
@@ -23,6 +29,8 @@ module objects {
 
         public Reset(): void {
             this.movementSeed = Math.random();
+            this.yCenterAxis = math.randRange(250, 350);
+            this.cosWave = math.cosWaveFunction(math.randRange(20, 50), math.randRange(50, 250));
             this.currentMovePatter = (Math.random() < .5) ?
             this.movementPattern01 : this.movementPattern02;
             this.x = Math.floor(Math.random() * 550) + 50;
@@ -32,7 +40,7 @@ module objects {
         public Move():void {
             this.y += 1;
             
-            this.x = this.currentMovePatter() + 300;
+            this.x = this.cosWave(this.y) + this.yCenterAxis; //this.currentMovePatter() + 300;
         }
 
         public CheckBounds():void {

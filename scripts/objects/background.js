@@ -18,6 +18,9 @@ var objects;
         // Constructor
         function Background() {
             var _this = _super.call(this, objects.Game.assetManager.getResult("background")) || this;
+            _this.scaleX *= 1.05;
+            _this.scaleY *= 1.05;
+            _this.x -= 300;
             _this.Start();
             return _this;
         }
@@ -34,7 +37,7 @@ var objects;
         };
         // Resets the position of the object
         Background.prototype.Reset = function () {
-            this.y = -124;
+            this.y = -500;
         };
         // Move the object
         Background.prototype.Move = function () {

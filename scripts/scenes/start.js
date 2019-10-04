@@ -36,9 +36,12 @@ var scenes;
             objects.Game.currentScene = config.Scene.GAME;
         };
         StartScene.prototype.Main = function () {
+            var logo = new createjs.Bitmap(objects.Game.assetManager.getResult("logo"));
+            logo.x = 320;
+            logo.y = 240;
             // Add items to our scene
             this.addChild(this.background);
-            this.addChild(this.welcomeLabel);
+            this.addChildAt(logo, 0);
             this.addChild(this.startButton);
             this.startButton.on("click", this.startButtonClick);
         };

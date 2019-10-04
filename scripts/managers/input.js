@@ -12,6 +12,7 @@ var managers;
         Input.keypress = function (key, callback) {
             var io = new InputOption(key, KeyAction.Down, callback);
             Input.keydownMaping.push(io);
+            return io;
         };
         Input.listen = function () {
             this.keydownMaping = new Array(0);
@@ -20,7 +21,7 @@ var managers;
         Input.onKey = function (e) {
             var key = e.key ? e.key.toLowerCase() : "";
             Input.keydownMaping.forEach(function (k) {
-                if (k.key.toLowerCase() == key && !k.disabled) {
+                if (k.getKey().toLowerCase() == key && !k.isDisabled()) {
                     k.Call(e);
                 }
             });
@@ -28,16 +29,16 @@ var managers;
         Input.disable = function (key) {
             key = key.toLowerCase();
             Input.keydownMaping.forEach(function (keyOption) {
-                if (keyOption.key.toLowerCase() == key) {
-                    keyOption.disabled = true;
+                if (keyOption.getKey().toLowerCase() == key) {
+                    keyOption.disable();
                 }
             });
         };
         Input.enabled = function (key) {
             key = key.toLowerCase();
             Input.keydownMaping.forEach(function (keyOption) {
-                if (keyOption.key.toLowerCase() == key) {
-                    keyOption.disabled = false;
+                if (keyOption.getKey().toLowerCase() == key) {
+                    keyOption.enable();
                 }
             });
         };
@@ -51,16 +52,29 @@ var managers;
             this.keyAction = keyAct;
             this.callback = callback;
         }
+        InputOption.prototype.getKey = function () {
+            return this.key;
+        };
         InputOption.prototype.Call = function (e) {
             this.callback(e);
         };
+        InputOption.prototype.isDisabled = function () {
+            return this.disabled;
+        };
+        InputOption.prototype.disable = function () {
+            this.disabled = true;
+        };
+        InputOption.prototype.enable = function () {
+            this.disabled = false;
+        };
         return InputOption;
     }());
+    managers.InputOption = InputOption;
     var KeyAction;
     (function (KeyAction) {
         KeyAction[KeyAction["Down"] = 0] = "Down";
         KeyAction[KeyAction["Up"] = 1] = "Up";
         KeyAction[KeyAction["Hold"] = 2] = "Hold";
-    })(KeyAction || (KeyAction = {}));
+    })(KeyAction = managers.KeyAction || (managers.KeyAction = {}));
 })(managers || (managers = {}));
 //# sourceMappingURL=input.js.map

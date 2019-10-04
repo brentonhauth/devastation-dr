@@ -5,7 +5,9 @@ module objects {
         // Constructor
         constructor() {
             super(objects.Game.assetManager.getResult("background"));
-
+            this.scaleX *= 1.05;
+            this.scaleY *= 1.05;
+            this.x -= 300;
             this.Start();
         }
         // Functions 
@@ -21,7 +23,7 @@ module objects {
         }
         // Resets the position of the object
         public Reset():void {
-            this.y = -124;
+            this.y = -500;
         }
         // Move the object
         public Move():void {

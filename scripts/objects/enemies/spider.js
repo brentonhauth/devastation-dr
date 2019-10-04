@@ -17,7 +17,11 @@ var objects;
     var Spider = /** @class */ (function (_super) {
         __extends(Spider, _super);
         function Spider() {
-            var _this = _super.call(this, "enemy") || this;
+            var _this = _super.call(this, "spider") || this;
+            // this.scaleX *= .25;
+            // this.scaleY *= .25;
+            // this.halfW = this.width * .5;
+            // this.halfH = this.height * .5;
             _this.Start();
             return _this;
         }
@@ -32,6 +36,8 @@ var objects;
         };
         Spider.prototype.Reset = function () {
             this.movementSeed = Math.random();
+            this.yCenterAxis = math.randRange(250, 350);
+            this.cosWave = math.cosWaveFunction(math.randRange(20, 50), math.randRange(50, 250));
             this.currentMovePatter = (Math.random() < .5) ?
                 this.movementPattern01 : this.movementPattern02;
             this.x = Math.floor(Math.random() * 550) + 50;
@@ -39,7 +45,7 @@ var objects;
         };
         Spider.prototype.Move = function () {
             this.y += 1;
-            this.x = this.currentMovePatter() + 300;
+            this.x = this.cosWave(this.y) + this.yCenterAxis; //this.currentMovePatter() + 300;
         };
         Spider.prototype.CheckBounds = function () {
             if (this.y >= 900 + this.halfH + 5) {

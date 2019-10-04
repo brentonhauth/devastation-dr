@@ -30,10 +30,16 @@ var scenes;
             this.lifeCounter = new hud.LifeCounter();
             // this.enemy = new objects.Enemy(this.assetManager);
             this.enemies = new Array();
+            this.score = new hud.Score();
             this.enemyNum = 5;
             this.bullets = new Array(0);
             for (var i = 0; i < this.enemyNum; i++) {
-                this.enemies[i] = new objects.Spider();
+                if (i == 0) {
+                    this.enemies[i] = new objects.Lizard();
+                }
+                else {
+                    this.enemies[i] = new objects.Spider();
+                }
             }
             managers.Input.keypress(' ', function () {
                 var bullet = new objects.Bullet(_this.player.x, _this.player.y);
@@ -42,6 +48,8 @@ var scenes;
                 //var fn: any = bullet.Destroy;
                 bullet.Destroy = function () {
                     var b = _this.bullets.shift();
+                    if (!b)
+                        return;
                     b.isDestroyed = true;
                     _this.removeChild(b);
                 };
@@ -54,8 +62,12 @@ var scenes;
             this.background.Update();
             this.player.Update();
             // this.enemy.Update();
+            this.score.updateText();
             this.lifeCounter.text("" + this.player.lives);
             this.enemies.forEach(function (e) {
+                if (e instanceof objects.Lizard) {
+                    e.setLastPlayerPos(_this.player.x, _this.player.y);
+                }
                 e.Update();
                 managers.Collision.Check(_this.player, e);
             });
@@ -74,6 +86,7 @@ var scenes;
             this.addChild(this.background);
             this.addChild(this.player);
             this.addChild(this.lifeCounter);
+            this.addChild(this.score);
             // this.addChild(this.enemy);
             this.enemies.forEach(function (e) {
                 _this.addChild(e);
