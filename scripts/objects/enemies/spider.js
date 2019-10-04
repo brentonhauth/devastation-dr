@@ -16,12 +16,13 @@ var objects;
     // change so that Spider extends Enemy
     var Spider = /** @class */ (function (_super) {
         __extends(Spider, _super);
-        function Spider() {
+        function Spider(enemyHandler) {
             var _this = _super.call(this, "spider") || this;
             // this.scaleX *= .25;
             // this.scaleY *= .25;
             // this.halfW = this.width * .5;
             // this.halfH = this.height * .5;
+            _this.enemyHandler = enemyHandler;
             _this.Start();
             return _this;
         }

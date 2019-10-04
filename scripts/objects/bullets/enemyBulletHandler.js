@@ -5,12 +5,12 @@ var objects;
             this.playScene = playScene;
             this.enemyBullets = new Array();
         }
-        EnemyBulletHandler.prototype.SpawnEnemyBullet = function () {
-            /*
-            let eb = new objects.EnemyBullet(new math.Vec2(this.x, this.y), this.lastPlayerPos);
-            objects.Game.currentSceneRef.addChild(eb);
-            this.enemyBullets.push(eb);
-            */
+        EnemyBulletHandler.prototype.SpawnBullet = function (enemy) {
+            var playerPos = new math.Vec2(this.playScene.player.x, this.playScene.player.y);
+            var enemyPos = new math.Vec2(enemy.x, enemy.y);
+            var enemyBullet = new objects.EnemyBullet(enemyPos, playerPos);
+            this.enemyBullets.push(enemyBullet);
+            return enemyBullet;
         };
         EnemyBulletHandler.prototype.CheckCollision = function () {
             this.enemyBullets.forEach(function (eb) {

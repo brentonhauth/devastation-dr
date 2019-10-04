@@ -70,6 +70,11 @@ module scenes {
             this.removeChild(bullet)
         }
 
+        public AddEnemyBullet(enemy:objects.Enemy) {
+            let bullet = this.enemyBulletHandler.SpawnBullet(enemy);
+            this.addChild(bullet);
+        }
+        
         public RemoveEnemyBullet(bullet:objects.EnemyBullet) {
             this.removeChild(bullet)
         }

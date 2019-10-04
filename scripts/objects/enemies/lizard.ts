@@ -2,10 +2,11 @@ module objects {
     export class Lizard extends objects.Spider {
 
         private lastPlayerPos: math.Vec2;
-
         public enemyBullets: objects.EnemyBullet[];
-        constructor() {
-            super();
+        public enemyHandler: objects.EnemyHandler;
+
+        constructor(enemyHandler:objects.EnemyHandler) {
+            super(enemyHandler);
             this.scaleX *= 1.5;
             this.scaleY *= 1.5;
             this.lastPlayerPos = new math.Vec2();
@@ -20,15 +21,16 @@ module objects {
 
         public Update() {
             super.Update();
+            this.SpawnBullet();
         }
 
         
         public SpawnBullet()
         {
-            /*let r = math.randRange(1, 30);
+            let r = math.randRange(1, 30);
             if (Math.round(r) == 5) {
-                this.spawnBullet();
-            }*/
+                this.enemyHandler.playScene.AddEnemyBullet(this);
+            }
         }
     }
 }

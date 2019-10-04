@@ -64,6 +64,10 @@ var scenes;
         PlayScene.prototype.RemoveBullet = function (bullet) {
             this.removeChild(bullet);
         };
+        PlayScene.prototype.AddEnemyBullet = function (enemy) {
+            var bullet = this.enemyBulletHandler.SpawnBullet(enemy);
+            this.addChild(bullet);
+        };
         PlayScene.prototype.RemoveEnemyBullet = function (bullet) {
             this.removeChild(bullet);
         };

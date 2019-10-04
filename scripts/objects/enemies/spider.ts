@@ -6,13 +6,15 @@ module objects {
         private currentMovePatter: Function;
         private cosWave: Function;
         private yCenterAxis: number;
+        public enemyHandler:objects.EnemyHandler;
 
-        constructor() {
+        constructor(enemyHandler:objects.EnemyHandler) {
             super("spider");
             // this.scaleX *= .25;
             // this.scaleY *= .25;
             // this.halfW = this.width * .5;
             // this.halfH = this.height * .5;
+            this.enemyHandler = enemyHandler;
             this.Start();
         }
 

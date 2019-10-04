@@ -23,10 +23,10 @@ var objects;
         EnemyHandler.prototype.SpawnEnemies = function () {
             for (var i = 0; i < this.enemyNum; i++) {
                 if (i == 0) {
-                    this.enemies.push(new objects.Lizard());
+                    this.enemies.push(new objects.Lizard(this));
                 }
                 else {
-                    this.enemies.push(new objects.Spider());
+                    this.enemies.push(new objects.Spider(this));
                 }
             }
         };

@@ -15,8 +15,8 @@ var objects;
 (function (objects) {
     var Lizard = /** @class */ (function (_super) {
         __extends(Lizard, _super);
-        function Lizard() {
-            var _this = _super.call(this) || this;
+        function Lizard(enemyHandler) {
+            var _this = _super.call(this, enemyHandler) || this;
             _this.scaleX *= 1.5;
             _this.scaleY *= 1.5;
             _this.lastPlayerPos = new math.Vec2();
@@ -30,12 +30,13 @@ var objects;
         */
         Lizard.prototype.Update = function () {
             _super.prototype.Update.call(this);
+            this.SpawnBullet();
         };
         Lizard.prototype.SpawnBullet = function () {
-            /*let r = math.randRange(1, 30);
+            var r = math.randRange(1, 30);
             if (Math.round(r) == 5) {
-                this.spawnBullet();
-            }*/
+                this.enemyHandler.playScene.AddEnemyBullet(this);
+            }
         };
         return Lizard;
     }(objects.Spider));

@@ -10,12 +10,13 @@ module objects {
             this.enemyBullets = new Array();
         }
 
-        public SpawnEnemyBullet() {
-            /*
-            let eb = new objects.EnemyBullet(new math.Vec2(this.x, this.y), this.lastPlayerPos);
-            objects.Game.currentSceneRef.addChild(eb);
-            this.enemyBullets.push(eb);
-            */
+        public SpawnBullet(enemy:objects.Enemy):objects.EnemyBullet {
+            let playerPos = new math.Vec2(this.playScene.player.x, this.playScene.player.y);
+            let enemyPos = new math.Vec2(enemy.x, enemy.y)
+            let enemyBullet = new objects.EnemyBullet(enemyPos, playerPos);
+            this.enemyBullets.push(enemyBullet);
+
+            return enemyBullet;
         }
 
         public CheckCollision(){
