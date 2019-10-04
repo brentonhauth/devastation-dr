@@ -15,10 +15,13 @@ var objects;
 (function (objects) {
     var EnemyBullet = /** @class */ (function (_super) {
         __extends(EnemyBullet, _super);
-        function EnemyBullet(pos, target) {
+        function EnemyBullet(pos, target, spawnedFrom, bulletHandler) {
             var _this = _super.call(this, pos.x, pos.y, "enemyBullet") || this;
             _this.speed = 3;
-            _this.isDestroyed = false;
+            _this.bulletHandler = bulletHandler;
+            _this.bulletID = String(EnemyBullet.counter);
+            EnemyBullet.counter++;
+            _this.spawnedFrom = spawnedFrom;
             _this.x = pos.x;
             var dx = target.x - pos.x;
             var dy = target.y - pos.y;
@@ -34,6 +37,7 @@ var objects;
         EnemyBullet.prototype.Update = function () {
             this.x += this.dir.x * this.speed;
             this.y += this.dir.y * this.speed;
+            this.CheckBound();
         };
         EnemyBullet.prototype.CheckBound = function () {
             if (this.x > 650 || this.x < 0 ||
@@ -42,15 +46,9 @@ var objects;
             }
         };
         EnemyBullet.prototype.Destroy = function () {
-            this.isDestroyed = true;
-            try {
-                objects.Game.currentSceneRef.removeChild(this);
-                this.spawnedFrom.enemyBullets.shift();
-            }
-            catch (err) {
-                console.log(err);
-            }
+            this.bulletHandler.DestroyBullet(this);
         };
+        EnemyBullet.counter = 1;
         return EnemyBullet;
     }(objects.Bullet));
     objects.EnemyBullet = EnemyBullet;
