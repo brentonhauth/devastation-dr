@@ -9,15 +9,16 @@
     var currentScene;
     var currentState;
     manifest = [
-        { id: "logo", src: "./assets/devastation-dr.PNG" },
-        { id: "backButton", src: "./assets/BackButton.png" },
-        { id: "nextButton", src: "./assets/NextButton.png" },
-        { id: "background", src: "./assets/road1.png" },
-        { id: "player", src: "./assets/car.png" },
-        { id: "enemy", src: "./assets/ship.png" },
-        { id: "bullet", src: "./assets/bullet.png" },
-        { id: "basicEnemy", src: "./assets/enemy.png" },
-        { id: "spider", src: "./assets/spider1.png" }
+        { id: "logo", src: "./assets/images/devastation-dr.PNG" },
+        { id: "backButton", src: "./assets/images/BackButton.png" },
+        { id: "nextButton", src: "./assets/images/NextButton.png" },
+        { id: "background", src: "./assets/images/road1.png" },
+        { id: "player", src: "./assets/images/car.png" },
+        { id: "enemy", src: "./assets/images/ship.png" },
+        { id: "bullet", src: "./assets/images/bullet.png" },
+        { id: "basicEnemy", src: "./assets/images/enemy.png" },
+        { id: "spider", src: "./assets/images/spider1.png" },
+        { id: "explosion", src: "./assets/sounds/explosion.wav" }
     ];
     function Init() {
         console.log("Initialization Start");

@@ -5,17 +5,22 @@ module objects {
         private blink: boolean = false;
         private oddBlink = 0;
 
+        private explosion: createjs.AbstractSoundInstance;
+        
+        
+
         // Constructor
         constructor() {
             super("player");
             this.Start();
         }
         // Methods
-        public Start():void {
+        public Start(): void {
             // Set the initial position
             this.y = 700;
             this.x = 320;
             this.lives = 3;
+            
 
             // managers.Input.keypress('a', () => {
             //     this.x -= 15;
@@ -87,6 +92,7 @@ module objects {
 
         public OnCollision(_gameObject: objects.GameObject): void {
             this.lives -= 1;
+            createjs.Sound.play("explosion");
             this.StartBlink();
             if (this.lives == 0) {
                 objects.Game.currentScene = config.Scene.OVER;

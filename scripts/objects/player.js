@@ -91,6 +91,7 @@ var objects;
         };
         Player.prototype.OnCollision = function (_gameObject) {
             this.lives -= 1;
+            createjs.Sound.play("explosion");
             this.StartBlink();
             if (this.lives == 0) {
                 objects.Game.currentScene = config.Scene.OVER;
