@@ -36,6 +36,7 @@ var objects;
             }
         };
         PlayerBullet.prototype.Destroy = function () {
+            this.bulletHandler.DestroyBullet(this);
         };
         PlayerBullet.counter = 1;
         return PlayerBullet;

@@ -17,9 +17,7 @@ module objects {
         }
 
         public Start(): void {
-            setTimeout(() => {
-                this.Destroy();
-            }, 10 * 1000);
+
         }
 
         public Update(): void {
@@ -29,9 +27,14 @@ module objects {
 
         public Move(): void {
             this.y -= 7;
+            if(this.y < 0)
+            {
+                this.Destroy();
+            }
         }
 
         public CheckBounds(): void {
+
         }
 
         public Destroy(): void {

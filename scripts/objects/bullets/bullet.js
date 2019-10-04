@@ -26,10 +26,6 @@ var objects;
         Bullet.prototype.setInitialPosition = function () {
         };
         Bullet.prototype.Start = function () {
-            var _this = this;
-            setTimeout(function () {
-                _this.Destroy();
-            }, 10 * 1000);
         };
         Bullet.prototype.Update = function () {
             this.Move();
@@ -37,6 +33,9 @@ var objects;
         };
         Bullet.prototype.Move = function () {
             this.y -= 7;
+            if (this.y < 0) {
+                this.Destroy();
+            }
         };
         Bullet.prototype.CheckBounds = function () {
         };

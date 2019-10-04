@@ -31,7 +31,7 @@ module objects {
         }
 
         public Destroy(){
-
+            this.bulletHandler.DestroyBullet(this);
         }
     }
 }
