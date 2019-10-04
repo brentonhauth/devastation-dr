@@ -72,6 +72,12 @@ var objects;
             this.x += this.dir.x * this.speed;
             this.y += this.dir.y * this.speed;
         };
+        EnemyBullet.prototype.CheckBound = function () {
+            if (this.x > 650 || this.x < 0 ||
+                this.y > 900 || this.y < 0) {
+                this.Destroy();
+            }
+        };
         EnemyBullet.prototype.Destroy = function () {
             this.isDestroyed = true;
             try {

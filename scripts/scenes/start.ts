@@ -2,7 +2,8 @@ module scenes {
     export class StartScene extends objects.Scene {
         // Variables
         private background: objects.Background;
-        private welcomeLabel: objects.Label;
+        private infoLabel: objects.Label;
+        private logo: createjs.Bitmap;
         private startButton: objects.Button;
 
         // Constructor
@@ -14,11 +15,18 @@ module scenes {
         public Start():void {
             // Initialize our objects for this scene
             this.background = new objects.Background();
+            this.logo = new createjs.Bitmap(objects.Game.assetManager.getResult("logo"));
+            this.infoLabel = new objects.Label(
+            "(c) Rude Rhino", "18px", "Arial", "#e1e1f1", 320, 800, true);
+            this.logo.scaleX *= .8;
+            this.logo.scaleY *= .8;
+            this.logo.x = 80;
+            this.logo.y = 140;
 
-            this.welcomeLabel = new objects.Label(
-                "Welcome to School!", "60px", "Consolas", "#FFFFFF", 320, 240, true);
+            this.startButton = new objects.Button("nextButton", 270, 300);
 
-            this.startButton = new objects.Button("nextButton", 320, 300);
+            this.startButton.scaleY *= 3.25;
+            this.startButton.scaleX *= 3.25;
             this.Main();
         }
         public Update():void {
@@ -32,15 +40,13 @@ module scenes {
 
         public Main():void {
 
-            let logo = new createjs.Bitmap(objects.Game.assetManager.getResult("logo"));
 
-            logo.x = 320;
-            logo.y = 240;
 
             // Add items to our scene
             this.addChild(this.background);
-            this.addChildAt(logo, 0);
             this.addChild(this.startButton);
+            this.addChildAt(this.logo, 2);
+            this.addChild(this.infoLabel);
 
             this.startButton.on("click", this.startButtonClick);
         }

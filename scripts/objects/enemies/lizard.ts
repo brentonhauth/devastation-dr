@@ -75,6 +75,13 @@ module objects {
             this.y += this.dir.y * this.speed;
         }
 
+        public CheckBound(): void {
+            if (this.x > 650 || this.x < 0 ||
+                this.y > 900 || this.y < 0) {
+                    this.Destroy();
+            }
+        }
+
         public Destroy() {
             this.isDestroyed = true;
             try {

@@ -24,8 +24,15 @@ var scenes;
         StartScene.prototype.Start = function () {
             // Initialize our objects for this scene
             this.background = new objects.Background();
-            this.welcomeLabel = new objects.Label("Welcome to School!", "60px", "Consolas", "#FFFFFF", 320, 240, true);
-            this.startButton = new objects.Button("nextButton", 320, 300);
+            this.logo = new createjs.Bitmap(objects.Game.assetManager.getResult("logo"));
+            this.infoLabel = new objects.Label("(c) Rude Rhino", "18px", "Arial", "#e1e1f1", 320, 800, true);
+            this.logo.scaleX *= .8;
+            this.logo.scaleY *= .8;
+            this.logo.x = 80;
+            this.logo.y = 140;
+            this.startButton = new objects.Button("nextButton", 270, 300);
+            this.startButton.scaleY *= 3.25;
+            this.startButton.scaleX *= 3.25;
             this.Main();
         };
         StartScene.prototype.Update = function () {
@@ -36,13 +43,11 @@ var scenes;
             objects.Game.currentScene = config.Scene.GAME;
         };
         StartScene.prototype.Main = function () {
-            var logo = new createjs.Bitmap(objects.Game.assetManager.getResult("logo"));
-            logo.x = 320;
-            logo.y = 240;
             // Add items to our scene
             this.addChild(this.background);
-            this.addChildAt(logo, 0);
             this.addChild(this.startButton);
+            this.addChildAt(this.logo, 2);
+            this.addChild(this.infoLabel);
             this.startButton.on("click", this.startButtonClick);
         };
         return StartScene;
