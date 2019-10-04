@@ -16,12 +16,13 @@ var objects;
     // change so that Spider extends Enemy
     var Spider = /** @class */ (function (_super) {
         __extends(Spider, _super);
-        function Spider() {
+        function Spider(enemyHandler) {
             var _this = _super.call(this, "spider") || this;
             // this.scaleX *= .25;
             // this.scaleY *= .25;
             // this.halfW = this.width * .5;
             // this.halfH = this.height * .5;
+            _this.enemyHandler = enemyHandler;
             _this.Start();
             return _this;
         }
@@ -38,8 +39,7 @@ var objects;
             this.movementSeed = Math.random();
             this.yCenterAxis = math.randRange(250, 350);
             this.cosWave = math.cosWaveFunction(math.randRange(20, 50), math.randRange(50, 250));
-            this.currentMovePatter = (Math.random() < .5) ?
-                this.movementPattern01 : this.movementPattern02;
+            this.currentMovePatter = (Math.random() < .5) ? this.movementPattern01 : this.movementPattern02;
             this.x = Math.floor(Math.random() * 550) + 50;
             this.y = Math.floor(Math.random() * -800) - 50;
         };
@@ -65,7 +65,7 @@ var objects;
             return Math.cos((this.y / r1)) * r2;
         };
         return Spider;
-    }(objects.GameObject));
+    }(objects.Enemy));
     objects.Spider = Spider;
 })(objects || (objects = {}));
 //# sourceMappingURL=spider.js.map

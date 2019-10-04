@@ -15,17 +15,15 @@ var objects;
 (function (objects) {
     var Enemy = /** @class */ (function (_super) {
         __extends(Enemy, _super);
-        // Variables
         // Constructor
-        function Enemy() {
-            var _this = _super.call(this, "enemy") || this;
+        function Enemy(enemyType) {
+            var _this = _super.call(this, enemyType) || this;
+            //this.pointsWorth = pointsWorth;
             _this.Start();
             return _this;
         }
         // Methods
         Enemy.prototype.Start = function () {
-            // this.x = 320;
-            // this.y = -50;
             this.Reset();
         };
         Enemy.prototype.Update = function () {
