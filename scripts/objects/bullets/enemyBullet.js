@@ -23,15 +23,8 @@ var objects;
             EnemyBullet.counter++;
             _this.spawnedFrom = spawnedFrom;
             _this.x = pos.x;
-            var dx = target.x - pos.x;
-            var dy = target.y - pos.y;
-            var mag = Math.sqrt((dx * dx) + (dy * dy));
-            if (mag != 0) {
-                dx /= mag;
-                dy /= mag;
-            }
-            _this.dir = new math.Vec2(dx, dy);
             _this.y = pos.y;
+            _this.dir = math.Vec2.Difference(target, pos).Normalized;
             return _this;
         }
         EnemyBullet.prototype.Update = function () {

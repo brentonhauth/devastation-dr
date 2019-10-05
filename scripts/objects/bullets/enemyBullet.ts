@@ -16,19 +16,9 @@ module objects {
             this.spawnedFrom = spawnedFrom;
 
             this.x = pos.x;
-
-            let dx = target.x - pos.x;
-            let dy = target.y - pos.y;
-
-            let mag = Math.sqrt((dx * dx) + (dy * dy));
-
-            if (mag != 0) {
-                dx /= mag;
-                dy /= mag;
-            }
-
-            this.dir = new math.Vec2(dx, dy);
             this.y = pos.y;
+
+            this.dir = math.Vec2.Difference(target, pos).Normalized;
         }
 
         public Update() {

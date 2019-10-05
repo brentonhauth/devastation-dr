@@ -18,10 +18,6 @@ var objects;
         __extends(Spider, _super);
         function Spider(enemyHandler) {
             var _this = _super.call(this, "spider") || this;
-            // this.scaleX *= .25;
-            // this.scaleY *= .25;
-            // this.halfW = this.width * .5;
-            // this.halfH = this.height * .5;
             _this.enemyHandler = enemyHandler;
             _this.Start();
             return _this;
@@ -39,13 +35,12 @@ var objects;
             this.movementSeed = Math.random();
             this.yCenterAxis = math.randRange(250, 350);
             this.cosWave = math.cosWaveFunction(math.randRange(20, 50), math.randRange(50, 250));
-            this.currentMovePatter = (Math.random() < .5) ? this.movementPattern01 : this.movementPattern02;
             this.x = Math.floor(Math.random() * 550) + 50;
             this.y = Math.floor(Math.random() * -800) - 50;
         };
         Spider.prototype.Move = function () {
             this.y += 1;
-            this.x = this.cosWave(this.y) + this.yCenterAxis; //this.currentMovePatter() + 300;
+            this.x = this.cosWave(this.y) + this.yCenterAxis;
         };
         Spider.prototype.CheckBounds = function () {
             if (this.y >= 900 + this.halfH + 5) {
@@ -57,12 +52,6 @@ var objects;
             r2 = (this.movementSeed / 10000);
             r1 = Math.round((this.movementSeed * 50) + 100);
             return Math.sin(this.y / r1) / (this.y * r2);
-        };
-        Spider.prototype.movementPattern02 = function () {
-            var r1, r2;
-            r2 = 50 + (this.movementSeed * 200);
-            r1 = 20 + (this.movementSeed * 5);
-            return Math.cos((this.y / r1)) * r2;
         };
         return Spider;
     }(objects.Enemy));

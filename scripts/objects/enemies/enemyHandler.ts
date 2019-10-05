@@ -8,7 +8,7 @@ module objects {
         public playScene:scenes.PlayScene;
 
         constructor(playScene:scenes.PlayScene) {
-            this.enemies = new Array;
+            this.enemies = new Array(0);
             this.playScene = playScene;
             this.SpawnEnemies();
         }

@@ -3,7 +3,7 @@ var objects;
     var EnemyHandler = /** @class */ (function () {
         function EnemyHandler(playScene) {
             this.enemyNum = 5;
-            this.enemies = new Array;
+            this.enemies = new Array(0);
             this.playScene = playScene;
             this.SpawnEnemies();
         }

@@ -21,7 +21,7 @@ module objects {
         
         public Update() {
             for(let key in this.bullets)
-            {        
+            {
                 let bullet = this.bullets[key];
                 bullet.Update();
             }
