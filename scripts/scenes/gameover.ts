@@ -13,6 +13,9 @@ module scenes {
 
         // Method
         public Start():void {
+
+            createjs.Sound.stop();
+
             this.gameOverLabel = new objects.Label(
                 "Game Over!", "40px", "Consolas", "#000000", 320, 240, true);
             

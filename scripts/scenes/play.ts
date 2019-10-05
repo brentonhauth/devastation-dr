@@ -16,6 +16,10 @@ module scenes {
         }
 
         public Start(): void {
+            
+            createjs.Sound.play("cyberpunker");
+
+
             this.background = new objects.Background();
             this.player = new objects.Player();
             this.lifeCounter = new hud.LifeCounter();

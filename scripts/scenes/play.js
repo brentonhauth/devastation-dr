@@ -21,6 +21,7 @@ var scenes;
             return _this;
         }
         PlayScene.prototype.Start = function () {
+            createjs.Sound.play("cyberpunker");
             this.background = new objects.Background();
             this.player = new objects.Player();
             this.lifeCounter = new hud.LifeCounter();

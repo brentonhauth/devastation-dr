@@ -23,6 +23,7 @@ var scenes;
         }
         // Method
         GameOverScene.prototype.Start = function () {
+            createjs.Sound.stop();
             this.gameOverLabel = new objects.Label("Game Over!", "40px", "Consolas", "#000000", 320, 240, true);
             this.backButton = new objects.Button("backButton", 320, 340);
             this.Main();

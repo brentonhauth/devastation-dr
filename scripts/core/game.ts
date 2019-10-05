@@ -14,6 +14,7 @@
     let currentState: config.Scene;
 
     manifest = [
+        // Images
         { id: "logo", src: "./assets/images/devastation-dr.PNG" },
         { id: "backButton", src: "./assets/images/BackButton.png" },
         { id: "nextButton", src: "./assets/images/NextButton.png" },
@@ -23,7 +24,10 @@
         { id: "bullet", src: "./assets/images/bullet.png" },
         { id: "basicEnemy", src: "./assets/images/enemy.png" },
         { id: "spider", src: "./assets/images/spider1.png" },
-        { id: "explosion", src: "./assets/sounds/explosion.wav" }
+
+        // Sounds
+        { id: "explosion", src: "./assets/sounds/explosion.wav" },
+        { id: "cyberpunker", src: "./assets/sounds/cyberpunker.ogg" }
     ];
 
     function Init() {
