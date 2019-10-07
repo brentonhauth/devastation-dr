@@ -11,9 +11,7 @@ module objects {
         }
 
         public SpawnBullet(enemy:objects.Enemy):objects.EnemyBullet {
-            let playerPos = new math.Vec2(this.playScene.player.x, this.playScene.player.y);
-            let enemyPos = new math.Vec2(enemy.x, enemy.y)
-            let bullet = new objects.EnemyBullet(enemyPos, playerPos, enemy, this);
+            let bullet = new objects.EnemyBullet(enemy.position, this.playScene.player.position, enemy, this);
             this.bullets[String(bullet.bulletID)] = bullet;
 
             return bullet;

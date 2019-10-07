@@ -17,6 +17,20 @@ module objects {
 
             this.Init();
         }
+
+
+        // Properties
+
+        public get position() {
+            return new math.Vec2(this.x, this.y);
+        }
+
+        public set position(pos: math.Vec2) {
+            this.x = pos.x;
+            this.y = pos.y;
+        }
+
+
         // Methods 
         private Init():void {
             // Initialize all the properties of my object
