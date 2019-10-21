@@ -11,8 +11,7 @@ module managers {
                     object1.OnCollision(object2);
                     object2.isColliding = true;
                 }
-            } 
-            else {
+            } else {
                 object2.isColliding = false;
             }
             // let intersecting = math.AABB.Intersect(object1.boxCollider.aabb, object2.boxCollider.aabb);
