@@ -1,14 +1,12 @@
-var objects;
-(function (objects) {
+var handlers;
+(function (handlers) {
     var EnemyBulletHandler = /** @class */ (function () {
         function EnemyBulletHandler(playScene) {
             this.playScene = playScene;
             this.bullets = new Object;
         }
         EnemyBulletHandler.prototype.SpawnBullet = function (enemy) {
-            var playerPos = new math.Vec2(this.playScene.player.x, this.playScene.player.y);
-            var enemyPos = new math.Vec2(enemy.x, enemy.y);
-            var bullet = new objects.EnemyBullet(enemyPos, playerPos, enemy, this);
+            var bullet = new objects.EnemyBullet(enemy.position, this.playScene.player.position, enemy, this);
             this.bullets[String(bullet.bulletID)] = bullet;
             return bullet;
         };
@@ -30,6 +28,6 @@ var objects;
         };
         return EnemyBulletHandler;
     }());
-    objects.EnemyBulletHandler = EnemyBulletHandler;
-})(objects || (objects = {}));
+    handlers.EnemyBulletHandler = EnemyBulletHandler;
+})(handlers || (handlers = {}));
 //# sourceMappingURL=enemyBulletHandler.js.map

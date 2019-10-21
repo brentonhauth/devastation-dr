@@ -11,8 +11,8 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var objects;
-(function (objects) {
+var scenes;
+(function (scenes) {
     var Scene = /** @class */ (function (_super) {
         __extends(Scene, _super);
         // Variables
@@ -26,6 +26,6 @@ var objects;
         Scene.prototype.Main = function () { };
         return Scene;
     }(createjs.Container));
-    objects.Scene = Scene;
-})(objects || (objects = {}));
-//# sourceMappingURL=scene.js.map
+    scenes.Scene = Scene;
+})(scenes || (scenes = {}));
+//# sourceMappingURL=0_scene.js.map

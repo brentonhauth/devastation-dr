@@ -17,7 +17,7 @@ var hud;
         __extends(Score, _super);
         function Score() {
             var _this = _super.call(this) || this;
-            _this.display = new objects.Label("x3", "20px", "Consolas", "#FFFFFF", 240, 30, true);
+            _this.display = new ui.Label("x3", "20px", "Consolas", "#FFFFFF", 240, 30, true);
             _this.addChild(_this.display);
             return _this;
         }

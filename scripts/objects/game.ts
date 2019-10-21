@@ -3,6 +3,6 @@ module objects {
         public static stage: createjs.Stage;
         public static assetManager: createjs.LoadQueue;
         public static currentScene: number;
-        public static currentSceneRef: objects.Scene;
+        public static currentSceneRef: scenes.Scene;
     }
 }

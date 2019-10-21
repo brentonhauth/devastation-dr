@@ -17,7 +17,7 @@ var hud;
         __extends(LifeCounter, _super);
         function LifeCounter() {
             var _this = _super.call(this) || this;
-            _this.counterText = new objects.Label("x3", "20px", "Consolas", "#FFFFFF", 80, 30, true);
+            _this.counterText = new ui.Label("x3", "20px", "Consolas", "#FFFFFF", 80, 30, true);
             _this.addChild(_this.counterText);
             return _this;
             //this.counterImage = new createjs.Bitmap();

@@ -3,7 +3,7 @@ module objects {
 
         public static counter = 1;
         public bulletID:string;
-        public bulletHandler:PlayerBulletHandler;
+        public bulletHandler:handlers.PlayerBulletHandler;
 
         constructor(x:number, y:number, bulletHandler) {
             super(x, y, "playerBullet");

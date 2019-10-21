@@ -11,8 +11,8 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var objects;
-(function (objects) {
+var ui;
+(function (ui) {
     var Button = /** @class */ (function (_super) {
         __extends(Button, _super);
         // Variables
@@ -38,6 +38,6 @@ var objects;
         };
         return Button;
     }(createjs.Bitmap));
-    objects.Button = Button;
-})(objects || (objects = {}));
+    ui.Button = Button;
+})(ui || (ui = {}));
 //# sourceMappingURL=button.js.map

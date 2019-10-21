@@ -3,9 +3,9 @@ module objects {
 
         private lastPlayerPos: math.Vec2;
         public enemyBullets: objects.EnemyBullet[];
-        public enemyHandler: objects.EnemyHandler;
+        public enemyHandler: handlers.EnemyHandler;
 
-        constructor(enemyHandler:objects.EnemyHandler) {
+        constructor(enemyHandler:handlers.EnemyHandler) {
             super(enemyHandler);
             this.scaleX *= 1.5;
             this.scaleY *= 1.5;

@@ -25,12 +25,12 @@ var scenes;
             // Initialize our objects for this scene
             this.background = new objects.Background();
             this.logo = new createjs.Bitmap(objects.Game.assetManager.getResult("logo"));
-            this.infoLabel = new objects.Label("(c) Rude Rhino", "18px", "Arial", "#e1e1f1", 320, 800, true);
+            this.infoLabel = new ui.Label("(c) Rude Rhino", "18px", "Arial", "#e1e1f1", 320, 800, true);
             this.logo.scaleX *= .8;
             this.logo.scaleY *= .8;
             this.logo.x = 80;
             this.logo.y = 140;
-            this.startButton = new objects.Button("nextButton", 270, 300);
+            this.startButton = new ui.Button("nextButton", 270, 300);
             this.startButton.scaleY *= 3.25;
             this.startButton.scaleX *= 3.25;
             this.Main();
@@ -51,7 +51,7 @@ var scenes;
             this.startButton.on("click", this.startButtonClick);
         };
         return StartScene;
-    }(objects.Scene));
+    }(scenes.Scene));
     scenes.StartScene = StartScene;
 })(scenes || (scenes = {}));
 //# sourceMappingURL=start.js.map

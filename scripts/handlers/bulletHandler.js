@@ -1,10 +1,10 @@
-var objects;
-(function (objects) {
+var handlers;
+(function (handlers) {
     var BulletHandler = /** @class */ (function () {
         function BulletHandler() {
         }
         return BulletHandler;
     }());
-    objects.BulletHandler = BulletHandler;
-})(objects || (objects = {}));
+    handlers.BulletHandler = BulletHandler;
+})(handlers || (handlers = {}));
 //# sourceMappingURL=bulletHandler.js.map

@@ -1,8 +1,8 @@
 module scenes {
-    export class GameOverScene extends objects.Scene {
+    export class GameOverScene extends Scene {
         // Variables
-        private gameOverLabel: objects.Label;
-        private backButton: objects.Button;
+        private gameOverLabel: ui.Label;
+        private backButton: ui.Button;
 
         // Constructor
         constructor() {
@@ -16,10 +16,10 @@ module scenes {
 
             createjs.Sound.stop();
 
-            this.gameOverLabel = new objects.Label(
+            this.gameOverLabel = new ui.Label(
                 "Game Over!", "40px", "Consolas", "#000000", 320, 240, true);
             
-            this.backButton = new objects.Button("backButton", 320, 340);
+            this.backButton = new ui.Button("backButton", 320, 340);
             this.Main();
         }
 

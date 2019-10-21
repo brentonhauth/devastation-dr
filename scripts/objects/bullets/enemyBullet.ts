@@ -3,11 +3,11 @@ module objects {
         private dir: math.Vec2;
         private speed: number = 3;
         public spawnedFrom: objects.Enemy;
-        public bulletHandler:objects.EnemyBulletHandler;
+        public bulletHandler:handlers.EnemyBulletHandler;
         public static counter = 1;
         public bulletID:string;
 
-        constructor(pos: math.Vec2, target: math.Vec2, spawnedFrom:objects.Enemy, bulletHandler:objects.EnemyBulletHandler) {
+        constructor(pos: math.Vec2, target: math.Vec2, spawnedFrom:objects.Enemy, bulletHandler:handlers.EnemyBulletHandler) {
             super(pos.x, pos.y, "enemyBullet");
 
             this.bulletHandler = bulletHandler;

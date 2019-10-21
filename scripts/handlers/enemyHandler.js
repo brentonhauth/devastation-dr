@@ -1,5 +1,5 @@
-var objects;
-(function (objects) {
+var handlers;
+(function (handlers) {
     var EnemyHandler = /** @class */ (function () {
         function EnemyHandler(playScene) {
             this.enemyNum = 5;
@@ -32,6 +32,6 @@ var objects;
         };
         return EnemyHandler;
     }());
-    objects.EnemyHandler = EnemyHandler;
-})(objects || (objects = {}));
+    handlers.EnemyHandler = EnemyHandler;
+})(handlers || (handlers = {}));
 //# sourceMappingURL=enemyHandler.js.map

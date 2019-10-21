@@ -1,5 +1,5 @@
 
-module objects {
+module handlers {
     export class EnemyHandler {
 
         //public enemies: any;

@@ -10,7 +10,7 @@
     let manifest: any[];
 
     // Store current scene and state information
-    let currentScene: objects.Scene;
+    let currentScene: scenes.Scene;
     let currentState: config.Scene;
 
     manifest = [

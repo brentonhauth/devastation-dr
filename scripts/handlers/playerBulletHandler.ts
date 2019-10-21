@@ -1,4 +1,4 @@
-module objects {
+module handlers {
     export class PlayerBulletHandler {
 
         public bullets: any;

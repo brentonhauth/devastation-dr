@@ -1,4 +1,4 @@
-module objects {
+module ui {
     export class Button extends createjs.Bitmap {
         // Variables
         // Constructor

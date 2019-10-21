@@ -22,6 +22,18 @@ var objects;
             _this.Init();
             return _this;
         }
+        Object.defineProperty(GameObject.prototype, "position", {
+            // Properties
+            get: function () {
+                return new math.Vec2(this.x, this.y);
+            },
+            set: function (pos) {
+                this.x = pos.x;
+                this.y = pos.y;
+            },
+            enumerable: true,
+            configurable: true
+        });
         // Methods 
         GameObject.prototype.Init = function () {
             // Initialize all the properties of my object

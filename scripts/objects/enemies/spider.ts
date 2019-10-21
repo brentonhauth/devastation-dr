@@ -6,9 +6,9 @@ module objects {
         private currentMovePatter: Function;
         private cosWave: Function;
         private yCenterAxis: number;
-        public enemyHandler:objects.EnemyHandler;
+        public enemyHandler:handlers.EnemyHandler;
 
-        constructor(enemyHandler:objects.EnemyHandler) {
+        constructor(enemyHandler:handlers.EnemyHandler) {
             super("spider");
             this.enemyHandler = enemyHandler;
             this.Start();

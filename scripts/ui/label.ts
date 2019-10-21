@@ -1,4 +1,4 @@
-module objects {    // Module == Namespace
+module ui {    // Module == Namespace
     export class Label extends createjs.Text {    // export == public
         // Variables
         // Constructor

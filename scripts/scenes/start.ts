@@ -1,10 +1,10 @@
 module scenes {
-    export class StartScene extends objects.Scene {
+    export class StartScene extends Scene {
         // Variables
         private background: objects.Background;
-        private infoLabel: objects.Label;
+        private infoLabel: ui.Label;
         private logo: createjs.Bitmap;
-        private startButton: objects.Button;
+        private startButton: ui.Button;
 
         // Constructor
         constructor() {
@@ -16,14 +16,14 @@ module scenes {
             // Initialize our objects for this scene
             this.background = new objects.Background();
             this.logo = new createjs.Bitmap(objects.Game.assetManager.getResult("logo"));
-            this.infoLabel = new objects.Label(
+            this.infoLabel = new ui.Label(
             "(c) Rude Rhino", "18px", "Arial", "#e1e1f1", 320, 800, true);
             this.logo.scaleX *= .8;
             this.logo.scaleY *= .8;
             this.logo.x = 80;
             this.logo.y = 140;
 
-            this.startButton = new objects.Button("nextButton", 270, 300);
+            this.startButton = new ui.Button("nextButton", 270, 300);
 
             this.startButton.scaleY *= 3.25;
             this.startButton.scaleX *= 3.25;

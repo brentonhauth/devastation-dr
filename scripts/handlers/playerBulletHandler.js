@@ -1,5 +1,5 @@
-var objects;
-(function (objects) {
+var handlers;
+(function (handlers) {
     var PlayerBulletHandler = /** @class */ (function () {
         function PlayerBulletHandler(playScene) {
             this.playScene = playScene;
@@ -38,6 +38,6 @@ var objects;
         };
         return PlayerBulletHandler;
     }());
-    objects.PlayerBulletHandler = PlayerBulletHandler;
-})(objects || (objects = {}));
+    handlers.PlayerBulletHandler = PlayerBulletHandler;
+})(handlers || (handlers = {}));
 //# sourceMappingURL=playerBulletHandler.js.map

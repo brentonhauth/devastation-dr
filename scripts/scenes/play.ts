@@ -1,14 +1,14 @@
 module scenes {
-    export class PlayScene extends objects.Scene {
+    export class PlayScene extends Scene {
 
         private background: objects.Background;
         public player: objects.Player;
         private lifeCounter: hud.LifeCounter;
         public score: hud.Score;
 
-        public playerBulletHandler: objects.PlayerBulletHandler;
-        public enemyBulletHandler: objects.EnemyBulletHandler;
-        public enemyHandler: objects.EnemyHandler; 
+        public playerBulletHandler: handlers.PlayerBulletHandler;
+        public enemyBulletHandler: handlers.EnemyBulletHandler;
+        public enemyHandler: handlers.EnemyHandler; 
 
         constructor() {
             super();
@@ -25,9 +25,9 @@ module scenes {
             this.lifeCounter = new hud.LifeCounter();
             this.score = new hud.Score();
 
-            this.playerBulletHandler = new objects.PlayerBulletHandler(this);
-            this.enemyBulletHandler = new objects.EnemyBulletHandler(this);
-            this.enemyHandler = new objects.EnemyHandler(this);
+            this.playerBulletHandler = new handlers.PlayerBulletHandler(this);
+            this.enemyBulletHandler = new handlers.EnemyBulletHandler(this);
+            this.enemyHandler = new handlers.EnemyHandler(this);
             this.initEventHandlers();
 
             this.Main();

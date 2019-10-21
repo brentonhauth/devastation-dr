@@ -1,4 +1,4 @@
-module objects {
+module scenes {
     export class Scene extends createjs.Container {
         // Variables
         // Constructor
