@@ -2,7 +2,9 @@
 var math;
 (function (math) {
     var AABB = /** @class */ (function () {
-        function AABB() {
+        function AABB(min, max) {
+            this.min = min;
+            this.max = max;
         }
         AABB.Intersect = function (a, b) {
             if (a.max.x < b.min.x || a.min.x > b.max.x) {
