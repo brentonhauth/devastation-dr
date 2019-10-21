@@ -3,30 +3,14 @@
     var canvas = document.getElementById("canvas");
     var stage;
     var assetManager;
-    var manifest;
     // Store current scene and state information
     var currentScene;
     var currentState;
-    manifest = [
-        // Images
-        { id: "logo", src: "./assets/images/devastation-dr.PNG" },
-        { id: "backButton", src: "./assets/images/BackButton.png" },
-        { id: "nextButton", src: "./assets/images/NextButton.png" },
-        { id: "background", src: "./assets/images/road1.png" },
-        { id: "player", src: "./assets/images/car.png" },
-        { id: "enemy", src: "./assets/images/ship.png" },
-        { id: "bullet", src: "./assets/images/bullet.png" },
-        { id: "basicEnemy", src: "./assets/images/enemy.png" },
-        { id: "spider", src: "./assets/images/spider1.png" },
-        // Sounds
-        { id: "explosion", src: "./assets/sounds/explosion.wav" },
-        { id: "cyberpunker", src: "./assets/sounds/cyberpunker.ogg" }
-    ];
     function Init() {
         console.log("Initialization Start");
         assetManager = new createjs.LoadQueue();
         assetManager.installPlugin(createjs.Sound);
-        assetManager.loadManifest(manifest);
+        assetManager.loadManifest(config.getManifest());
         assetManager.on("complete", Start, this);
     }
     function Start() {
