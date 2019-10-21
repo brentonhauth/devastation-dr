@@ -40,7 +40,7 @@ var scenes;
         };
         StartScene.prototype.startButtonClick = function () {
             // Change our game state from START to GAME
-            objects.Game.currentScene = config.Scene.GAME;
+            objects.Game.currentState = config.Scene.GAME;
         };
         StartScene.prototype.Main = function () {
             // Add items to our scene

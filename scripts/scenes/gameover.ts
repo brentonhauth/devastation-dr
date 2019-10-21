@@ -26,7 +26,7 @@ module scenes {
         public Update():void {}
 
         private backButtonClick():void {
-            objects.Game.currentScene = config.Scene.START;
+            objects.Game.currentState = config.Scene.START;
         }
 
         public Main():void {

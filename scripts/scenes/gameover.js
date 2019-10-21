@@ -30,7 +30,7 @@ var scenes;
         };
         GameOverScene.prototype.Update = function () { };
         GameOverScene.prototype.backButtonClick = function () {
-            objects.Game.currentScene = config.Scene.START;
+            objects.Game.currentState = config.Scene.START;
         };
         GameOverScene.prototype.Main = function () {
             this.addChild(this.gameOverLabel);

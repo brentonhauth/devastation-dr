@@ -96,7 +96,7 @@ var objects;
             createjs.Sound.play("explosion");
             this.StartBlink();
             if (this.lives == 0) {
-                objects.Game.currentScene = config.Scene.OVER;
+                objects.Game.currentState = config.Scene.OVER;
                 console.log("dead");
             }
         };

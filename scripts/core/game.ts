@@ -1,5 +1,3 @@
-// Immediate Invoked Anonymous Function
-
 (function() {
 
     // Global Game Variables
@@ -51,17 +49,16 @@
         // Set up default game state
         // Create a global reference to our stage object
         objects.Game.stage = stage;
-        objects.Game.currentScene = config.Scene.START;
-        objects.Game.assetManager = assetManager;
-        currentState = config.Scene.START; 
+        objects.Game.currentState = currentState = config.Scene.START;
+        objects.Game.assetManager = assetManager; 
         managers.Input.listen();
         Main();
     }
 
     function Update() {
         // Has my state changed since the last check?
-        if(currentState != objects.Game.currentScene) {
-            console.log("Changing scenes to" + objects.Game.currentScene);
+        if(currentState != objects.Game.currentState) {
+            console.log("Changing scenes to" + objects.Game.currentState);
             Main();
         }
 
@@ -74,7 +71,7 @@
         console.log("Game Start...");
 
         // Finite State Machine
-        switch (objects.Game.currentScene) {
+        switch (objects.Game.currentState) {
             case config.Scene.START:
                 currentScene = new scenes.StartScene();
             break;
@@ -87,8 +84,8 @@
         }
 
         stage.removeAllChildren();
-        objects.Game.currentSceneRef = currentScene;
-        currentState = objects.Game.currentScene;
+        objects.Game.currentScene = currentScene;
+        currentState = objects.Game.currentState;
         stage.addChild(currentScene);
     }
 
