@@ -17,6 +17,34 @@ var math;
                 return true;
             }
         };
+        AABB.Overlap = function (abox, bbox) {
+            var over = new math.Vec2(0, 0);
+            var checkedMinX = abox.min.x < bbox.max.x && abox.min.x > bbox.min.x;
+            var checkedMaxX = abox.max.x > bbox.min.x && abox.max.x < bbox.max.x;
+            var xorX = checkedMinX !== checkedMaxX;
+            if (xorX) {
+                over.x = checkedMinX ?
+                    (abox.min.x - bbox.max.x) :
+                    (abox.max.x - bbox.min.x);
+            }
+            var checkedMinY = abox.min.y < bbox.max.y && abox.min.y > bbox.min.y;
+            var checkedMaxY = abox.max.y > bbox.min.y && abox.max.y < bbox.max.y;
+            var xorY = checkedMinY !== checkedMaxY;
+            if (xorY) {
+                over.y = checkedMinY ?
+                    (abox.min.y - bbox.max.y) :
+                    (abox.max.y - bbox.min.y);
+            }
+            if (xorX && xorY) {
+                if (Math.abs(over.x) < Math.abs(over.y)) {
+                    over.y = 0;
+                }
+                else {
+                    over.x = 0;
+                }
+            }
+            return over;
+        };
         return AABB;
     }());
     math.AABB = AABB;

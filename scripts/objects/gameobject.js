@@ -20,6 +20,7 @@ var objects;
             var _this = _super.call(this, objects.Game.assetManager.getResult(imageString)) || this;
             _this.name = imageString;
             _this.Init();
+            _this.boxCollider = new components.BoxCollider(_this.x, _this.y, _this.width, _this.height);
             return _this;
         }
         Object.defineProperty(GameObject.prototype, "position", {

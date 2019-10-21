@@ -18,6 +18,15 @@ var managers;
             else {
                 object2.isColliding = false;
             }
+            // let intersecting = math.AABB.Intersect(object1.boxCollider.aabb, object2.boxCollider.aabb);
+            // if (intersecting) {
+            //     this.HandleCollision(object1, object2);
+            // }
+        };
+        Collision.HandleCollision = function (a, b) {
+            var overlap = math.AABB.Overlap(a.boxCollider.aabb, b.boxCollider.aabb);
+            a.position = math.Vec2.Difference(overlap.Scale(1.01), a.position);
+            a.OnCollision(b);
         };
         return Collision;
     }());

@@ -9,6 +9,9 @@ module objects {
         public halfW: number;   // Half-width; Useful for collision detection
         public halfH: number;   // Half-height
         public isColliding: boolean;
+        
+        public boxCollider: components.BoxCollider;
+
         // Constructor
         constructor(imageString:string) {
             super(objects.Game.assetManager.getResult(imageString));
@@ -16,6 +19,7 @@ module objects {
             this.name = imageString;
 
             this.Init();
+            this.boxCollider = new components.BoxCollider(this.x, this.y, this.width, this.height);
         }
 
 

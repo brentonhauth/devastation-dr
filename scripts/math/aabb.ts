@@ -19,5 +19,42 @@ module math {
                 return true;
             }
         }
+
+        public static Overlap(abox: AABB, bbox: AABB): Vec2 {
+            let over = new Vec2(0, 0);
+
+            let checkedMinX = abox.min.x < bbox.max.x && abox.min.x > bbox.min.x;
+            let checkedMaxX = abox.max.x > bbox.min.x && abox.max.x < bbox.max.x;
+
+            let xorX = checkedMinX !== checkedMaxX;
+
+            if (xorX) {
+                over.x = checkedMinX ?
+                (abox.min.x - bbox.max.x) :
+                (abox.max.x - bbox.min.x);
+            }
+
+
+            let checkedMinY = abox.min.y < bbox.max.y && abox.min.y > bbox.min.y;
+            let checkedMaxY = abox.max.y > bbox.min.y && abox.max.y < bbox.max.y;
+
+            let xorY = checkedMinY !== checkedMaxY;
+
+            if (xorY) {
+                over.y = checkedMinY ?
+                (abox.min.y - bbox.max.y) :
+                (abox.max.y - bbox.min.y);
+            }
+
+            if (xorX && xorY) {
+                if (Math.abs(over.x) < Math.abs(over.y)) {
+                    over.y = 0;
+                } else {
+                    over.x = 0;
+                }
+            }
+
+            return over;
+        }
     }
 }
