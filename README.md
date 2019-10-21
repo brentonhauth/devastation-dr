@@ -1,4 +1,4 @@
-# frontend-quiz
+# devastation-dr
 
 ## Project setup
 ```
