@@ -22,7 +22,7 @@
         console.log("Starting Application...");
 
         // Initialize CreateJS
-        stage = new createjs.Stage(canvas);
+        objects.Game.stage = stage = new createjs.Stage(canvas);
         // Freqeuncy of checks. Computationally expensive. Turn on in menus, Turn off in game
         stage.enableMouseOver(20); 
         createjs.Ticker.framerate = 60; // 60 FPS
@@ -30,10 +30,9 @@
 
         // Set up default game state
         // Create a global reference to our stage object
-        objects.Game.stage = stage;
+        managers.Keyboard.listen();
         objects.Game.currentState = currentState = config.Scene.START;
         objects.Game.assetManager = assetManager; 
-        managers.Input.listen();
         Main();
     }
 

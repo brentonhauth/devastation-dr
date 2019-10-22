@@ -29,7 +29,6 @@ var scenes;
             this.playerBulletHandler = new handlers.PlayerBulletHandler(this);
             this.enemyBulletHandler = new handlers.EnemyBulletHandler(this);
             this.enemyHandler = new handlers.EnemyHandler(this);
-            this.initEventHandlers();
             this.Main();
         };
         PlayScene.prototype.Update = function () {
@@ -43,6 +42,9 @@ var scenes;
             this.enemyHandler.CheckCollision();
             this.enemyBulletHandler.CheckCollision();
             this.playerBulletHandler.CheckCollision();
+            if (managers.Keyboard.pressed(config.Key.Space)) {
+                this.AddBullet();
+            }
         };
         PlayScene.prototype.Main = function () {
             var _this = this;
@@ -55,13 +57,9 @@ var scenes;
                 _this.addChild(e);
             });
         };
-        PlayScene.prototype.initEventHandlers = function () {
-            var playScene = this;
-            managers.Input.keypress(" ", function () { playScene.AddBullet(playScene); });
-        };
-        PlayScene.prototype.AddBullet = function (playScene) {
-            var bullet = playScene.playerBulletHandler.SpawnBullet();
-            playScene.addChild(bullet);
+        PlayScene.prototype.AddBullet = function () {
+            var bullet = this.playerBulletHandler.SpawnBullet();
+            this.addChild(bullet);
         };
         PlayScene.prototype.RemoveBullet = function (bullet) {
             this.removeChild(bullet);

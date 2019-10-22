@@ -28,7 +28,6 @@ module scenes {
             this.playerBulletHandler = new handlers.PlayerBulletHandler(this);
             this.enemyBulletHandler = new handlers.EnemyBulletHandler(this);
             this.enemyHandler = new handlers.EnemyHandler(this);
-            this.initEventHandlers();
 
             this.Main();
         }
@@ -48,6 +47,10 @@ module scenes {
             this.enemyBulletHandler.CheckCollision();
             this.playerBulletHandler.CheckCollision();
 
+            if (managers.Keyboard.pressed(config.Key.Space)) {
+                this.AddBullet();
+            }
+
         }
 
         public Main(): void {
@@ -61,14 +64,9 @@ module scenes {
             });
         }
 
-        public initEventHandlers(): void {
-            let playScene = this;
-            managers.Input.keypress(" ", function(){playScene.AddBullet(playScene); });
-        }
-
-        public AddBullet(playScene:scenes.PlayScene) {
-            let bullet = playScene.playerBulletHandler.SpawnBullet();
-            playScene.addChild(bullet);
+        public AddBullet() {
+            let bullet = this.playerBulletHandler.SpawnBullet();
+            this.addChild(bullet);
         }
 
         public RemoveBullet(bullet:objects.PlayerBullet) {
