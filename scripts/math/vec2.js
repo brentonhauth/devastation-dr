@@ -25,7 +25,13 @@ var math;
         Vec2.prototype.Scale = function (s) {
             return new Vec2(this.x * s, this.y * s);
         };
-        // Methods
+        Vec2.prototype.Add = function (v) {
+            return Vec2.Sum(this, v);
+        };
+        // Static Methods
+        Vec2.Sum = function (a, b) {
+            return new Vec2(a.x + b.x, a.y + b.y);
+        };
         Vec2.Distance = function (P1, P2) {
             return Math.floor(Math.sqrt(Math.pow(P2.x - P1.x, 2) + Math.pow(P2.y - P1.y, 2)));
         };

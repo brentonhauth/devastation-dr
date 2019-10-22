@@ -12,12 +12,11 @@ var handlers;
                 e.Update();
             });
         };
-        EnemyHandler.prototype.CheckCollision = function () {
-            var _this = this;
+        EnemyHandler.prototype.CheckCollision = function (obj) {
             this.enemies.forEach(function (e) {
                 //e.setLastPlayerPos(this.player.x, this.player.y);
                 //e.Update();
-                managers.Collision.Check(_this.playScene.player, e);
+                managers.Collision.Check(obj, e);
             });
         };
         EnemyHandler.prototype.SpawnEnemies = function () {

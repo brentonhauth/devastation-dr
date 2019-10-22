@@ -21,7 +21,7 @@ var scenes;
             return _this;
         }
         PlayScene.prototype.Start = function () {
-            createjs.Sound.play("cyberpunker");
+            managers.Sound.music("cyberpunker");
             this.background = new objects.Background();
             this.player = new objects.Player();
             this.lifeCounter = new hud.LifeCounter();
@@ -35,13 +35,11 @@ var scenes;
             this.background.Update();
             this.player.Update();
             this.score.updateText();
-            this.lifeCounter.text("" + this.player.lives);
-            this.playerBulletHandler.Update();
+            this.lifeCounter.text(this.player.lives);
             this.enemyHandler.Update();
-            this.enemyBulletHandler.Update();
-            this.enemyHandler.CheckCollision();
-            this.enemyBulletHandler.CheckCollision();
-            this.playerBulletHandler.CheckCollision();
+            this.enemyHandler.CheckCollision(this.player);
+            this.enemyBulletHandler.UpdateAndCheckCollision(this.player);
+            this.playerBulletHandler.UpdateAndCheckCollision(this.enemyHandler.enemies);
             if (managers.Keyboard.pressed(config.Key.Space)) {
                 this.AddBullet();
             }
@@ -61,15 +59,9 @@ var scenes;
             var bullet = this.playerBulletHandler.SpawnBullet();
             this.addChild(bullet);
         };
-        PlayScene.prototype.RemoveBullet = function (bullet) {
-            this.removeChild(bullet);
-        };
         PlayScene.prototype.AddEnemyBullet = function (enemy) {
             var bullet = this.enemyBulletHandler.SpawnBullet(enemy);
             this.addChild(bullet);
-        };
-        PlayScene.prototype.RemoveEnemyBullet = function (bullet) {
-            this.removeChild(bullet);
         };
         return PlayScene;
     }(scenes.Scene));

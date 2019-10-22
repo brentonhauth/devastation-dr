@@ -3,7 +3,8 @@ var managers;
     var Collision = /** @class */ (function () {
         function Collision() {
         }
-        Collision.Check = function (object1, object2) {
+        Collision.Check = function (object1, object2, options) {
+            if (options === void 0) { options = undefined; }
             // Create 2 temp Vec2 objects used for collision detection
             var P1 = new math.Vec2(object1.x, object1.y);
             var P2 = new math.Vec2(object2.x, object2.y);
@@ -12,6 +13,7 @@ var managers;
                     // React to our collision
                     console.log("Collision with " + object2.name);
                     object1.OnCollision(object2);
+                    object2.OnCollision(object1);
                     object2.isColliding = true;
                 }
             }

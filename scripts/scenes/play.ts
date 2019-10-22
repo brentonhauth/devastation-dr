@@ -16,8 +16,8 @@ module scenes {
         }
 
         public Start(): void {
-            
-            createjs.Sound.play("cyberpunker");
+
+            managers.Sound.music("cyberpunker");
 
 
             this.background = new objects.Background();
@@ -37,20 +37,18 @@ module scenes {
             this.player.Update();
             this.score.updateText();
 
-            this.lifeCounter.text("" + this.player.lives);
+            this.lifeCounter.text(this.player.lives);
 
-            this.playerBulletHandler.Update();
             this.enemyHandler.Update();
-            this.enemyBulletHandler.Update();
 
-            this.enemyHandler.CheckCollision();
-            this.enemyBulletHandler.CheckCollision();
-            this.playerBulletHandler.CheckCollision();
+            this.enemyHandler.CheckCollision(this.player);
+            
+            this.enemyBulletHandler.UpdateAndCheckCollision(this.player);
+            this.playerBulletHandler.UpdateAndCheckCollision(this.enemyHandler.enemies);
 
             if (managers.Keyboard.pressed(config.Key.Space)) {
                 this.AddBullet();
             }
-
         }
 
         public Main(): void {
@@ -69,17 +67,9 @@ module scenes {
             this.addChild(bullet);
         }
 
-        public RemoveBullet(bullet:objects.PlayerBullet) {
-            this.removeChild(bullet)
-        }
-
         public AddEnemyBullet(enemy:objects.Enemy) {
             let bullet = this.enemyBulletHandler.SpawnBullet(enemy);
             this.addChild(bullet);
-        }
-        
-        public RemoveEnemyBullet(bullet:objects.EnemyBullet) {
-            this.removeChild(bullet)
         }
     }
 }

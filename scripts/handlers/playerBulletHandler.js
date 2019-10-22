@@ -1,9 +1,22 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var handlers;
 (function (handlers) {
-    var PlayerBulletHandler = /** @class */ (function () {
+    var PlayerBulletHandler = /** @class */ (function (_super) {
+        __extends(PlayerBulletHandler, _super);
         function PlayerBulletHandler(playScene) {
-            this.playScene = playScene;
-            this.bullets = new Object;
+            return _super.call(this, playScene) || this;
         }
         PlayerBulletHandler.prototype.SpawnBullet = function () {
             var player = this.playScene.player;
@@ -11,10 +24,10 @@ var handlers;
             this.bullets[bullet.bulletID] = bullet;
             return bullet;
         };
-        PlayerBulletHandler.prototype.CheckCollision = function () {
+        PlayerBulletHandler.prototype.CheckCollision = function (enemies) {
             var _loop_1 = function (key) {
                 var b = this_1.bullets[key];
-                this_1.playScene.enemyHandler.enemies.forEach(function (e) {
+                enemies.forEach(function (e) {
                     managers.Collision.Check(b, e);
                 });
             };
@@ -25,19 +38,12 @@ var handlers;
             }
             ;
         };
-        PlayerBulletHandler.prototype.Update = function () {
-            for (var key in this.bullets) {
-                var b = this.bullets[key];
-                b.Update();
-            }
-            ;
-        };
         PlayerBulletHandler.prototype.DestroyBullet = function (bullet) {
             delete this.bullets[bullet.bulletID];
-            this.playScene.RemoveBullet(bullet);
+            this.playScene.removeChild(bullet);
         };
         return PlayerBulletHandler;
-    }());
+    }(handlers.BulletHandler));
     handlers.PlayerBulletHandler = PlayerBulletHandler;
 })(handlers || (handlers = {}));
 //# sourceMappingURL=playerBulletHandler.js.map

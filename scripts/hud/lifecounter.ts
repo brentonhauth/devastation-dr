@@ -11,7 +11,7 @@ module hud {
             //this.counterImage = new createjs.Bitmap();
         }
 
-        public text (t:string) {
+        public text (t: string | number) {
             this.counterText.text = "lives: " + t;
         }
 

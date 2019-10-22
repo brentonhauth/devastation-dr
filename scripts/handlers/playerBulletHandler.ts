@@ -1,12 +1,8 @@
 module handlers {
-    export class PlayerBulletHandler {
-
-        public bullets: any;
-        public playScene:scenes.PlayScene;
+    export class PlayerBulletHandler extends BulletHandler {
 
         constructor(playScene:scenes.PlayScene) {
-            this.playScene = playScene;
-            this.bullets = new Object;
+            super(playScene);
         }
 
         public SpawnBullet():objects.PlayerBullet {
@@ -17,28 +13,20 @@ module handlers {
             return bullet;
         }
 
-        public CheckCollision(){
+        public CheckCollision(enemies: any[]){
             //this.bullets.forEach(b => {
             for(let key in this.bullets)
             {
                 let b = this.bullets[key];
-                this.playScene.enemyHandler.enemies.forEach(e => {
+                enemies.forEach(e => {
                     managers.Collision.Check(b, e);
                 });
             };
         }
 
-        public Update() {
-            for(let key in this.bullets)
-            {
-                let b = this.bullets[key];
-                b.Update();
-            };
-        }
-
         public DestroyBullet(bullet) {
             delete this.bullets[bullet.bulletID];
-            this.playScene.RemoveBullet(bullet);
+            this.playScene.removeChild(bullet);
         }
     }
 }

@@ -1,6 +1,10 @@
 module managers {
     export class Collision {
-        public static Check(object1: objects.GameObject, object2: objects.GameObject) {
+        public static Check(
+            object1: objects.GameObject,
+            object2: objects.GameObject,
+            options: any=undefined
+        ) {
             // Create 2 temp Vec2 objects used for collision detection
             let P1: math.Vec2 = new math.Vec2(object1.x, object1.y);
             let P2: math.Vec2 = new math.Vec2(object2.x, object2.y);
@@ -9,6 +13,7 @@ module managers {
                     // React to our collision
                     console.log("Collision with " + object2.name);
                     object1.OnCollision(object2);
+                    object2.OnCollision(object1);
                     object2.isColliding = true;
                 }
             } else {

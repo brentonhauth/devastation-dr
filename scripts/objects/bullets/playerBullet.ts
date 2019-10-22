@@ -23,7 +23,6 @@ module objects {
             if (obj instanceof objects.Enemy || obj instanceof objects.Spider) {
                 obj.Reset();
                 this.Destroy();
-                playScene.RemoveBullet(this);
 
                 let points = obj instanceof objects.Lizard ? 300 : 100;
                 playScene.score.addPoints(points);

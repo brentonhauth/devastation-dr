@@ -19,11 +19,11 @@ module handlers {
             });
         }
 
-        public CheckCollision() {
+        public CheckCollision(obj: objects.GameObject) {
             this.enemies.forEach(e => {
                 //e.setLastPlayerPos(this.player.x, this.player.y);
                 //e.Update();
-                managers.Collision.Check(this.playScene.player, e);
+                managers.Collision.Check(obj, e);
             });
         }
 

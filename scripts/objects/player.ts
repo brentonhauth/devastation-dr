@@ -4,6 +4,8 @@ module objects {
         public lives: number;
         private blink: boolean = false;
         private oddBlink = 0;
+        private moveSpeed = 8;
+        private moved: math.Vec2;
 
         private explosion: createjs.AbstractSoundInstance;
         
@@ -17,9 +19,10 @@ module objects {
         // Methods
         public Start(): void {
             // Set the initial position
-            this.y = 700;
+            this.y = 500;
             this.x = 320;
             this.lives = 3;
+            this.moved = new math.Vec2(0, 0);
             
 
             // managers.Input.keypress('a', () => {
@@ -43,9 +46,36 @@ module objects {
         }
         public Reset(): void {}
         public Move(): void {
+            this.moved.x = this.moved.y = 0;
+
+            if (managers.Keyboard.pressed(config.Key.W)) {
+                this.moved.y = -this.moveSpeed;
+            }
+
+            if (managers.Keyboard.pressed(config.Key.S)) {
+                this.moved.y += this.moveSpeed;
+            }
+
+            if (managers.Keyboard.pressed(config.Key.A)) {
+                this.moved.x = -this.moveSpeed;
+            }
+
+            if (managers.Keyboard.pressed(config.Key.D)) {
+                this.moved.x += this.moveSpeed;
+            }
+
+            if (this.moved.x || this.moved.y) {
+                if (this.moved.x && this.moved.y) {
+                    this.moved = this.moved.Scale(Math.SQRT1_2);
+                }
+
+                this.position = this.position.Add(this.moved);
+            }
+            
+
             // We reference the stage object and get mouse position
-            this.x = objects.Game.stage.mouseX;
-            this.y = objects.Game.stage.mouseY;
+            // this.x = objects.Game.stage.mouseX;
+            // this.y = objects.Game.stage.mouseY;
             this.CheckBound();
             // This is evetually replaced with keyboard input
             // Maybe xbox controller...
