@@ -11,7 +11,7 @@ module config {
             { id: "bullet", src: "./assets/images/bullet.png" },
             { id: "basicEnemy", src: "./assets/images/enemy.png" },
             { id: "spider", src: "./assets/images/spider1.png" },
-    
+
             // Sounds
             { id: "explosion", src: "./assets/sounds/explosion.wav" },
             { id: "cyberpunker", src: "./assets/sounds/cyberpunker.ogg" }
