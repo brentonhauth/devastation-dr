@@ -29,6 +29,7 @@ var scenes;
             this.playerBulletHandler = new handlers.PlayerBulletHandler(this);
             this.enemyBulletHandler = new handlers.EnemyBulletHandler(this);
             this.enemyHandler = new handlers.EnemyHandler(this);
+            this.dialogHandler = new handlers.DialogHandler(this);
             this.Main();
         };
         PlayScene.prototype.Update = function () {
@@ -43,6 +44,17 @@ var scenes;
             if (managers.Keyboard.pressed(config.Key.Space)) {
                 this.AddBullet();
             }
+            if (managers.Keyboard.pressed(config.Key.F)) {
+                this.dialogHandler.TriggerMany(["You pressed F!", 3], ["This will disapear after 2 seconds", 2], ["5", 1], ["4", 1], ["3", 1], ["2", 1], ["1", 1], ["Blastoff!", 3]);
+                // this.dialogHandler.Trigger("You pressed F!", 3);
+                // this.dialogHandler.Trigger("This will disapear after 2 seconds", 2);
+                // this.dialogHandler.Trigger("5", 1);
+                // this.dialogHandler.Trigger("4", 1);
+                // this.dialogHandler.Trigger("3", 1);
+                // this.dialogHandler.Trigger("2", 1);
+                // this.dialogHandler.Trigger("1", 1);
+                // this.dialogHandler.Trigger("Blastoff!", 3);
+            }
         };
         PlayScene.prototype.Main = function () {
             var _this = this;
@@ -54,6 +66,7 @@ var scenes;
             this.enemyHandler.enemies.forEach(function (e) {
                 _this.addChild(e);
             });
+            this.dialogHandler.AppendDialogBox();
         };
         PlayScene.prototype.AddBullet = function () {
             var bullet = this.playerBulletHandler.SpawnBullet();

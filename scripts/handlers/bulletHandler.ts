@@ -2,7 +2,7 @@ module handlers {
     export class BulletHandler {
 
         protected bullets: any;
-        protected playScene: scenes.PlayScene;
+        public playScene: scenes.PlayScene;
 
 
         constructor(playScene: scenes.PlayScene) {

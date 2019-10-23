@@ -9,6 +9,7 @@ module scenes {
         public playerBulletHandler: handlers.PlayerBulletHandler;
         public enemyBulletHandler: handlers.EnemyBulletHandler;
         public enemyHandler: handlers.EnemyHandler; 
+        public dialogHandler: handlers.DialogHandler;
 
         constructor() {
             super();
@@ -28,6 +29,7 @@ module scenes {
             this.playerBulletHandler = new handlers.PlayerBulletHandler(this);
             this.enemyBulletHandler = new handlers.EnemyBulletHandler(this);
             this.enemyHandler = new handlers.EnemyHandler(this);
+            this.dialogHandler = new handlers.DialogHandler(this);
 
             this.Main();
         }
@@ -42,12 +44,33 @@ module scenes {
             this.enemyHandler.Update();
 
             this.enemyHandler.CheckCollision(this.player);
-            
+
             this.enemyBulletHandler.UpdateAndCheckCollision(this.player);
             this.playerBulletHandler.UpdateAndCheckCollision(this.enemyHandler.enemies);
 
             if (managers.Keyboard.pressed(config.Key.Space)) {
                 this.AddBullet();
+            }
+
+            if (managers.Keyboard.pressed(config.Key.F)) {
+                this.dialogHandler.TriggerMany(
+                    ["You pressed F!", 3],
+                    ["This will disapear after 2 seconds", 2],
+                    ["5", 1],
+                    ["4", 1],
+                    ["3", 1],
+                    ["2", 1],
+                    ["1", 1],
+                    ["Blastoff!", 3]
+                );
+                // this.dialogHandler.Trigger("You pressed F!", 3);
+                // this.dialogHandler.Trigger("This will disapear after 2 seconds", 2);
+                // this.dialogHandler.Trigger("5", 1);
+                // this.dialogHandler.Trigger("4", 1);
+                // this.dialogHandler.Trigger("3", 1);
+                // this.dialogHandler.Trigger("2", 1);
+                // this.dialogHandler.Trigger("1", 1);
+                // this.dialogHandler.Trigger("Blastoff!", 3);
             }
         }
 
@@ -60,6 +83,7 @@ module scenes {
             this.enemyHandler.enemies.forEach(e => {
                 this.addChild(e);
             });
+            this.dialogHandler.AppendDialogBox();
         }
 
         public AddBullet() {
