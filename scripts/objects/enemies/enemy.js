@@ -17,7 +17,9 @@ var objects;
         __extends(Enemy, _super);
         // Constructor
         function Enemy(enemyType) {
-            var _this = _super.call(this, enemyType) || this;
+            var _this = _super.call(this) || this;
+            _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult(enemyType));
+            _this.addChild(_this.sprite);
             //this.pointsWorth = pointsWorth;
             _this.Start();
             return _this;

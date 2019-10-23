@@ -17,10 +17,12 @@ var objects;
         __extends(Player, _super);
         // Constructor
         function Player() {
-            var _this = _super.call(this, "player") || this;
+            var _this = _super.call(this) || this;
             _this.blink = false;
             _this.oddBlink = 0;
             _this.moveSpeed = 8;
+            _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("player"));
+            _this.addChild(_this.sprite);
             _this.Start();
             return _this;
         }

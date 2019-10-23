@@ -16,8 +16,10 @@ var objects;
     var Bullet = /** @class */ (function (_super) {
         __extends(Bullet, _super);
         function Bullet(x, y, bulletType) {
-            var _this = _super.call(this, "bullet") || this;
+            var _this = _super.call(this) || this;
             _this.isDestroyed = false;
+            _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("bullet"));
+            _this.addChild(_this.sprite);
             _this.x = x;
             _this.y = y;
             _this.Start();

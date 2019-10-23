@@ -2,9 +2,12 @@ module objects {
     export class Enemy extends objects.GameObject {
         // Variables
         public pointsWorth: number;
+        protected sprite: createjs.Bitmap;
         // Constructor
         constructor(enemyType:string) {
-            super(enemyType);
+            super();
+            this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult(enemyType));
+            this.addChild(this.sprite);
             //this.pointsWorth = pointsWorth;
             this.Start();
         }

@@ -16,9 +16,14 @@ var objects;
     var GameObject = /** @class */ (function (_super) {
         __extends(GameObject, _super);
         // Constructor
-        function GameObject(imageString) {
-            var _this = _super.call(this, objects.Game.assetManager.getResult(imageString)) || this;
-            _this.name = imageString;
+        function GameObject(width, height) {
+            if (width === void 0) { width = 0; }
+            if (height === void 0) { height = 0; }
+            var _this = _super.call(this) || this;
+            //objects.Game.assetManager.getResult(imageString)
+            // this.name = imageString;
+            _this.width = width;
+            _this.height = height;
             _this.Init();
             _this.boxCollider = new components.BoxCollider(_this.x, _this.y, _this.width, _this.height);
             return _this;
@@ -35,11 +40,11 @@ var objects;
             enumerable: true,
             configurable: true
         });
-        // Methods 
+        // Methods
         GameObject.prototype.Init = function () {
             // Initialize all the properties of my object
-            this.width = this.getBounds().width;
-            this.height = this.getBounds().height;
+            // this.width = this.getBounds().width;
+            // this.height = this.getBounds().height;
             this.halfW = this.width * 0.5;
             this.halfH = this.height * 0.5;
             // Registration Points
@@ -54,7 +59,7 @@ var objects;
         GameObject.prototype.CheckBound = function () { };
         GameObject.prototype.OnCollision = function (_gameObject) { };
         return GameObject;
-    }(createjs.Bitmap));
+    }(createjs.Container));
     objects.GameObject = GameObject;
 })(objects || (objects = {}));
 //# sourceMappingURL=gameobject.js.map

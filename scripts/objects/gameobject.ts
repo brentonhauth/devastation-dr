@@ -1,5 +1,5 @@
 module objects {
-    export abstract class GameObject extends createjs.Bitmap {
+    export abstract class GameObject extends createjs.Container {
         // Variables
         protected speedX: number;
         protected speedY: number;
@@ -13,12 +13,16 @@ module objects {
         public boxCollider: components.BoxCollider;
 
         // Constructor
-        constructor(imageString:string) {
-            super(objects.Game.assetManager.getResult(imageString));
-
-            this.name = imageString;
-
+        constructor(width=0, height=0) {
+            super();
+            //objects.Game.assetManager.getResult(imageString)
+            // this.name = imageString;
+            this.width = width;
+            this.height = height;
             this.Init();
+
+
+
             this.boxCollider = new components.BoxCollider(this.x, this.y, this.width, this.height);
         }
 
@@ -35,11 +39,11 @@ module objects {
         }
 
 
-        // Methods 
+        // Methods
         private Init():void {
             // Initialize all the properties of my object
-            this.width = this.getBounds().width;
-            this.height = this.getBounds().height;
+            // this.width = this.getBounds().width;
+            // this.height = this.getBounds().height;
             this.halfW = this.width * 0.5;
             this.halfH = this.height * 0.5;
 

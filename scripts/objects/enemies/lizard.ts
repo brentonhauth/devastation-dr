@@ -7,8 +7,8 @@ module objects {
 
         constructor(enemyHandler:handlers.EnemyHandler) {
             super(enemyHandler);
-            this.scaleX *= 1.5;
-            this.scaleY *= 1.5;
+            this.scaleX = this.sprite.scaleX = 1.5;
+            this.scaleY = this.sprite.scaleY = 1.5;
             this.lastPlayerPos = new math.Vec2();
             this.enemyBullets = new Array<objects.EnemyBullet>(0);
         }

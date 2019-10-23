@@ -6,14 +6,15 @@ module objects {
         private oddBlink = 0;
         private moveSpeed = 8;
         private moved: math.Vec2;
-
-        private explosion: createjs.AbstractSoundInstance;
         
+        private sprite: createjs.Bitmap;
         
 
         // Constructor
         constructor() {
-            super("player");
+            super();
+            this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("player"));
+            this.addChild(this.sprite);
             this.Start();
         }
         // Methods

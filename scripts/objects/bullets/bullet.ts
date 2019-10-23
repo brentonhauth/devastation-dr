@@ -4,9 +4,12 @@ module objects {
 
         public isDestroyed: boolean = false;
         public bulletSpeed: number;
+        private sprite: createjs.Bitmap;
 
         constructor(x:number, y:number, bulletType:string) {
-            super("bullet");
+            super();
+            this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("bullet"));
+            this.addChild(this.sprite);
             this.x = x;
             this.y = y;
             this.Start();
