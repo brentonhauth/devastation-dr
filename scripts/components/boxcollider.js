@@ -2,7 +2,8 @@ var components;
 (function (components) {
     var BoxCollider = /** @class */ (function () {
         function BoxCollider(x, y, width, height) {
-            this.drawMode = false;
+            this.ignore = [];
+            this.drawMode = true;
             var hw = width / 2;
             var hh = height / 2;
             this.center = new math.Vec2(x, y);
@@ -11,23 +12,22 @@ var components;
             this.aabb = new math.AABB(min, max);
         }
         Object.defineProperty(BoxCollider.prototype, "position", {
-            set: function (v2) {
-                var m = math.Vec2.Difference(this.center, v2);
+            set: function (pos) {
+                var m = math.Vec2.Difference(pos, this.center);
                 // let mx = v2.x - this.center.x;
                 // let my = v2.y - this.center.y;
                 this.aabb.min.x += m.x;
                 this.aabb.min.y += m.y;
                 this.aabb.max.x += m.x;
                 this.aabb.max.y += m.y;
-                this.center.x = v2.x;
-                this.center.y = v2.y;
+                this.center.x = pos.x;
+                this.center.y = pos.y;
                 if (this.drawMode) {
                     this.draw();
-                    // REMOVE
                 }
-                else {
-                    objects.Game.stage.removeChild(this.shape);
-                }
+                // else {
+                //     objects.Game.stage.removeChild(this.shape);
+                // }
             },
             enumerable: true,
             configurable: true
@@ -37,7 +37,7 @@ var components;
                 objects.Game.stage.removeChild(this.shape);
             }
             var g = new createjs.Graphics();
-            g.beginStroke("firebrick");
+            g.beginStroke("green");
             // let rect: any = {
             //     x: this.aabb.min
             // };

@@ -19,7 +19,7 @@ var config;
         Key[Key["F"] = 70] = "F";
         Key[Key["Q"] = 81] = "Q";
         Key[Key["LeftShift"] = 16] = "LeftShift";
-        Key[Key["LeftCtrl"] = 0] = "LeftCtrl";
+        Key[Key["LeftCtrl"] = 17] = "LeftCtrl";
     })(Key = config.Key || (config.Key = {}));
 })(config || (config = {}));
 //# sourceMappingURL=key.js.map

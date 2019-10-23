@@ -3,14 +3,16 @@ module components {
         public aabb: math.AABB;
         private center: math.Vec2;
         private shape: any;
+        
+        public ignore: any[] = [];
 
-        public drawMode = false;
+        public drawMode = true;
 
 
-        public set position(v2: math.Vec2) {
+        public set position(pos: math.Vec2) {
 
 
-            let m = math.Vec2.Difference(this.center, v2);
+            let m = math.Vec2.Difference(pos, this.center);
 
             // let mx = v2.x - this.center.x;
             // let my = v2.y - this.center.y;
@@ -21,16 +23,15 @@ module components {
             this.aabb.max.x += m.x;
             this.aabb.max.y += m.y;
 
-            this.center.x = v2.x;
-            this.center.y = v2.y;
+            this.center.x = pos.x;
+            this.center.y = pos.y;
 
             if (this.drawMode) {
                 this.draw()
-
-            // REMOVE
-            } else {
-                objects.Game.stage.removeChild(this.shape);
             }
+            // else {
+            //     objects.Game.stage.removeChild(this.shape);
+            // }
         }
 
         constructor(x: number, y: number, width: number, height: number) {
@@ -53,7 +54,7 @@ module components {
 
             let g = new createjs.Graphics();
 
-            g.beginStroke("firebrick");
+            g.beginStroke("green");
 
             // let rect: any = {
             //     x: this.aabb.min

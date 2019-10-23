@@ -14,16 +14,16 @@ module objects {
             this.bulletID = String(EnemyBullet.counter);
             EnemyBullet.counter++;
             this.spawnedFrom = spawnedFrom;
-
-            this.x = pos.x;
-            this.y = pos.y;
+            // this.Init();
+            // this.position = pos;
+            // this.x = pos.x;
+            // this.y = pos.y;
 
             this.dir = math.Vec2.Difference(target, pos).Normalized;
         }
 
         public Update() {
-            this.x += this.dir.x * this.speed;
-            this.y += this.dir.y * this.speed;
+            this.position = this.position.Add(this.dir.Scale(this.speed));
             this.CheckBound();
         }
 

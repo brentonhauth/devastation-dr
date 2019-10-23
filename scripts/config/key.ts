@@ -20,6 +20,6 @@ module config {
         F = 70,
         Q = 81,
         LeftShift = 16,
-        LeftCtrl = 0
+        LeftCtrl = 17
     }
 }

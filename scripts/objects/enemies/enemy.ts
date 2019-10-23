@@ -8,6 +8,11 @@ module objects {
             super();
             this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult(enemyType));
             this.addChild(this.sprite);
+            let bounds = this.sprite.getBounds();
+            console.log(bounds.width + " x " + bounds.height);
+            this.width = bounds.width;
+            this.height = bounds.height;
+            this.Init();
             //this.pointsWorth = pointsWorth;
             this.Start();
         }
@@ -22,13 +27,15 @@ module objects {
         }
 
         public Reset():void {
-            this.x = Math.floor(Math.random() * 550) + 50;
-            this.y = Math.floor(Math.random() * -800) - 50;
+            let x = Math.floor(Math.random() * 550) + 50;
+            let y = Math.floor(Math.random() * -800) - 50;
+
+            this.position = new math.Vec2(x, y);
         }
 
-        public Move():void {
-            this.y += 5;
-        }
+        // public Move():void {
+        //     this.y += 5;
+        // }
 
         public CheckBounds():void {
             if(this.y >= 900 + this.halfH + 5) {

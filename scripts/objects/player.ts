@@ -14,27 +14,19 @@ module objects {
         constructor() {
             super();
             this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("player"));
+            let bounds = this.sprite.getBounds();
+            this.width = bounds.width;
+            this.height = bounds.height;
+            this.Init();
             this.addChild(this.sprite);
             this.Start();
         }
         // Methods
         public Start(): void {
             // Set the initial position
-            this.y = 500;
-            this.x = 320;
+            this.position = new math.Vec2(320, 500);
             this.lives = 3;
             this.moved = new math.Vec2(0, 0);
-            
-
-            // managers.Input.keypress('a', () => {
-            //     this.x -= 15;
-            //     this.CheckBound();
-            // });
-
-            // managers.Input.keypress('d', () => {
-            //     this.x += 15;
-            //     this.CheckBound();
-            // });
 
             //this.scaleX = 0.25;
             //this.scaleY = 0.25;
@@ -77,7 +69,7 @@ module objects {
             // We reference the stage object and get mouse position
             // this.x = objects.Game.stage.mouseX;
             // this.y = objects.Game.stage.mouseY;
-            this.CheckBound();
+            // this.CheckBound();
             // This is evetually replaced with keyboard input
             // Maybe xbox controller...
         }

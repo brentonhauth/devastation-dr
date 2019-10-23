@@ -17,8 +17,9 @@ var objects;
         __extends(PlayerBullet, _super);
         function PlayerBullet(x, y, bulletHandler) {
             var _this = _super.call(this, x, y, "playerBullet") || this;
-            _this.x = x;
-            _this.y = y;
+            _this.position = new math.Vec2(x, y);
+            // this.x = x;
+            // this.y = y;
             _this.bulletHandler = bulletHandler;
             _this.bulletID = String(PlayerBullet.counter);
             PlayerBullet.counter++;

@@ -20,8 +20,11 @@ var objects;
             _this.isDestroyed = false;
             _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("bullet"));
             _this.addChild(_this.sprite);
-            _this.x = x;
-            _this.y = y;
+            var bounds = _this.sprite.getBounds();
+            _this.width = bounds.width;
+            _this.height = bounds.height;
+            _this.Init();
+            _this.position = new math.Vec2(x, y);
             _this.Start();
             return _this;
         }
@@ -34,7 +37,7 @@ var objects;
             this.CheckBounds();
         };
         Bullet.prototype.Move = function () {
-            this.y -= 7;
+            this.position = new math.Vec2(this.x, this.y - 7);
             if (this.y < 0) {
                 this.Destroy();
             }

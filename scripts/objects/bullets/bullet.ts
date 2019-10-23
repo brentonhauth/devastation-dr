@@ -10,8 +10,11 @@ module objects {
             super();
             this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("bullet"));
             this.addChild(this.sprite);
-            this.x = x;
-            this.y = y;
+            let bounds = this.sprite.getBounds();
+            this.width = bounds.width;
+            this.height = bounds.height;
+            this.Init();
+            this.position = new math.Vec2(x, y);
             this.Start();
         }
 
@@ -29,7 +32,7 @@ module objects {
         }
 
         public Move(): void {
-            this.y -= 7;
+            this.position = new math.Vec2(this.x, this.y - 7);
             if(this.y < 0)
             {
                 this.Destroy();

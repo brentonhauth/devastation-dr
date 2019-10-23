@@ -20,6 +20,11 @@ var objects;
             var _this = _super.call(this) || this;
             _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult(enemyType));
             _this.addChild(_this.sprite);
+            var bounds = _this.sprite.getBounds();
+            console.log(bounds.width + " x " + bounds.height);
+            _this.width = bounds.width;
+            _this.height = bounds.height;
+            _this.Init();
             //this.pointsWorth = pointsWorth;
             _this.Start();
             return _this;
@@ -33,12 +38,13 @@ var objects;
             this.CheckBounds();
         };
         Enemy.prototype.Reset = function () {
-            this.x = Math.floor(Math.random() * 550) + 50;
-            this.y = Math.floor(Math.random() * -800) - 50;
+            var x = Math.floor(Math.random() * 550) + 50;
+            var y = Math.floor(Math.random() * -800) - 50;
+            this.position = new math.Vec2(x, y);
         };
-        Enemy.prototype.Move = function () {
-            this.y += 5;
-        };
+        // public Move():void {
+        //     this.y += 5;
+        // }
         Enemy.prototype.CheckBounds = function () {
             if (this.y >= 900 + this.halfH + 5) {
                 this.Reset();

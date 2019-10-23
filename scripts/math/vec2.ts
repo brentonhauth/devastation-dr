@@ -1,9 +1,15 @@
 module math {
-    export class Vec2 extends createjs.Point {
+    export class Vec2 /*extends createjs.Point*/ {
         // Variables
         // Constructor
+
+        public x: number;
+        public y: number;
+
         constructor(x: number = 0, y: number = 0) {
-            super(x, y);
+            // super(x, y);
+            this.x = x;
+            this.y = y;
         }
 
         public Scale(s: number) {

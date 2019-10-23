@@ -16,17 +16,14 @@ var objects;
     var GameObject = /** @class */ (function (_super) {
         __extends(GameObject, _super);
         // Constructor
-        function GameObject(width, height) {
-            if (width === void 0) { width = 0; }
-            if (height === void 0) { height = 0; }
-            var _this = _super.call(this) || this;
+        function GameObject() {
+            return _super.call(this) || this;
             //objects.Game.assetManager.getResult(imageString)
             // this.name = imageString;
-            _this.width = width;
-            _this.height = height;
-            _this.Init();
-            _this.boxCollider = new components.BoxCollider(_this.x, _this.y, _this.width, _this.height);
-            return _this;
+            // this.width = width;
+            // this.height = height;
+            // this.Init();
+            // this.boxCollider = new components.BoxCollider(this.x, this.y, this.width, this.height);
         }
         Object.defineProperty(GameObject.prototype, "position", {
             // Properties
@@ -34,6 +31,7 @@ var objects;
                 return new math.Vec2(this.x, this.y);
             },
             set: function (pos) {
+                this.boxCollider.position = pos;
                 this.x = pos.x;
                 this.y = pos.y;
             },
@@ -51,6 +49,7 @@ var objects;
             this.regX = this.halfW;
             this.regY = this.halfH;
             this.isColliding = false;
+            this.boxCollider = new components.BoxCollider(this.x || 0, this.y || 0, this.width, this.height);
         };
         GameObject.prototype.Start = function () { };
         GameObject.prototype.Update = function () { };

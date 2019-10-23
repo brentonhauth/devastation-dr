@@ -17,8 +17,12 @@ var objects;
         __extends(Lizard, _super);
         function Lizard(enemyHandler) {
             var _this = _super.call(this, enemyHandler) || this;
-            _this.scaleX = _this.sprite.scaleX = 1.5;
-            _this.scaleY = _this.sprite.scaleY = 1.5;
+            _this.scaleX = 1.5;
+            _this.scaleY = 1.5;
+            var bounds = _this.sprite.getBounds();
+            _this.width = bounds.width;
+            _this.height = bounds.height;
+            _this.Init();
             _this.lastPlayerPos = new math.Vec2();
             _this.enemyBullets = new Array(0);
             return _this;

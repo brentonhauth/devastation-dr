@@ -22,14 +22,15 @@ var objects;
             _this.bulletID = String(EnemyBullet.counter);
             EnemyBullet.counter++;
             _this.spawnedFrom = spawnedFrom;
-            _this.x = pos.x;
-            _this.y = pos.y;
+            // this.Init();
+            // this.position = pos;
+            // this.x = pos.x;
+            // this.y = pos.y;
             _this.dir = math.Vec2.Difference(target, pos).Normalized;
             return _this;
         }
         EnemyBullet.prototype.Update = function () {
-            this.x += this.dir.x * this.speed;
-            this.y += this.dir.y * this.speed;
+            this.position = this.position.Add(this.dir.Scale(this.speed));
             this.CheckBound();
         };
         EnemyBullet.prototype.CheckBound = function () {

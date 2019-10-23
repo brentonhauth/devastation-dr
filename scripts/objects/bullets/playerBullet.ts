@@ -7,8 +7,9 @@ module objects {
 
         constructor(x:number, y:number, bulletHandler) {
             super(x, y, "playerBullet");
-            this.x = x;
-            this.y = y;
+            this.position = new math.Vec2(x, y);
+            // this.x = x;
+            // this.y = y;
             this.bulletHandler = bulletHandler;
 
             this.bulletID = String(PlayerBullet.counter);

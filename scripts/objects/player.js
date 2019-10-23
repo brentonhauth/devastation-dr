@@ -22,6 +22,10 @@ var objects;
             _this.oddBlink = 0;
             _this.moveSpeed = 8;
             _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("player"));
+            var bounds = _this.sprite.getBounds();
+            _this.width = bounds.width;
+            _this.height = bounds.height;
+            _this.Init();
             _this.addChild(_this.sprite);
             _this.Start();
             return _this;
@@ -29,18 +33,9 @@ var objects;
         // Methods
         Player.prototype.Start = function () {
             // Set the initial position
-            this.y = 500;
-            this.x = 320;
+            this.position = new math.Vec2(320, 500);
             this.lives = 3;
             this.moved = new math.Vec2(0, 0);
-            // managers.Input.keypress('a', () => {
-            //     this.x -= 15;
-            //     this.CheckBound();
-            // });
-            // managers.Input.keypress('d', () => {
-            //     this.x += 15;
-            //     this.CheckBound();
-            // });
             //this.scaleX = 0.25;
             //this.scaleY = 0.25;
         };
@@ -73,7 +68,7 @@ var objects;
             // We reference the stage object and get mouse position
             // this.x = objects.Game.stage.mouseX;
             // this.y = objects.Game.stage.mouseY;
-            this.CheckBound();
+            // this.CheckBound();
             // This is evetually replaced with keyboard input
             // Maybe xbox controller...
         };
