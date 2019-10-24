@@ -8,7 +8,7 @@ module handlers {
         public SpawnBullet():objects.PlayerBullet {
             let player = this.playScene.player;
             let bullet = new objects.PlayerBullet(player.x, player.y, this);
-            this.bullets[bullet.bulletID] = bullet;
+            this.bullets[bullet.id] = bullet;
 
             return bullet;
         }

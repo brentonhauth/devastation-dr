@@ -1,8 +1,6 @@
 module objects {
     export class PlayerBullet extends objects.Bullet {
 
-        public static counter = 1;
-        public bulletID:string;
         public bulletHandler:handlers.PlayerBulletHandler;
 
         constructor(x:number, y:number, bulletHandler) {
@@ -11,9 +9,6 @@ module objects {
             // this.x = x;
             // this.y = y;
             this.bulletHandler = bulletHandler;
-
-            this.bulletID = String(PlayerBullet.counter);
-            PlayerBullet.counter++;
 
             this.Start();
         }

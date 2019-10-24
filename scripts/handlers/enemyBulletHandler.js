@@ -20,7 +20,7 @@ var handlers;
         }
         EnemyBulletHandler.prototype.SpawnBullet = function (enemy) {
             var bullet = new objects.EnemyBullet(enemy.position, this.playScene.player.position, enemy, this);
-            this.bullets[bullet.bulletID] = bullet;
+            this.bullets[bullet.id] = bullet;
             return bullet;
         };
         EnemyBulletHandler.prototype.Update = function () {
@@ -36,7 +36,7 @@ var handlers;
             }
         };
         EnemyBulletHandler.prototype.DestroyBullet = function (bullet) {
-            delete this.bullets[bullet.bulletID];
+            delete this.bullets[bullet.id];
             this.playScene.removeChild(bullet);
         };
         return EnemyBulletHandler;

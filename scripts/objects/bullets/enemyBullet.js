@@ -19,8 +19,6 @@ var objects;
             var _this = _super.call(this, pos.x, pos.y, "enemyBullet") || this;
             _this.speed = 3;
             _this.bulletHandler = bulletHandler;
-            _this.bulletID = String(EnemyBullet.counter);
-            EnemyBullet.counter++;
             _this.spawnedFrom = spawnedFrom;
             // this.Init();
             // this.position = pos;
@@ -42,7 +40,6 @@ var objects;
         EnemyBullet.prototype.Destroy = function () {
             this.bulletHandler.DestroyBullet(this);
         };
-        EnemyBullet.counter = 1;
         return EnemyBullet;
     }(objects.Bullet));
     objects.EnemyBullet = EnemyBullet;

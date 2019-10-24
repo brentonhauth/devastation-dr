@@ -21,7 +21,7 @@ var handlers;
         PlayerBulletHandler.prototype.SpawnBullet = function () {
             var player = this.playScene.player;
             var bullet = new objects.PlayerBullet(player.x, player.y, this);
-            this.bullets[bullet.bulletID] = bullet;
+            this.bullets[bullet.id] = bullet;
             return bullet;
         };
         PlayerBulletHandler.prototype.CheckCollision = function (enemies) {

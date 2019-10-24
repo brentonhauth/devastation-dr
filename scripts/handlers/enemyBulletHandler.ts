@@ -7,7 +7,7 @@ module handlers {
 
         public SpawnBullet(enemy:objects.Enemy):objects.EnemyBullet {
             let bullet = new objects.EnemyBullet(enemy.position, this.playScene.player.position, enemy, this);
-            this.bullets[bullet.bulletID] = bullet;
+            this.bullets[bullet.id] = bullet;
 
             return bullet;
         }
@@ -29,7 +29,7 @@ module handlers {
         }
 
         public DestroyBullet(bullet:objects.EnemyBullet) {
-            delete this.bullets[bullet.bulletID];
+            delete this.bullets[bullet.id];
             this.playScene.removeChild(bullet);
         }
     }

@@ -21,8 +21,6 @@ var objects;
             // this.x = x;
             // this.y = y;
             _this.bulletHandler = bulletHandler;
-            _this.bulletID = String(PlayerBullet.counter);
-            PlayerBullet.counter++;
             _this.Start();
             return _this;
         }
@@ -38,7 +36,6 @@ var objects;
         PlayerBullet.prototype.Destroy = function () {
             this.bulletHandler.DestroyBullet(this);
         };
-        PlayerBullet.counter = 1;
         return PlayerBullet;
     }(objects.Bullet));
     objects.PlayerBullet = PlayerBullet;

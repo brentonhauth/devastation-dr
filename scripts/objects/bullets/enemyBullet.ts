@@ -4,15 +4,11 @@ module objects {
         private speed: number = 3;
         public spawnedFrom: objects.Enemy;
         public bulletHandler:handlers.EnemyBulletHandler;
-        public static counter = 1;
-        public bulletID:string;
 
         constructor(pos: math.Vec2, target: math.Vec2, spawnedFrom:objects.Enemy, bulletHandler:handlers.EnemyBulletHandler) {
             super(pos.x, pos.y, "enemyBullet");
 
             this.bulletHandler = bulletHandler;
-            this.bulletID = String(EnemyBullet.counter);
-            EnemyBullet.counter++;
             this.spawnedFrom = spawnedFrom;
             // this.Init();
             // this.position = pos;
