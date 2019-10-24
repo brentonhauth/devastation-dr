@@ -17,9 +17,7 @@ var scenes;
         __extends(GameOverScene, _super);
         // Constructor
         function GameOverScene() {
-            var _this = _super.call(this) || this;
-            _this.Start();
-            return _this;
+            return _super.call(this) || this;
         }
         // Method
         GameOverScene.prototype.Start = function () {

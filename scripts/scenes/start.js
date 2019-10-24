@@ -17,9 +17,7 @@ var scenes;
         __extends(StartScene, _super);
         // Constructor
         function StartScene() {
-            var _this = _super.call(this) || this;
-            _this.Start();
-            return _this;
+            return _super.call(this) || this;
         }
         StartScene.prototype.Start = function () {
             // Initialize our objects for this scene

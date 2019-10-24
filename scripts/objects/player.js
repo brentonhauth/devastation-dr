@@ -19,6 +19,7 @@ var objects;
         function Player() {
             var _this = _super.call(this) || this;
             _this.blink = false;
+            _this.intangible = false;
             _this.oddBlink = 0;
             _this.moveSpeed = 8;
             _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("player"));
@@ -41,7 +42,7 @@ var objects;
         };
         Player.prototype.Update = function () {
             this.Move();
-            this.CheckBound(); // <-- Check collisions
+            // this.CheckBound(); // <-- Check collisions
             this.Blink();
         };
         Player.prototype.Reset = function () { };
@@ -85,11 +86,11 @@ var objects;
         };
         Player.prototype.StartBlink = function () {
             var _this = this;
-            this.blink = true;
+            this.blink = this.intangible = true;
             setTimeout(function () {
-                _this.blink = false;
+                _this.blink = _this.intangible = false;
                 _this.visible = true;
-            }, 750);
+            }, 1000);
         };
         Player.prototype.CheckBound = function () {
             // Right boundary
@@ -110,8 +111,11 @@ var objects;
             */
         };
         Player.prototype.OnCollision = function (_gameObject) {
+            if (this.intangible) {
+                return;
+            }
             this.lives -= 1;
-            createjs.Sound.play("explosion");
+            managers.Sound.sfx("explosion");
             this.StartBlink();
             if (this.lives == 0) {
                 objects.Game.currentState = config.Scene.OVER;

@@ -9,7 +9,6 @@ module scenes {
         // Constructor
         constructor() {
             super();
-            this.Start();
         }
 
         public Start():void {

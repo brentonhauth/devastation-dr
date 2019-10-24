@@ -42,5 +42,12 @@ module objects {
                 this.Reset();
             }
         }
+
+        public Destroy() {
+            let cw:objects.Wave, scene = <scenes.PlayScene>objects.Game.currentScene;
+            if (cw=scene.waveHandler.currentWave) {
+                cw.Remove(this);
+            }
+        }
     }
 }

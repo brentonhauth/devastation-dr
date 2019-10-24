@@ -15,6 +15,7 @@ var managers;
         Keyboard.onkeyup = function (event) {
             if (Keyboard.isEnabled) {
                 Keyboard.keysPressed[event.keyCode] = false;
+                Keyboard.keysDownCheck[event.keyCode] = false;
             }
         };
         Keyboard.disable = function () {
@@ -29,7 +30,18 @@ var managers;
         Keyboard.pressed = function (key) {
             return Keyboard.keysPressed[key];
         };
+        Keyboard.down = function (key) {
+            if (Keyboard.keysPressed[key]) {
+                var check = !Keyboard.keysDownCheck[key];
+                Keyboard.keysDownCheck[key] = true;
+                return check;
+            }
+            else {
+                return false;
+            }
+        };
         Keyboard.keysPressed = {};
+        Keyboard.keysDownCheck = {};
         Keyboard.isEnabled = true;
         return Keyboard;
     }());

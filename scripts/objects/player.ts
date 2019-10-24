@@ -3,6 +3,7 @@ module objects {
         // Variables
         public lives: number;
         private blink: boolean = false;
+        private intangible: boolean = false;
         private oddBlink = 0;
         private moveSpeed = 8;
         private moved: math.Vec2;
@@ -33,7 +34,7 @@ module objects {
         }
         public Update(): void {
             this.Move();
-            this.CheckBound(); // <-- Check collisions
+            // this.CheckBound(); // <-- Check collisions
             this.Blink();
 
         }
@@ -86,11 +87,11 @@ module objects {
         }
 
         public StartBlink() {
-            this.blink = true;
+            this.blink = this.intangible = true;
             setTimeout(() => {
-                this.blink = false;
+                this.blink = this.intangible = false;
                 this.visible = true;
-            }, 750);
+            }, 1000);
         }
 
         public CheckBound(): void {
@@ -116,8 +117,9 @@ module objects {
         }
 
         public OnCollision(_gameObject: objects.GameObject): void {
+            if (this.intangible) { return; }
             this.lives -= 1;
-            createjs.Sound.play("explosion");
+            managers.Sound.sfx("explosion");
             this.StartBlink();
             if (this.lives == 0) {
                 objects.Game.currentState = config.Scene.OVER;

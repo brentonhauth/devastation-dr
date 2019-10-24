@@ -2,6 +2,7 @@ module managers {
     export class Keyboard {
 
         private static keysPressed = {};
+        private static keysDownCheck = {};
         private static isEnabled = true;
         
         public static listen() {
@@ -18,6 +19,7 @@ module managers {
         private static onkeyup(event: KeyboardEvent) {
             if (Keyboard.isEnabled) {
                 Keyboard.keysPressed[event.keyCode] = false;
+                Keyboard.keysDownCheck[event.keyCode] = false;
             }
         }
 
@@ -34,6 +36,16 @@ module managers {
 
         public static pressed(key: config.Key): boolean {
             return Keyboard.keysPressed[key];
+        }
+
+        public static down(key: config.Key): boolean {
+            if (Keyboard.keysPressed[key]) {
+                let check = !Keyboard.keysDownCheck[key];
+                Keyboard.keysDownCheck[key] = true;
+                return check;
+            } else {
+                return false;
+            }
         }
     }
 }

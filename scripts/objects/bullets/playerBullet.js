@@ -29,7 +29,7 @@ var objects;
         PlayerBullet.prototype.OnCollision = function (obj) {
             var playScene = this.bulletHandler.playScene;
             if (obj instanceof objects.Enemy || obj instanceof objects.Spider) {
-                obj.Reset();
+                obj.Destroy();
                 this.Destroy();
                 var points = obj instanceof objects.Lizard ? 300 : 100;
                 playScene.score.addPoints(points);

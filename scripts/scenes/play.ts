@@ -8,12 +8,12 @@ module scenes {
 
         public playerBulletHandler: handlers.PlayerBulletHandler;
         public enemyBulletHandler: handlers.EnemyBulletHandler;
-        public enemyHandler: handlers.EnemyHandler; 
+        public enemyHandler: handlers.EnemyHandler;
         public dialogHandler: handlers.DialogHandler;
+        public waveHandler: handlers.WaveHandler;
 
         constructor() {
             super();
-            this.Start();
         }
 
         public Start(): void {
@@ -30,25 +30,39 @@ module scenes {
             this.enemyBulletHandler = new handlers.EnemyBulletHandler(this);
             this.enemyHandler = new handlers.EnemyHandler(this);
             this.dialogHandler = new handlers.DialogHandler(this);
+            this.waveHandler = new handlers.WaveHandler(this);
+
+
 
             this.Main();
         }
 
         public Update(): void {
+
+            if (this.waveHandler.CompletedAllWaves) {
+                this.dialogHandler.TriggerMany(
+                    ["You've beaten all of the enemies.", 3],
+                    ["At this point you would move onto the next scene!", 4]
+                );
+            }
+
             this.background.Update();
             this.player.Update();
             this.score.updateText();
 
             this.lifeCounter.text(this.player.lives);
 
-            this.enemyHandler.Update();
+            // this.enemyHandler.Update();
 
-            this.enemyHandler.CheckCollision(this.player);
+            // this.enemyHandler.CheckCollision(this.player);
+            this.waveHandler.Update();
+
+            this.waveHandler.CheckCollision(this.player);
 
             this.enemyBulletHandler.UpdateAndCheckCollision(this.player);
-            this.playerBulletHandler.UpdateAndCheckCollision(this.enemyHandler.enemies);
+            this.playerBulletHandler.UpdateAndCheckCollision(this.waveHandler.ActiveEnemies);
 
-            if (managers.Keyboard.pressed(config.Key.Space)) {
+            if (managers.Keyboard.down(config.Key.Space)) {
                 this.AddBullet();
             }
 
@@ -80,10 +94,61 @@ module scenes {
             this.addChild(this.player);
             this.addChild(this.lifeCounter);
             this.addChild(this.score);
-            this.enemyHandler.enemies.forEach(e => {
-                this.addChild(e);
-            });
+            // this.enemyHandler.enemies.forEach(e => {
+            //     this.addChild(e);
+            // });
             this.dialogHandler.AppendDialogBox();
+
+
+            let wave1 = new objects.Wave(
+                new objects.Spider(),
+                new objects.Spider(),
+                new objects.Spider(),
+                new objects.Spider(),
+                new objects.Spider()
+            );
+
+
+            let wave2 = new objects.Wave();
+
+            wave2.Add(
+                new objects.Spider(),
+                new objects.Spider(),
+
+                new objects.Lizard(),
+
+                new objects.Spider(),
+                new objects.Spider(),
+                new objects.Spider(),
+
+                new objects.Lizard(),
+            );
+
+            wave1.AddAmount(objects.Spider, 20);
+
+            wave1.Behavior(objects.Spider, (x, y, index) => {
+                if (index % 2 === 0) {
+                    x += 5;
+                    if (x > 760) {
+                        x = 0;
+                    }
+                } else {
+                    x -= 5;
+                    if (x < 0) {
+                        x = 760;
+                    }
+                }
+                y += 1;
+                if (y > 700) {
+                    y = -100;
+                }
+                return new math.Vec2(x, y);
+            });
+
+
+            this.waveHandler.Add(wave1, wave2);
+
+            this.waveHandler.Start();
         }
 
         public AddBullet() {

@@ -17,6 +17,7 @@ var objects;
     var Spider = /** @class */ (function (_super) {
         __extends(Spider, _super);
         function Spider(enemyHandler) {
+            if (enemyHandler === void 0) { enemyHandler = null; }
             var _this = _super.call(this, "spider") || this;
             _this.enemyHandler = enemyHandler;
             var bounds = _this.sprite.getBounds();

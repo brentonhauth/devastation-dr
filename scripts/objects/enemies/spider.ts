@@ -8,7 +8,7 @@ module objects {
         private yCenterAxis: number;
         public enemyHandler:handlers.EnemyHandler;
 
-        constructor(enemyHandler:handlers.EnemyHandler) {
+        constructor(enemyHandler:handlers.EnemyHandler=null) {
             super("spider");
             this.enemyHandler = enemyHandler;
             let bounds = this.sprite.getBounds();

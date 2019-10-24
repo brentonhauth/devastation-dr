@@ -68,6 +68,7 @@
         objects.Game.currentScene = currentScene;
         currentState = objects.Game.currentState;
         stage.addChild(currentScene);
+        currentScene.Start();
     }
 
     window.onload = Init;

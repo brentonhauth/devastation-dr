@@ -22,7 +22,7 @@ module objects {
             let playScene = this.bulletHandler.playScene;
 
             if (obj instanceof objects.Enemy || obj instanceof objects.Spider) {
-                obj.Reset();
+                obj.Destroy();
                 this.Destroy();
 
                 let points = obj instanceof objects.Lizard ? 300 : 100;

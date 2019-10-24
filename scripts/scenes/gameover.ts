@@ -7,8 +7,6 @@ module scenes {
         // Constructor
         constructor() {
             super();
-
-            this.Start();
         }
 
         // Method

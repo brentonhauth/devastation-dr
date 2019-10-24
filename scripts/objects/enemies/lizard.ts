@@ -5,7 +5,7 @@ module objects {
         public enemyBullets: objects.EnemyBullet[];
         public enemyHandler: handlers.EnemyHandler;
 
-        constructor(enemyHandler:handlers.EnemyHandler) {
+        constructor(enemyHandler:handlers.EnemyHandler=null) {
             super(enemyHandler);
             this.scaleX = 1.5;
             this.scaleY = 1.5;
@@ -33,7 +33,9 @@ module objects {
         {
             let r = math.randRange(1, 30);
             if (Math.round(r) == 5) {
-                this.enemyHandler.playScene.AddEnemyBullet(this);
+                let cs = <scenes.PlayScene>objects.Game.currentScene;
+                // this.enemyHandler.
+                cs.AddEnemyBullet(this);
             }
         }
     }

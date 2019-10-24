@@ -50,6 +50,12 @@ var objects;
                 this.Reset();
             }
         };
+        Enemy.prototype.Destroy = function () {
+            var cw, scene = objects.Game.currentScene;
+            if (cw = scene.waveHandler.currentWave) {
+                cw.Remove(this);
+            }
+        };
         return Enemy;
     }(objects.GameObject));
     objects.Enemy = Enemy;

@@ -16,6 +16,7 @@ var objects;
     var Lizard = /** @class */ (function (_super) {
         __extends(Lizard, _super);
         function Lizard(enemyHandler) {
+            if (enemyHandler === void 0) { enemyHandler = null; }
             var _this = _super.call(this, enemyHandler) || this;
             _this.scaleX = 1.5;
             _this.scaleY = 1.5;
@@ -39,7 +40,9 @@ var objects;
         Lizard.prototype.SpawnBullet = function () {
             var r = math.randRange(1, 30);
             if (Math.round(r) == 5) {
-                this.enemyHandler.playScene.AddEnemyBullet(this);
+                var cs = objects.Game.currentScene;
+                // this.enemyHandler.
+                cs.AddEnemyBullet(this);
             }
         };
         return Lizard;
