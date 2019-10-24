@@ -39,7 +39,7 @@ var handlers;
             ;
         };
         PlayerBulletHandler.prototype.DestroyBullet = function (bullet) {
-            delete this.bullets[bullet.bulletID];
+            delete this.bullets[bullet.id];
             this.playScene.removeChild(bullet);
         };
         return PlayerBulletHandler;

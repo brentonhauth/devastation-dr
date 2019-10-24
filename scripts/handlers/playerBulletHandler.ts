@@ -25,7 +25,7 @@ module handlers {
         }
 
         public DestroyBullet(bullet) {
-            delete this.bullets[bullet.bulletID];
+            delete this.bullets[bullet.id];
             this.playScene.removeChild(bullet);
         }
     }
