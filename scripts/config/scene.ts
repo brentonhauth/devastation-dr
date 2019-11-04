@@ -2,6 +2,9 @@ module config {
     export enum Scene {
         START,
         GAME,
-        OVER
+        OVER,
+        JUNGLE,
+        DESERT,
+        ARCTIC
     }
 }

@@ -62,6 +62,17 @@
             case config.Scene.OVER:
                 currentScene = new scenes.GameOverScene();
             break;
+
+            // LEVELS
+            case config.Scene.JUNGLE:
+                currentScene = new scenes.JungleScene();
+            break;
+            case config.Scene.DESERT:
+                currentScene = new scenes.DesertScene();
+            break;
+            case config.Scene.ARCTIC:
+                currentScene = new scenes.ArcticScene();
+            break;
         }
 
         stage.removeAllChildren();
