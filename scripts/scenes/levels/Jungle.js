@@ -28,4 +28,4 @@ var scenes;
     }(scenes.PlayScene));
     scenes.JungleScene = JungleScene;
 })(scenes || (scenes = {}));
-//# sourceMappingURL=Jungle.js.map
+//# sourceMappingURL=jungle.js.map
