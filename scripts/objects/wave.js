@@ -58,17 +58,33 @@ var objects;
             this.enemies.forEach(check);
         };
         Wave.prototype.Add = function () {
-            var _a;
+            var _this = this;
             var enemies = [];
             for (var _i = 0; _i < arguments.length; _i++) {
                 enemies[_i] = arguments[_i];
             }
-            (_a = this.enemies).push.apply(_a, enemies);
+            enemies.forEach(function (e) {
+                if (Array.isArray(e)) {
+                    _this.AddAmount(e[0], e[1], e[2] || []);
+                }
+                else if (e instanceof objects.Enemy) {
+                    _this.enemies.push(e);
+                }
+            });
+            // this.enemies.push(...enemies);
         };
         Wave.prototype.AddAmount = function (type, amount, params) {
             if (params === void 0) { params = []; }
             for (var i = 0; i < amount; i++) {
-                this.enemies.push(new (type.bind.apply(type, __spreadArrays([void 0], params)))());
+                try {
+                    var e = new (type.bind.apply(type, __spreadArrays([void 0], params)))();
+                    if (e instanceof objects.Enemy) {
+                        this.enemies.push(e);
+                    }
+                }
+                catch (err) {
+                    console.log(err);
+                }
             }
         };
         Wave.prototype.Behavior = function (type, cb) {

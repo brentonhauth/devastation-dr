@@ -112,19 +112,22 @@ module scenes {
             let wave2 = new objects.Wave();
 
             wave2.Add(
-                new objects.Spider(),
-                new objects.Spider(),
+                [objects.Spider, 5],
+                [objects.Lizard, 2]
+                // new objects.Spider(),
+                // new objects.Spider(),
 
-                new objects.Lizard(),
+                // new objects.Lizard(),
 
-                new objects.Spider(),
-                new objects.Spider(),
-                new objects.Spider(),
+                // new objects.Spider(),
+                // new objects.Spider(),
+                // new objects.Spider(),
 
-                new objects.Lizard(),
+                // new objects.Lizard(),
             );
 
             wave1.AddAmount(objects.Spider, 20);
+            // SAME AS: wave1.Add([objects.Spider, 20]);
 
             wave1.Behavior(objects.Spider, (x, y, index) => {
                 if (index % 2 === 0) {

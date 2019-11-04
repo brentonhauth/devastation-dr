@@ -72,8 +72,17 @@ var scenes;
             this.dialogHandler.AppendDialogBox();
             var wave1 = new objects.Wave(new objects.Spider(), new objects.Spider(), new objects.Spider(), new objects.Spider(), new objects.Spider());
             var wave2 = new objects.Wave();
-            wave2.Add(new objects.Spider(), new objects.Spider(), new objects.Lizard(), new objects.Spider(), new objects.Spider(), new objects.Spider(), new objects.Lizard());
+            wave2.Add([objects.Spider, 5], [objects.Lizard, 2]
+            // new objects.Spider(),
+            // new objects.Spider(),
+            // new objects.Lizard(),
+            // new objects.Spider(),
+            // new objects.Spider(),
+            // new objects.Spider(),
+            // new objects.Lizard(),
+            );
             wave1.AddAmount(objects.Spider, 20);
+            // SAME AS: wave1.Add([objects.Spider, 20]);
             wave1.Behavior(objects.Spider, function (x, y, index) {
                 if (index % 2 === 0) {
                     x += 5;

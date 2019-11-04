@@ -1,6 +1,8 @@
 module objects {
 
     type WaveBehaviorCallback = (x:number,y:number,index?:number)=>math.Vec2;
+    type WaveEnemyAmount = [any, number, Params?];
+    type Params = any[];
 
     export class Wave {
         public enemies: Enemy[];
@@ -12,7 +14,7 @@ module objects {
             return this.enemies.length === 0;
         }
 
-        constructor(...enemies: objects.Enemy[]) {
+        constructor(...enemies: (objects.Enemy|WaveEnemyAmount)[]) {
             this.enemies = new Array<Enemy>();
             this.behaviors = new Array();
             this.Add(...enemies);
@@ -51,13 +53,27 @@ module objects {
             this.enemies.forEach(check);
         }
 
-        public Add(...enemies: Enemy[]) {
-            this.enemies.push(...enemies);
+        public Add(...enemies: (Enemy|WaveEnemyAmount)[]) {
+            enemies.forEach(e => {
+                if (Array.isArray(e)) {
+                    this.AddAmount(e[0], e[1], e[2] || []);
+                } else if (e instanceof Enemy) {
+                    this.enemies.push(e);
+                }
+            });
+            // this.enemies.push(...enemies);
         }
 
-        public AddAmount(type: any, amount: number, params=[]) {
+        public AddAmount(type: any, amount: number, params:Params=[]) {
             for (let i = 0; i < amount; i++) {
-                this.enemies.push(new type(...params));
+                try {
+                    let e = new type(...params);
+                    if (e instanceof Enemy) {
+                        this.enemies.push(e);
+                    }
+                } catch (err) {
+                    console.log(err);
+                }
             }
         }
 
