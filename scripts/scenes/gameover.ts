@@ -12,7 +12,7 @@ module scenes {
         // Method
         public Start():void {
 
-            createjs.Sound.stop();
+            managers.Sound.music(false);
 
             this.gameOverLabel = new ui.Label(
                 "Game Over!", "40px", "Consolas", "#000000", 320, 240, true);

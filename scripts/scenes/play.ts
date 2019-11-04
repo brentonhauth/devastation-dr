@@ -42,7 +42,7 @@ module scenes {
             if (this.waveHandler.CompletedAllWaves) {
                 this.dialogHandler.TriggerMany(
                     ["You've beaten all of the enemies.", 3],
-                    ["At this point you would move onto the next scene!", 4]
+                    ["At this point you would\nmove onto the next scene!", 4]
                 );
             }
 
