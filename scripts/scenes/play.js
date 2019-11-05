@@ -16,28 +16,27 @@ var scenes;
     var PlayScene = /** @class */ (function (_super) {
         __extends(PlayScene, _super);
         function PlayScene() {
-            return _super.call(this) || this;
+            var _this = _super.call(this) || this;
+            _this.background = new objects.Background();
+            _this.player = new objects.Player();
+            _this.lifeCounter = new hud.LifeCounter();
+            _this.score = new hud.Score();
+            _this.playerBulletHandler = new handlers.PlayerBulletHandler(_this);
+            _this.enemyBulletHandler = new handlers.EnemyBulletHandler(_this);
+            _this.enemyHandler = new handlers.EnemyHandler(_this);
+            _this.dialogHandler = new handlers.DialogHandler(_this);
+            _this.waveHandler = new handlers.WaveHandler(_this);
+            return _this;
         }
         PlayScene.prototype.Start = function () {
-            managers.Sound.music("cyberpunker");
-            this.background = new objects.Background();
-            this.player = new objects.Player();
-            this.lifeCounter = new hud.LifeCounter();
-            this.score = new hud.Score();
-            this.playerBulletHandler = new handlers.PlayerBulletHandler(this);
-            this.enemyBulletHandler = new handlers.EnemyBulletHandler(this);
-            this.enemyHandler = new handlers.EnemyHandler(this);
-            this.dialogHandler = new handlers.DialogHandler(this);
-            this.waveHandler = new handlers.WaveHandler(this);
+            this.addChild(this.background);
+            this.addChild(this.player);
+            this.addChild(this.lifeCounter);
+            this.addChild(this.score);
+            this.dialogHandler.AppendDialogBox();
             this.Main();
         };
         PlayScene.prototype.Update = function () {
-            // if (this.waveHandler.CompletedAllWaves) {
-            //     this.dialogHandler.TriggerMany(
-            //         ["You've beaten all of the enemies.", 3],
-            //         ["At this point you would\nmove onto the next scene!", 4]
-            //     );
-            // }
             this.background.Update();
             this.player.Update();
             this.waveHandler.Update();
@@ -47,17 +46,6 @@ var scenes;
             if (managers.Keyboard.down(config.Key.Space)) {
                 this.AddBullet();
             }
-        };
-        PlayScene.prototype.Main = function () {
-            // Order matters when adding game objects.
-            this.addChild(this.background);
-            this.addChild(this.player);
-            this.addChild(this.lifeCounter);
-            this.addChild(this.score);
-            // this.enemyHandler.enemies.forEach(e => {
-            //     this.addChild(e);
-            // });
-            this.dialogHandler.AppendDialogBox();
         };
         PlayScene.prototype.AddBullet = function () {
             var bullet = this.playerBulletHandler.SpawnBullet();

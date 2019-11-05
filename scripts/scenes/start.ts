@@ -9,45 +9,32 @@ module scenes {
         // Constructor
         constructor() {
             super();
-        }
 
-        public Start():void {
-            // Initialize our objects for this scene
             this.background = new objects.Background();
             this.logo = new createjs.Bitmap(objects.Game.assetManager.getResult("logo"));
             this.infoLabel = new ui.Label(
             "(c) Rude Rhino", "18px", "Arial", "#e1e1f1", 320, 800, true);
-            this.logo.scaleX *= .8;
-            this.logo.scaleY *= .8;
-            this.logo.x = 80;
-            this.logo.y = 140;
-
-            this.startButton = new ui.Button("nextButton", 270, 300);
-
-            this.startButton.scaleY *= 3.25;
-            this.startButton.scaleX *= 3.25;
-            this.Main();
-        }
-        public Update():void {
-            // this.background.Update();
+            this.logo.scaleX *= .65;
+            this.logo.scaleY *= .65;
+            this.logo.x = 10;
+            this.logo.y = 10;
+    
+            this.startButton = new ui.Button("nextButton", 30, 120);
+    
+            this.startButton.scaleY *= 2.25;
+            this.startButton.scaleX *= 2.25;
         }
 
-        private startButtonClick():void {
-            // Change our game state from START to GAME
-            objects.Game.currentState = config.Scene.JUNGLE;
-        }
 
-        public Main():void {
-
-
-
-            // Add items to our scene
+        public Start(): void {
             this.addChild(this.background);
             this.addChild(this.startButton);
             this.addChildAt(this.logo, 2);
             this.addChild(this.infoLabel);
 
-            this.startButton.on("click", this.startButtonClick);
+            this.startButton.on("click", () => {
+                objects.Game.currentState = config.Scene.JUNGLE;
+            });
         }
     }
 }

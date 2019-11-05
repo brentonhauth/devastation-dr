@@ -14,37 +14,31 @@ module scenes {
 
         constructor() {
             super();
-        }
-
-        public Start(): void {
-
-            managers.Sound.music("cyberpunker");
-
 
             this.background = new objects.Background();
             this.player = new objects.Player();
             this.lifeCounter = new hud.LifeCounter();
             this.score = new hud.Score();
-
+    
             this.playerBulletHandler = new handlers.PlayerBulletHandler(this);
             this.enemyBulletHandler = new handlers.EnemyBulletHandler(this);
             this.enemyHandler = new handlers.EnemyHandler(this);
             this.dialogHandler = new handlers.DialogHandler(this);
             this.waveHandler = new handlers.WaveHandler(this);
+        }
 
+        public Start(): void {
 
+            this.addChild(this.background);
+            this.addChild(this.player);
+            this.addChild(this.lifeCounter);
+            this.addChild(this.score);
+            this.dialogHandler.AppendDialogBox();
 
             this.Main();
         }
 
         public Update(): void {
-
-            // if (this.waveHandler.CompletedAllWaves) {
-            //     this.dialogHandler.TriggerMany(
-            //         ["You've beaten all of the enemies.", 3],
-            //         ["At this point you would\nmove onto the next scene!", 4]
-            //     );
-            // }
 
             this.background.Update();
             this.player.Update();
@@ -58,18 +52,6 @@ module scenes {
             if (managers.Keyboard.down(config.Key.Space)) {
                 this.AddBullet();
             }
-        }
-
-        public Main(): void {
-            // Order matters when adding game objects.
-            this.addChild(this.background);
-            this.addChild(this.player);
-            this.addChild(this.lifeCounter);
-            this.addChild(this.score);
-            // this.enemyHandler.enemies.forEach(e => {
-            //     this.addChild(e);
-            // });
-            this.dialogHandler.AppendDialogBox();
         }
 
         public AddBullet() {

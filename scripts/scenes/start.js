@@ -17,36 +17,27 @@ var scenes;
         __extends(StartScene, _super);
         // Constructor
         function StartScene() {
-            return _super.call(this) || this;
+            var _this = _super.call(this) || this;
+            _this.background = new objects.Background();
+            _this.logo = new createjs.Bitmap(objects.Game.assetManager.getResult("logo"));
+            _this.infoLabel = new ui.Label("(c) Rude Rhino", "18px", "Arial", "#e1e1f1", 320, 800, true);
+            _this.logo.scaleX *= .65;
+            _this.logo.scaleY *= .65;
+            _this.logo.x = 10;
+            _this.logo.y = 10;
+            _this.startButton = new ui.Button("nextButton", 30, 120);
+            _this.startButton.scaleY *= 2.25;
+            _this.startButton.scaleX *= 2.25;
+            return _this;
         }
         StartScene.prototype.Start = function () {
-            // Initialize our objects for this scene
-            this.background = new objects.Background();
-            this.logo = new createjs.Bitmap(objects.Game.assetManager.getResult("logo"));
-            this.infoLabel = new ui.Label("(c) Rude Rhino", "18px", "Arial", "#e1e1f1", 320, 800, true);
-            this.logo.scaleX *= .8;
-            this.logo.scaleY *= .8;
-            this.logo.x = 80;
-            this.logo.y = 140;
-            this.startButton = new ui.Button("nextButton", 270, 300);
-            this.startButton.scaleY *= 3.25;
-            this.startButton.scaleX *= 3.25;
-            this.Main();
-        };
-        StartScene.prototype.Update = function () {
-            // this.background.Update();
-        };
-        StartScene.prototype.startButtonClick = function () {
-            // Change our game state from START to GAME
-            objects.Game.currentState = config.Scene.JUNGLE;
-        };
-        StartScene.prototype.Main = function () {
-            // Add items to our scene
             this.addChild(this.background);
             this.addChild(this.startButton);
             this.addChildAt(this.logo, 2);
             this.addChild(this.infoLabel);
-            this.startButton.on("click", this.startButtonClick);
+            this.startButton.on("click", function () {
+                objects.Game.currentState = config.Scene.JUNGLE;
+            });
         };
         return StartScene;
     }(scenes.Scene));

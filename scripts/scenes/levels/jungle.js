@@ -23,6 +23,7 @@ var scenes;
         JungleScene.prototype.Start = function () {
             var _this = this;
             _super.prototype.Start.call(this);
+            managers.Sound.music("cyberpunker");
             this.dialogHandler.TriggerMany(["I've entered this part!", 2], ["I hope something bad\ndoesn't happen...", 2,
                 function () { return _this.waveHandler.Start(); }]);
         };

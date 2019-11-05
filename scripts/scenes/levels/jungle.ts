@@ -10,6 +10,7 @@ module scenes {
         public Start() {
             super.Start();
 
+            managers.Sound.music("cyberpunker");
 
             this.dialogHandler.TriggerMany(
                 ["I've entered this part!", 2],
