@@ -6,12 +6,12 @@ module hud {
 
         constructor() {
             super();
-            this.counterText = new ui.Label("x3", "20px", "Consolas", "#FFFFFF", 80, 30, true);
+            this.counterText = new ui.Label("Lives: 3", "20px", "Consolas", "#FFFFFF", 80, 30, true);
             this.addChild(this.counterText);
             //this.counterImage = new createjs.Bitmap();
         }
 
-        public text (t: string | number) {
+        public text(t: string | number) {
             this.counterText.text = "lives: " + t;
         }
 

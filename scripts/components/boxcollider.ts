@@ -34,6 +34,36 @@ module components {
             // }
         }
 
+        public get width(): number {
+            if (this.aabb) {
+                return this.aabb.max.x - this.aabb.min.x;
+            } else {
+                return 0;
+            }
+        }
+
+        public set width(w: number) {
+            if (w < 0) { w = 0; }
+            let hw = w / 2;
+            this.aabb.min.x = this.center.x - hw;
+            this.aabb.max.x = this.center.x + hw;
+        }
+
+        public get height(): number {
+            if (this.aabb) {
+                return this.aabb.max.y - this.aabb.min.y;
+            } else {
+                return 0;
+            }
+        }
+
+        public set height(h: number) {
+            if (h < 0) { h = 0; }
+            let hh = h / 2;
+            this.aabb.min.x = this.center.y - hh;
+            this.aabb.max.x = this.center.y + hh;
+        }
+
         constructor(x: number, y: number, width: number, height: number) {
             let hw = width / 2;
             let hh = height / 2;
@@ -60,10 +90,8 @@ module components {
             //     x: this.aabb.min
             // };
 
-            let w = this.aabb.max.x - this.aabb.min.x;
-            let h = this.aabb.max.y - this.aabb.min.y;
 
-            g.drawRect(this.aabb.min.x, this.aabb.min.y, w, h);
+            g.drawRect(this.aabb.min.x, this.aabb.min.y, this.width, this.height);
 
             g.endStroke();
 

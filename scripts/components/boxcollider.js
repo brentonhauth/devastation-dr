@@ -32,6 +32,46 @@ var components;
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(BoxCollider.prototype, "width", {
+            get: function () {
+                if (this.aabb) {
+                    return this.aabb.max.x - this.aabb.min.x;
+                }
+                else {
+                    return 0;
+                }
+            },
+            set: function (w) {
+                if (w < 0) {
+                    w = 0;
+                }
+                var hw = w / 2;
+                this.aabb.min.x = this.center.x - hw;
+                this.aabb.max.x = this.center.x + hw;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BoxCollider.prototype, "height", {
+            get: function () {
+                if (this.aabb) {
+                    return this.aabb.max.y - this.aabb.min.y;
+                }
+                else {
+                    return 0;
+                }
+            },
+            set: function (h) {
+                if (h < 0) {
+                    h = 0;
+                }
+                var hh = h / 2;
+                this.aabb.min.x = this.center.y - hh;
+                this.aabb.max.x = this.center.y + hh;
+            },
+            enumerable: true,
+            configurable: true
+        });
         BoxCollider.prototype.draw = function () {
             if (this.shape) {
                 objects.Game.stage.removeChild(this.shape);
@@ -41,9 +81,7 @@ var components;
             // let rect: any = {
             //     x: this.aabb.min
             // };
-            var w = this.aabb.max.x - this.aabb.min.x;
-            var h = this.aabb.max.y - this.aabb.min.y;
-            g.drawRect(this.aabb.min.x, this.aabb.min.y, w, h);
+            g.drawRect(this.aabb.min.x, this.aabb.min.y, this.width, this.height);
             g.endStroke();
             this.shape = new createjs.Shape(g);
             objects.Game.stage.addChild(this.shape);

@@ -1,5 +1,8 @@
 module scenes {
     export class JungleScene extends PlayScene {
+
+        private finishedCheck = false;
+
         constructor() {
             super();
         }
@@ -10,13 +13,28 @@ module scenes {
 
             this.dialogHandler.TriggerMany(
                 ["I've entered this part!", 2],
-                ["I hope something bad\ndoesn't happen", 2,
+                ["I hope something bad\ndoesn't happen...", 2,
                 () => this.waveHandler.Start()]
             );
         }
 
         public Update() {
             super.Update();
+
+            if (this.waveHandler.CompletedAllWaves && !this.finishedCheck) {
+                this.dialogHandler.TriggerMany(
+                    ["It looks like that's the last of 'em!", 2.5],
+                    ["The drive home feels a lot\nlonger than normal...", 3],
+                    ["", 1], ["I have to keep a clear head!", 3],
+                    ["I'll reach the end eventually!", 3],
+                    ["", 2, () => {
+                        objects.Game.currentState = config.Scene.DESERT;
+                    }]
+                );
+
+                this.finishedCheck = true;
+            }
+
         }
 
         public Main() {

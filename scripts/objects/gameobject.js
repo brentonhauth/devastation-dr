@@ -38,6 +38,38 @@ var objects;
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(GameObject.prototype, "width", {
+            get: function () {
+                return this.m_width;
+            },
+            set: function (w) {
+                if (w < 0) {
+                    w = 0;
+                }
+                this.m_width = w;
+                if (this.boxCollider) {
+                    this.boxCollider.width = w;
+                }
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(GameObject.prototype, "height", {
+            get: function () {
+                return this.m_height;
+            },
+            set: function (h) {
+                if (h < 0) {
+                    h = 0;
+                }
+                this.m_height = h;
+                if (this.boxCollider) {
+                    this.boxCollider.height = h;
+                }
+            },
+            enumerable: true,
+            configurable: true
+        });
         // Methods
         GameObject.prototype.Init = function () {
             // Initialize all the properties of my object

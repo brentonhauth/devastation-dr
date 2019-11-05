@@ -4,8 +4,8 @@ module objects {
         protected speedX: number;
         protected speedY: number;
 
-        public width: number;
-        public height: number;
+        private m_width: number;
+        private m_height: number;
         public halfW: number;   // Half-width; Useful for collision detection
         public halfH: number;   // Half-height
         public isColliding: boolean;
@@ -37,6 +37,30 @@ module objects {
             this.boxCollider.position = pos;
             this.x = pos.x;
             this.y = pos.y;
+        }
+
+        public get width(): number {
+            return this.m_width;
+        }
+
+        public get height(): number {
+            return this.m_height;
+        }
+
+        public set width(w: number) {
+            if (w < 0) { w = 0; }
+            this.m_width = w;
+            if (this.boxCollider) {
+                this.boxCollider.width = w;
+            }
+        }
+
+        public set height(h: number) {
+            if (h < 0) { h = 0; }
+            this.m_height = h;
+            if (this.boxCollider) {
+                this.boxCollider.height = h;
+            }
         }
 
 

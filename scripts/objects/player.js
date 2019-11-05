@@ -22,7 +22,7 @@ var objects;
             _this.intangible = false;
             _this.oddBlink = 0;
             _this.moveSpeed = 8;
-            _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("player"));
+            _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("hummer"));
             var bounds = _this.sprite.getBounds();
             _this.width = bounds.width;
             _this.height = bounds.height;
@@ -66,12 +66,6 @@ var objects;
                 }
                 this.position = this.position.Add(this.moved);
             }
-            // We reference the stage object and get mouse position
-            // this.x = objects.Game.stage.mouseX;
-            // this.y = objects.Game.stage.mouseY;
-            // this.CheckBound();
-            // This is evetually replaced with keyboard input
-            // Maybe xbox controller...
         };
         Player.prototype.Blink = function () {
             if (this.blink) {
@@ -115,6 +109,10 @@ var objects;
                 return;
             }
             this.lives -= 1;
+            var cs = objects.Game.currentScene;
+            if (cs.lifeCounter) {
+                cs.lifeCounter.text(this.lives);
+            }
             managers.Sound.sfx("explosion");
             this.StartBlink();
             if (this.lives == 0) {

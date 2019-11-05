@@ -16,16 +16,24 @@ var scenes;
     var JungleScene = /** @class */ (function (_super) {
         __extends(JungleScene, _super);
         function JungleScene() {
-            return _super.call(this) || this;
+            var _this = _super.call(this) || this;
+            _this.finishedCheck = false;
+            return _this;
         }
         JungleScene.prototype.Start = function () {
             var _this = this;
             _super.prototype.Start.call(this);
-            this.dialogHandler.TriggerMany(["I've entered this part!", 2], ["I hope something bad\ndoesn't happen", 2,
+            this.dialogHandler.TriggerMany(["I've entered this part!", 2], ["I hope something bad\ndoesn't happen...", 2,
                 function () { return _this.waveHandler.Start(); }]);
         };
         JungleScene.prototype.Update = function () {
             _super.prototype.Update.call(this);
+            if (this.waveHandler.CompletedAllWaves && !this.finishedCheck) {
+                this.dialogHandler.TriggerMany(["It looks like that's the last of 'em!", 2.5], ["The drive home feels a lot\nlonger than normal...", 3], ["", 1], ["I have to keep a clear head!", 3], ["I'll reach the end eventually!", 3], ["", 2, function () {
+                        objects.Game.currentState = config.Scene.DESERT;
+                    }]);
+                this.finishedCheck = true;
+            }
         };
         JungleScene.prototype.Main = function () {
             _super.prototype.Main.call(this);

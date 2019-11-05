@@ -14,7 +14,7 @@ module objects {
         // Constructor
         constructor() {
             super();
-            this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("player"));
+            this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("hummer"));
             let bounds = this.sprite.getBounds();
             this.width = bounds.width;
             this.height = bounds.height;
@@ -65,14 +65,6 @@ module objects {
 
                 this.position = this.position.Add(this.moved);
             }
-            
-
-            // We reference the stage object and get mouse position
-            // this.x = objects.Game.stage.mouseX;
-            // this.y = objects.Game.stage.mouseY;
-            // this.CheckBound();
-            // This is evetually replaced with keyboard input
-            // Maybe xbox controller...
         }
 
         private Blink() {
@@ -119,6 +111,10 @@ module objects {
         public OnCollision(_gameObject: objects.GameObject): void {
             if (this.intangible) { return; }
             this.lives -= 1;
+            
+            let cs = <scenes.PlayScene>objects.Game.currentScene;
+            if (cs.lifeCounter) { cs.lifeCounter.text(this.lives); }
+
             managers.Sound.sfx("explosion");
             this.StartBlink();
             if (this.lives == 0) {

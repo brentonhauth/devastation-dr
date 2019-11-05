@@ -40,27 +40,12 @@ var scenes;
             // }
             this.background.Update();
             this.player.Update();
-            // this.score.updateText();
-            this.lifeCounter.text(this.player.lives);
-            // this.enemyHandler.Update();
-            // this.enemyHandler.CheckCollision(this.player);
             this.waveHandler.Update();
             this.waveHandler.CheckCollision(this.player);
             this.enemyBulletHandler.UpdateAndCheckCollision(this.player);
             this.playerBulletHandler.UpdateAndCheckCollision(this.waveHandler.ActiveEnemies);
             if (managers.Keyboard.down(config.Key.Space)) {
                 this.AddBullet();
-            }
-            if (managers.Keyboard.pressed(config.Key.F)) {
-                this.dialogHandler.TriggerMany(["You pressed F!", 3], ["This will disapear after 2 seconds", 2], ["5", 1], ["4", 1], ["3", 1], ["2", 1], ["1", 1], ["Blastoff!", 3]);
-                // this.dialogHandler.Trigger("You pressed F!", 3);
-                // this.dialogHandler.Trigger("This will disapear after 2 seconds", 2);
-                // this.dialogHandler.Trigger("5", 1);
-                // this.dialogHandler.Trigger("4", 1);
-                // this.dialogHandler.Trigger("3", 1);
-                // this.dialogHandler.Trigger("2", 1);
-                // this.dialogHandler.Trigger("1", 1);
-                // this.dialogHandler.Trigger("Blastoff!", 3);
             }
         };
         PlayScene.prototype.Main = function () {
