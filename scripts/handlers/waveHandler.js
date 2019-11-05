@@ -2,6 +2,7 @@ var handlers;
 (function (handlers) {
     var WaveHandler = /** @class */ (function () {
         function WaveHandler(playScene) {
+            this.hasStarted = false;
             this.playScene = playScene;
             this.waves = new Array();
         }
@@ -22,16 +23,18 @@ var handlers;
             enumerable: true,
             configurable: true
         });
+        /**
+         * Call when you would like the waves to start
+         */
         WaveHandler.prototype.Start = function () {
-            // this.NextWave();
-            this.currentWave = this.waves.shift();
-            if (this.currentWave) {
-                this.currentWave.Start();
-            }
+            this.hasStarted = true;
         };
         WaveHandler.prototype.Update = function () {
+            if (!this.hasStarted) {
+                return;
+            }
             if (!this.currentWave || this.currentWave.IsDone) {
-                this.Start();
+                this.NextWave();
             }
             else if (!this.CompletedAllWaves) {
                 this.currentWave.Update();
@@ -44,6 +47,9 @@ var handlers;
         };
         WaveHandler.prototype.NextWave = function () {
             this.currentWave = this.waves.shift();
+            if (this.currentWave) {
+                this.currentWave.Start();
+            }
         };
         WaveHandler.prototype.Add = function () {
             var _this = this;

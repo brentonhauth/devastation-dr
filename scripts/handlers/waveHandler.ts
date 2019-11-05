@@ -3,6 +3,7 @@ module handlers {
         public currentWave: objects.Wave;
         private waves: objects.Wave[];
         private playScene: scenes.PlayScene;
+        private hasStarted = false;
 
         public get CompletedAllWaves(): boolean {
             return this.currentWave &&
@@ -20,17 +21,18 @@ module handlers {
             this.waves = new Array<objects.Wave>();
         }
         
+        /**
+         * Call when you would like the waves to start
+         */
         public Start() {
-            // this.NextWave();
-            this.currentWave = this.waves.shift();
-            if (this.currentWave) {
-                this.currentWave.Start();
-            }
+            this.hasStarted = true;
         }
 
         public Update() {
+            if (!this.hasStarted) { return; }
+
             if (!this.currentWave || this.currentWave.IsDone) {
-                this.Start();
+                this.NextWave();
             } else if (!this.CompletedAllWaves) {
                 this.currentWave.Update();
             }
@@ -44,6 +46,9 @@ module handlers {
 
         private NextWave() {
             this.currentWave = this.waves.shift();
+            if (this.currentWave) {
+                this.currentWave.Start();
+            }
         }
 
         public Add(...ws: objects.Wave[]) {

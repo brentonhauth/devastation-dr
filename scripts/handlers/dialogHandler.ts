@@ -1,4 +1,7 @@
 module handlers {
+
+    type Dialog = [string, number, Function?]
+
     export class DialogHandler {
 
         public playScene: scenes.PlayScene;
@@ -22,7 +25,7 @@ module handlers {
             }
         }
 
-        public TriggerMany(...dialog: any[]) {
+        public TriggerMany(...dialog: Dialog[]) {
             dialog.forEach(d => {
                 if (Array.isArray(d)) {
                     this.Trigger(d[0], d[1], d[2]);

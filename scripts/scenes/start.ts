@@ -34,7 +34,7 @@ module scenes {
 
         private startButtonClick():void {
             // Change our game state from START to GAME
-            objects.Game.currentState = config.Scene.GAME;
+            objects.Game.currentState = config.Scene.JUNGLE;
         }
 
         public Main():void {
