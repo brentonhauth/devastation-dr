@@ -11,9 +11,7 @@ module scenes {
             this.dialogHandler.TriggerMany(
                 ["I've entered this part!", 2],
                 ["I hope something bad\ndoesn't happen", 2,
-                () => {
-                    this.waveHandler.Start();
-                }]
+                () => this.waveHandler.Start()]
             );
         }
 
@@ -24,60 +22,29 @@ module scenes {
         public Main() {
             super.Main();
 
-            let wave1 = new objects.Wave(
-                new objects.Spider(),
-                new objects.Spider(),
-                new objects.Spider(),
-                new objects.Spider(),
-                new objects.Spider()
-            );
-
-
-            let wave2 = new objects.Wave();
-
-            wave2.Add(
-                [objects.Spider, 5],
-                [objects.Lizard, 2]
-                // new objects.Spider(),
-                // new objects.Spider(),
-
-                // new objects.Lizard(),
-
-                // new objects.Spider(),
-                // new objects.Spider(),
-                // new objects.Spider(),
-
-                // new objects.Lizard(),
-            );
-
-            wave1.AddAmount(objects.Spider, 20);
-            // SAME AS: wave1.Add([objects.Spider, 20]);
-
-            wave1.Behavior(objects.Spider, (x, y, index) => {
-                if (index % 2 === 0) {
-                    x += 5;
-                    if (x > 760) {
-                        x = 0;
-                    }
-                } else {
-                    x -= 5;
-                    if (x < 0) {
-                        x = 760;
-                    }
-                }
-                y += 1;
-                if (y > 700) {
-                    y = -100;
-                }
-                return new math.Vec2(x, y);
-            });
-
-
             this.waveHandler.Add(
-                wave1, wave2
-            );
 
-            // this.waveHandler.Start();
+                // This wave has 25 spiders,
+                // and they all act different
+                new objects.Wave(
+                    [objects.Spider, 25]
+                ).Behavior(objects.Spider, (x, y, index) => {
+                    x = index % 2 === 0 ?
+                    (x < 760 ? x+5 : 0) :
+                    (x > 0 ? x-5 : 760);
+                    y = y < 700 ? y + 1 : -100;
+                    return new math.Vec2(x, y);
+                }),
+
+                // this wave has 5 spiders & 2 lizards
+                new objects.Wave(
+                    [objects.Spider, 5],
+                    [objects.Lizard, 2]
+                ),
+
+                // this wave has 5 lizards
+                new objects.Wave([objects.Lizard, 5])
+            );
         }
     }
 }

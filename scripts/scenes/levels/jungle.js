@@ -22,49 +22,27 @@ var scenes;
             var _this = this;
             _super.prototype.Start.call(this);
             this.dialogHandler.TriggerMany(["I've entered this part!", 2], ["I hope something bad\ndoesn't happen", 2,
-                function () {
-                    _this.waveHandler.Start();
-                }]);
+                function () { return _this.waveHandler.Start(); }]);
         };
         JungleScene.prototype.Update = function () {
             _super.prototype.Update.call(this);
         };
         JungleScene.prototype.Main = function () {
             _super.prototype.Main.call(this);
-            var wave1 = new objects.Wave(new objects.Spider(), new objects.Spider(), new objects.Spider(), new objects.Spider(), new objects.Spider());
-            var wave2 = new objects.Wave();
-            wave2.Add([objects.Spider, 5], [objects.Lizard, 2]
-            // new objects.Spider(),
-            // new objects.Spider(),
-            // new objects.Lizard(),
-            // new objects.Spider(),
-            // new objects.Spider(),
-            // new objects.Spider(),
-            // new objects.Lizard(),
-            );
-            wave1.AddAmount(objects.Spider, 20);
-            // SAME AS: wave1.Add([objects.Spider, 20]);
-            wave1.Behavior(objects.Spider, function (x, y, index) {
-                if (index % 2 === 0) {
-                    x += 5;
-                    if (x > 760) {
-                        x = 0;
-                    }
-                }
-                else {
-                    x -= 5;
-                    if (x < 0) {
-                        x = 760;
-                    }
-                }
-                y += 1;
-                if (y > 700) {
-                    y = -100;
-                }
+            this.waveHandler.Add(
+            // This wave has 25 spiders,
+            // and they all act different
+            new objects.Wave([objects.Spider, 25]).Behavior(objects.Spider, function (x, y, index) {
+                x = index % 2 === 0 ?
+                    (x < 760 ? x + 5 : 0) :
+                    (x > 0 ? x - 5 : 760);
+                y = y < 700 ? y + 1 : -100;
                 return new math.Vec2(x, y);
-            });
-            this.waveHandler.Add(wave1, wave2);
-            // this.waveHandler.Start();
+            }), 
+            // this wave has 5 spiders & 2 lizards
+            new objects.Wave([objects.Spider, 5], [objects.Lizard, 2]), 
+            // this wave has 5 lizards
+            new objects.Wave([objects.Lizard, 5]));
         };
         return JungleScene;
     }(scenes.PlayScene));

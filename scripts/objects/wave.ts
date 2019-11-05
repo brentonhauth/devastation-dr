@@ -61,7 +61,7 @@ module objects {
                     this.enemies.push(e);
                 }
             });
-            // this.enemies.push(...enemies);
+            return this;
         }
 
         public AddAmount(type: any, amount: number, params:Params=[]) {
@@ -75,10 +75,12 @@ module objects {
                     console.log(err);
                 }
             }
+            return this;
         }
 
         public Behavior<T>(type: T, cb: WaveBehaviorCallback) {
             this.behaviors.push({ type, cb });
+            return this;
         }
 
         public Remove(enemy: Enemy): boolean {

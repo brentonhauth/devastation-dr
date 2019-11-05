@@ -17,7 +17,7 @@ var hud;
         __extends(Score, _super);
         function Score() {
             var _this = _super.call(this) || this;
-            _this.display = new ui.Label("x3", "20px", "Consolas", "#FFFFFF", 240, 30, true);
+            _this.display = new ui.Label("Score: 0", "20px", "Consolas", "#FFFFFF", 240, 30, true);
             _this.addChild(_this.display);
             return _this;
         }
@@ -29,7 +29,7 @@ var hud;
             this.updateText();
         };
         Score.prototype.updateText = function () {
-            this.display.text = "Score: " + String(Score.savedScore + Score.currentScore);
+            this.display.text = "Score: " + (Score.savedScore + Score.currentScore);
         };
         Score.prototype.saveCurrentScore = function () {
             Score.savedScore += Score.currentScore;

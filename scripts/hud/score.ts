@@ -6,7 +6,7 @@ module hud {
         
         constructor() {
             super();
-            this.display = new ui.Label("x3", "20px", "Consolas", "#FFFFFF", 240, 30, true);
+            this.display = new ui.Label("Score: 0", "20px", "Consolas", "#FFFFFF", 240, 30, true);
 
             this.addChild(this.display);
         }
@@ -21,7 +21,7 @@ module hud {
         }
 
         public updateText() {
-            this.display.text = "Score: " + String(Score.savedScore + Score.currentScore);
+            this.display.text = "Score: " + (Score.savedScore + Score.currentScore);
         }
 
 

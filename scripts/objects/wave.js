@@ -71,7 +71,7 @@ var objects;
                     _this.enemies.push(e);
                 }
             });
-            // this.enemies.push(...enemies);
+            return this;
         };
         Wave.prototype.AddAmount = function (type, amount, params) {
             if (params === void 0) { params = []; }
@@ -86,9 +86,11 @@ var objects;
                     console.log(err);
                 }
             }
+            return this;
         };
         Wave.prototype.Behavior = function (type, cb) {
             this.behaviors.push({ type: type, cb: cb });
+            return this;
         };
         Wave.prototype.Remove = function (enemy) {
             var index = this.enemies.map(function (e) { return e.id; }).indexOf(enemy.id);
