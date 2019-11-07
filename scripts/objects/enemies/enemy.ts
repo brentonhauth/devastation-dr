@@ -9,12 +9,11 @@ module objects {
             this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult(enemyType));
             this.addChild(this.sprite);
             let bounds = this.sprite.getBounds();
-            console.log(bounds.width + " x " + bounds.height);
             this.width = bounds.width;
             this.height = bounds.height;
             this.Init();
             //this.pointsWorth = pointsWorth;
-            this.Start();
+            // this.Start();
         }
         // Methods
         public Start():void {

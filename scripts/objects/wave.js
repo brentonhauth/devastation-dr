@@ -27,7 +27,10 @@ var objects;
         });
         Wave.prototype.Start = function () {
             var _this = this;
-            this.enemies.forEach(function (e) { return _this.playScene.addChild(e); });
+            this.enemies.forEach(function (e) {
+                _this.playScene.addChild(e);
+                e.Start();
+            });
         };
         Wave.prototype.Update = function () {
             var _this = this;

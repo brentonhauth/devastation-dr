@@ -21,13 +21,12 @@ var objects;
             _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult(enemyType));
             _this.addChild(_this.sprite);
             var bounds = _this.sprite.getBounds();
-            console.log(bounds.width + " x " + bounds.height);
             _this.width = bounds.width;
             _this.height = bounds.height;
             _this.Init();
-            //this.pointsWorth = pointsWorth;
-            _this.Start();
             return _this;
+            //this.pointsWorth = pointsWorth;
+            // this.Start();
         }
         // Methods
         Enemy.prototype.Start = function () {

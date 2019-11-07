@@ -23,7 +23,10 @@ module objects {
         }
 
         public Start() {
-            this.enemies.forEach(e => this.playScene.addChild(e));
+            this.enemies.forEach(e => {
+                this.playScene.addChild(e);
+                e.Start();
+            });
         }
 
         public Update() {

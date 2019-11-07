@@ -20,9 +20,14 @@ var scenes;
         }
         ArcticScene.prototype.Start = function () {
             _super.prototype.Start.call(this);
+            this.waveHandler.Start();
         };
         ArcticScene.prototype.Update = function () {
             _super.prototype.Update.call(this);
+        };
+        ArcticScene.prototype.Main = function () {
+            _super.prototype.Main.call(this);
+            this.waveHandler.Add(new objects.Wave([objects.Wolf, 5]));
         };
         return ArcticScene;
     }(scenes.PlayScene));
