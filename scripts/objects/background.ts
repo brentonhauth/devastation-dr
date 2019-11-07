@@ -1,10 +1,10 @@
 module objects {
     export class Background extends createjs.Bitmap {
         // Variables
-        private speedY:number;  // Speed of background scrolling on Y-axis
+        private speedY: number;  // Speed of background scrolling on Y-axis
         // Constructor
-        constructor() {
-            super(objects.Game.assetManager.getResult("background"));
+        constructor(levelType: string) {
+            super(objects.Game.assetManager.getResult(levelType));
             this.scaleX *= 1.05;
             this.scaleY *= 1.05;
             this.x -= 300;
@@ -12,26 +12,26 @@ module objects {
         }
         // Functions 
         // Initializing our variables with default values
-        public Start():void {
+        public Start(): void {
             this.speedY = 0.5;
             this.Reset();
         }
         // Updated 60 times per second (60FPS)
-        public Update():void {
+        public Update(): void {
             this.Move();
             this.CheckBound();
         }
         // Resets the position of the object
-        public Reset():void {
+        public Reset(): void {
             this.y = -500;
         }
         // Move the object
-        public Move():void {
+        public Move(): void {
             this.y += this.speedY;
         }
         // Collision Detection 
-        public CheckBound():void {
-            if(this.y >= 0) {
+        public CheckBound(): void {
+            if (this.y >= 0) {
                 this.Reset();
             }
         }

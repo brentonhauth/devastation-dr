@@ -1,4 +1,4 @@
-(function() {
+(function () {
 
     // Global Game Variables
     let canvas = document.getElementById("canvas");
@@ -24,7 +24,7 @@
         // Initialize CreateJS
         objects.Game.stage = stage = new createjs.Stage(canvas);
         // Freqeuncy of checks. Computationally expensive. Turn on in menus, Turn off in game
-        stage.enableMouseOver(20); 
+        stage.enableMouseOver(20);
         createjs.Ticker.framerate = 60; // 60 FPS
         createjs.Ticker.on("tick", Update);
 
@@ -32,13 +32,13 @@
         // Create a global reference to our stage object
         managers.Keyboard.listen();
         objects.Game.currentState = currentState = config.Scene.START;
-        objects.Game.assetManager = assetManager; 
+        objects.Game.assetManager = assetManager;
         Main();
     }
 
     function Update() {
         // Has my state changed since the last check?
-        if(currentState != objects.Game.currentState) {
+        if (currentState != objects.Game.currentState) {
             console.log("Changing scenes to" + objects.Game.currentState);
             Main();
         }
@@ -55,24 +55,24 @@
         switch (objects.Game.currentState) {
             case config.Scene.START:
                 currentScene = new scenes.StartScene();
-            break;
+                break;
             case config.Scene.GAME:
-                currentScene = new scenes.PlayScene();
-            break;
+                // currentScene = new scenes.PlayScene();
+                break;
             case config.Scene.OVER:
                 currentScene = new scenes.GameOverScene();
-            break;
+                break;
 
             // LEVELS
             case config.Scene.JUNGLE:
                 currentScene = new scenes.JungleScene();
-            break;
+                break;
             case config.Scene.DESERT:
                 currentScene = new scenes.DesertScene();
-            break;
+                break;
             case config.Scene.ARCTIC:
                 currentScene = new scenes.ArcticScene();
-            break;
+                break;
         }
 
         stage.removeAllChildren();

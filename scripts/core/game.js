@@ -45,7 +45,7 @@
                 currentScene = new scenes.StartScene();
                 break;
             case config.Scene.GAME:
-                currentScene = new scenes.PlayScene();
+                // currentScene = new scenes.PlayScene();
                 break;
             case config.Scene.OVER:
                 currentScene = new scenes.GameOverScene();

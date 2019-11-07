@@ -12,14 +12,14 @@ module scenes {
         public dialogHandler: handlers.DialogHandler;
         public waveHandler: handlers.WaveHandler;
 
-        constructor() {
+        constructor(levelType: string) {
             super();
 
-            this.background = new objects.Background();
+            this.background = new objects.Background(levelType);
             this.player = new objects.Player();
             this.lifeCounter = new hud.LifeCounter();
             this.score = new hud.Score();
-    
+
             this.playerBulletHandler = new handlers.PlayerBulletHandler(this);
             this.enemyBulletHandler = new handlers.EnemyBulletHandler(this);
             this.enemyHandler = new handlers.EnemyHandler(this);
@@ -59,7 +59,7 @@ module scenes {
             this.addChild(bullet);
         }
 
-        public AddEnemyBullet(enemy:objects.Enemy) {
+        public AddEnemyBullet(enemy: objects.Enemy) {
             let bullet = this.enemyBulletHandler.SpawnBullet(enemy);
             this.addChild(bullet);
         }
