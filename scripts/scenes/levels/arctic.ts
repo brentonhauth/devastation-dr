@@ -18,7 +18,14 @@ module scenes {
             super.Main();
 
             this.waveHandler.Add(
-                new objects.Wave([objects.Wolf, 5])
+                new objects.Wave([objects.Penguin, 2]),
+                new objects.Wave([objects.Penguin, 3]),
+                new objects.Wave([objects.Penguin, 3]),
+                new objects.Wave([objects.Wolf, 5]),
+                new objects.Wave(
+                    [objects.Wolf, 5],
+                    [objects.Penguin, 2]
+                )
             );
         }
     }

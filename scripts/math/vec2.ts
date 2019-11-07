@@ -35,9 +35,9 @@ module math {
         }
 
         public static Distance(a: Vec2, b: Vec2): number {
-            let x = b.x - a.x;
-            let y = b.y - a.y;
-            return (x * x) + (y * y);
+            let x = a.x - b.x;
+            let y = a.y - b.y;
+            return Math.sqrt((x * x) + (y * y));
         }
 
         public static Difference(a: Vec2, b: Vec2): Vec2 {

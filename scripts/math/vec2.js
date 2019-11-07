@@ -53,9 +53,9 @@ var math;
             return new Vec2(a.x + b.x, a.y + b.y);
         };
         Vec2.Distance = function (a, b) {
-            var x = b.x - a.x;
-            var y = b.y - a.y;
-            return (x * x) + (y * y);
+            var x = a.x - b.x;
+            var y = a.y - b.y;
+            return Math.sqrt((x * x) + (y * y));
         };
         Vec2.Difference = function (a, b) {
             return new math.Vec2(a.x - b.x, a.y - b.y);

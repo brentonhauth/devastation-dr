@@ -18,7 +18,9 @@ module config {
             { id: "hummer", src: "./assets/images/hummer.png" },
 
             { id: "wolfSheet", src: "./assets/images/sheets/enemies/wolfSheet.png" },
+            { id: "penguinSheet", src: "./assets/images/sheets/enemies/penguinSheet.png" },
             { id: "lizardSheet", src: "./assets/images/sheets/enemies/alligatorSheet.png" },
+
             { id: "powerup", src: "./assets/images/powerup.png" },
 
 
