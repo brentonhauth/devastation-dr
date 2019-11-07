@@ -35,16 +35,12 @@ var hud;
         WeaponHUD.prototype.updateWeapon = function (weapon) {
             this.removeChild(this.weaponImage);
             var imageString = this.tempMap[weapon.weaponType];
-            //this.weaponText = new ui.Label(imageString, "20px", "Consolas", "#FFFFFF", 540, 30, true);
             this.weaponImage = new createjs.Bitmap(objects.Game.assetManager.getResult(imageString));
             this.weaponImage.x = 640;
             this.weaponImage.y = 30;
             this.addChild(this.weaponImage);
             this.weaponText.text = "Weapon level: " + String(weapon.upgradeLevel);
             //this.weaponImage.image = objects.Game.assetManager.getResult(imageString)
-        };
-        WeaponHUD.prototype.updateText = function () {
-            //this.display.text = "Score: " + (Score.savedScore + Score.currentScore);
         };
         WeaponHUD.savedScore = 0;
         WeaponHUD.currentScore = 0;

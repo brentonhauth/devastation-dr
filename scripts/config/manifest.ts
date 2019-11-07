@@ -20,7 +20,7 @@ module config {
             { id: "wolfSheet", src: "./assets/images/sheets/enemies/wolfSheet.png" },
             { id: "lizardSheet", src: "./assets/images/sheets/enemies/alligatorSheet.png" },
             { id: "powerup", src: "./assets/images/powerup.png" },
-            { id: "pistol", src: "./assets/images/pistol.png" },
+            { id: "pistol", src: "./assets/images/Pistol.png" },
             { id: "machineGun", src: "./assets/images/MachineGun.png" },
 
 
