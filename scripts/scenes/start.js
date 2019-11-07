@@ -18,7 +18,7 @@ var scenes;
         // Constructor
         function StartScene() {
             var _this = _super.call(this) || this;
-            _this.background = new objects.Background();
+            _this.background = new objects.Background("arctic");
             _this.logo = new createjs.Bitmap(objects.Game.assetManager.getResult("logo"));
             _this.infoLabel = new ui.Label("(c) Rude Rhino", "18px", "Arial", "#e1e1f1", 320, 800, true);
             _this.logo.scaleX *= .65;

@@ -4,7 +4,7 @@ module scenes {
         private finishedCheck = false;
 
         constructor() {
-            super();
+            super("jungle");
         }
 
         public Start() {
@@ -15,7 +15,7 @@ module scenes {
             this.dialogHandler.TriggerMany(
                 ["I've entered this part!", 2],
                 ["I hope something bad\ndoesn't happen...", 2,
-                () => this.waveHandler.Start()]
+                    () => this.waveHandler.Start()]
             );
         }
 
@@ -51,8 +51,8 @@ module scenes {
                     [objects.Spider, 25]
                 ).Behavior(objects.Spider, (x, y, index) => {
                     x = index % 2 === 0 ?
-                    (x < 760 ? x+5 : 0) :
-                    (x > 0 ? x-5 : 760);
+                        (x < 760 ? x + 5 : 0) :
+                        (x > 0 ? x - 5 : 760);
                     y = y < 700 ? y + 1 : -100;
                     return new math.Vec2(x, y);
                 }),

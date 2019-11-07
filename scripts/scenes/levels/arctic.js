@@ -16,7 +16,7 @@ var scenes;
     var ArcticScene = /** @class */ (function (_super) {
         __extends(ArcticScene, _super);
         function ArcticScene() {
-            return _super.call(this) || this;
+            return _super.call(this, "arctic") || this;
         }
         ArcticScene.prototype.Start = function () {
             _super.prototype.Start.call(this);

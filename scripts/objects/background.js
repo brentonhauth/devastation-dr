@@ -16,8 +16,8 @@ var objects;
     var Background = /** @class */ (function (_super) {
         __extends(Background, _super);
         // Constructor
-        function Background() {
-            var _this = _super.call(this, objects.Game.assetManager.getResult("background")) || this;
+        function Background(levelType) {
+            var _this = _super.call(this, objects.Game.assetManager.getResult(levelType)) || this;
             _this.scaleX *= 1.05;
             _this.scaleY *= 1.05;
             _this.x -= 300;
