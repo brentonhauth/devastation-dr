@@ -3,12 +3,13 @@ module objects {
     type WaveBehaviorCallback = (x:number,y:number,index?:number)=>math.Vec2;
     type WaveEnemyAmount = [any, number, Params?];
     type Params = any[];
+    type EnemyBehavior = {type: any, cb:WaveBehaviorCallback};
 
     export class Wave {
         public enemies: Enemy[];
         public playScene: scenes.PlayScene;
 
-        private behaviors: {type: any, cb:WaveBehaviorCallback}[];
+        private behaviors: EnemyBehavior[];
 
         public get IsDone(): boolean {
             return this.enemies.length === 0;
@@ -16,7 +17,7 @@ module objects {
 
         constructor(...enemies: (objects.Enemy|WaveEnemyAmount)[]) {
             this.enemies = new Array<Enemy>();
-            this.behaviors = new Array();
+            this.behaviors = new Array<EnemyBehavior>();
             this.Add(...enemies);
             this.playScene = <scenes.PlayScene>objects.Game.currentScene;
         }

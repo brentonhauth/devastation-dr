@@ -20,9 +20,26 @@ var objects;
             var _this = _super.call(this, enemyHandler) || this;
             _this.scaleX = 1.5;
             _this.scaleY = 1.5;
+            var sheet = new createjs.SpriteSheet({
+                images: [objects.Game.assetManager.getResult('lizardSheet')],
+                frames: {
+                    width: 1152 / 12,
+                    height: 768 / 8,
+                    count: 96
+                },
+                animations: {
+                    move: {
+                        frames: [0, 1, 2],
+                        speed: .1
+                    }
+                }
+            });
+            _this.lizardAnimator = new createjs.Sprite(sheet, "move");
             var bounds = _this.sprite.getBounds();
             _this.width = bounds.width;
             _this.height = bounds.height;
+            _this.removeChild(_this.sprite);
+            _this.addChild(_this.lizardAnimator);
             _this.Init();
             _this.lastPlayerPos = new math.Vec2();
             _this.enemyBullets = new Array(0);

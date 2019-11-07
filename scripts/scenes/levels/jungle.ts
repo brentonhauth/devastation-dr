@@ -43,6 +43,8 @@ module scenes {
 
             this.waveHandler.Add(
 
+                new objects.Wave(new objects.Lizard()),
+
                 // This wave has 25 spiders,
                 // and they all act different
                 new objects.Wave(
