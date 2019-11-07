@@ -16,7 +16,7 @@ var scenes;
     var JungleScene = /** @class */ (function (_super) {
         __extends(JungleScene, _super);
         function JungleScene() {
-            var _this = _super.call(this, "jungle") || this;
+            var _this = _super.call(this) || this;
             _this.finishedCheck = false;
             return _this;
         }

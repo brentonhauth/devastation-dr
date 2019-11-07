@@ -4,7 +4,7 @@ module scenes {
         private finishedCheck = false;
 
         constructor() {
-            super("jungle");
+            super();
         }
 
         public Start() {
