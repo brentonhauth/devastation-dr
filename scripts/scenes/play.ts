@@ -12,10 +12,12 @@ module scenes {
         public dialogHandler: handlers.DialogHandler;
         public waveHandler: handlers.WaveHandler;
 
-        constructor(levelType: string) {
+        constructor() {
             super();
 
-            this.background = new objects.Background(levelType);
+            let levelType = config.Scene[objects.Game.currentState];
+            console.log('levelType:',levelType);
+            this.background = new objects.Background(levelType.toLowerCase());
             this.player = new objects.Player();
             this.lifeCounter = new hud.LifeCounter();
             this.score = new hud.Score();

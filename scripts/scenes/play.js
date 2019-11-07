@@ -15,9 +15,11 @@ var scenes;
 (function (scenes) {
     var PlayScene = /** @class */ (function (_super) {
         __extends(PlayScene, _super);
-        function PlayScene(levelType) {
+        function PlayScene() {
             var _this = _super.call(this) || this;
-            _this.background = new objects.Background(levelType);
+            var levelType = config.Scene[objects.Game.currentState];
+            console.log('levelType:', levelType);
+            _this.background = new objects.Background(levelType.toLowerCase());
             _this.player = new objects.Player();
             _this.lifeCounter = new hud.LifeCounter();
             _this.score = new hud.Score();

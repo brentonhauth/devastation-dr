@@ -16,7 +16,7 @@ var scenes;
     var DesertScene = /** @class */ (function (_super) {
         __extends(DesertScene, _super);
         function DesertScene() {
-            return _super.call(this, "desert") || this;
+            return _super.call(this) || this;
         }
         DesertScene.prototype.Start = function () {
             _super.prototype.Start.call(this);

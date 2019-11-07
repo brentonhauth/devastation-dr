@@ -1,7 +1,7 @@
 module scenes {
     export class DesertScene extends PlayScene {
         constructor() {
-            super("desert");
+            super();
         }
 
         public Start() {
