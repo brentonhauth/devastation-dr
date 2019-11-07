@@ -20,7 +20,7 @@ var scenes;
             var levelType = config.Scene[objects.Game.currentState];
             console.log('levelType:', levelType);
             _this.background = new objects.Background(levelType.toLowerCase());
-            _this.player = new objects.Player();
+            _this.player = new objects.Player(_this);
             _this.lifeCounter = new hud.LifeCounter();
             _this.score = new hud.Score();
             _this.playerBulletHandler = new handlers.PlayerBulletHandler(_this);
@@ -28,6 +28,7 @@ var scenes;
             _this.enemyHandler = new handlers.EnemyHandler(_this);
             _this.dialogHandler = new handlers.DialogHandler(_this);
             _this.waveHandler = new handlers.WaveHandler(_this);
+            _this.enemyItemHandler = new handlers.EnemyItemHandler(_this);
             return _this;
         }
         PlayScene.prototype.Start = function () {
@@ -45,17 +46,19 @@ var scenes;
             this.waveHandler.CheckCollision(this.player);
             this.enemyBulletHandler.UpdateAndCheckCollision(this.player);
             this.playerBulletHandler.UpdateAndCheckCollision(this.waveHandler.ActiveEnemies);
+            this.enemyItemHandler.Update();
+            this.enemyItemHandler.CheckCollision(this.player);
             if (managers.Keyboard.down(config.Key.Space)) {
-                this.AddBullet();
+                this.player.ShootWeapon();
             }
-        };
-        PlayScene.prototype.AddBullet = function () {
-            var bullet = this.playerBulletHandler.SpawnBullet();
-            this.addChild(bullet);
         };
         PlayScene.prototype.AddEnemyBullet = function (enemy) {
             var bullet = this.enemyBulletHandler.SpawnBullet(enemy);
             this.addChild(bullet);
+        };
+        PlayScene.prototype.AddEnemyItem = function (enemy) {
+            var item = this.enemyItemHandler.SpawnItem(enemy);
+            this.addChild(item);
         };
         return PlayScene;
     }(scenes.Scene));

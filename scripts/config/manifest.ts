@@ -17,6 +17,9 @@ module config {
             { id: "playerSheet", src: "./assets/images/player_sheet112x146.png" },
             { id: "hummer", src: "./assets/images/hummer.png" },
             { id: "lizardSheet", src: "./assets/images/alligator.png" },
+            { id: "powerup", src: "./assets/images/powerup.png" },
+
+
 
             // Sounds
             { id: "explosion", src: "./assets/sounds/explosion.wav" },

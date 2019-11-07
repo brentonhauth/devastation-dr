@@ -5,9 +5,8 @@ module handlers {
             super(playScene);
         }
 
-        public SpawnBullet():objects.PlayerBullet {
-            let player = this.playScene.player;
-            let bullet = new objects.PlayerBullet(player.x, player.y, this);
+        public SpawnBullet(position: math.Vec2):objects.PlayerBullet {
+            let bullet = new objects.PlayerBullet(position.x, position.y, this);
             this.bullets[bullet.id] = bullet;
 
             return bullet;

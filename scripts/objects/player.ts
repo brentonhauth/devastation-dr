@@ -9,15 +9,20 @@ module objects {
         private moved: math.Vec2;
         
         private sprite: createjs.Bitmap;
+
+        private weapon: objects.Weapon;
+        public playScene: scenes.PlayScene;
         
 
         // Constructor
-        constructor() {
+        constructor(playScene: scenes.PlayScene) {
             super();
+            this.playScene = playScene;
             this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("hummer"));
             let bounds = this.sprite.getBounds();
             this.width = bounds.width;
             this.height = bounds.height;
+            this.weapon = new objects.Pistol(playScene);
             this.Init();
             this.addChild(this.sprite);
             this.Start();
@@ -108,19 +113,50 @@ module objects {
             */
         }
 
-        public OnCollision(_gameObject: objects.GameObject): void {
-            if (this.intangible) { return; }
-            this.lives -= 1;
-            
-            let cs = <scenes.PlayScene>objects.Game.currentScene;
-            if (cs.lifeCounter) { cs.lifeCounter.text(this.lives); }
+        public ShootWeapon():void {
+            this.weapon.Shoot();
+        }
 
-            managers.Sound.sfx("explosion");
-            this.StartBlink();
-            if (this.lives == 0) {
-                objects.Game.currentState = config.Scene.OVER;
-                console.log("dead");
+        public ChangeWeapon(weaponType: config.Weapon): void {
+            if (weaponType == config.Weapon.MACHINEGUN) 
+            {
+                this.weapon = new objects.MachineGun(this.playScene);
             }
+        }
+
+        public OnCollision(_gameObject: objects.GameObject): void {
+            if(_gameObject instanceof objects.EnemyItem)
+            {
+                if ((<objects.EnemyItem>_gameObject).itemType == config.Item.MACHINEGUN)
+                {
+                    if (this.weapon.weaponType == config.Weapon.MACHINEGUN)
+                    {
+                        this.weapon.Upgrade();
+                    }
+                    else
+                    {
+                        this.ChangeWeapon(config.Weapon.MACHINEGUN);
+                    }
+                }
+                (<objects.EnemyItem>_gameObject).Destroy();
+            }
+            else
+            {
+                if (!this.intangible) {
+                    this.lives -= 1;
+                    
+                    let cs = <scenes.PlayScene>objects.Game.currentScene;
+                    if (cs.lifeCounter) { cs.lifeCounter.text(this.lives); }
+
+                    managers.Sound.sfx("explosion");
+                    this.StartBlink();
+                    if (this.lives == 0) {
+                        objects.Game.currentState = config.Scene.OVER;
+                        console.log("dead");
+                    }
+                }
+            }
+
         }
     }
 }
