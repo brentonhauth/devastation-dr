@@ -34,7 +34,7 @@ module handlers {
         }
 
         public DestroyItem(item:objects.EnemyItem) {
-            delete this.items[item.id];
+            delete this.items[item.itemID];
             this.playScene.removeChild(item);
         }
     }

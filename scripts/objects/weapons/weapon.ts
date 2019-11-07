@@ -2,7 +2,7 @@ module objects {
     export class Weapon {
 
         public weaponType: config.Weapon;
-        protected upgradeLevel: number;
+        public upgradeLevel: number;
 
         constructor(weaponType: config.Weapon) {
             this.weaponType = weaponType;

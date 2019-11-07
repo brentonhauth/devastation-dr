@@ -23,7 +23,7 @@ var handlers;
             }
         };
         EnemyItemHandler.prototype.DestroyItem = function (item) {
-            delete this.items[item.id];
+            delete this.items[item.itemID];
             this.playScene.removeChild(item);
         };
         return EnemyItemHandler;
