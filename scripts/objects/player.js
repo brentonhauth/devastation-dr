@@ -123,6 +123,7 @@ var objects;
                     else {
                         this.ChangeWeapon(config.Weapon.MACHINEGUN);
                     }
+                    this.playScene.weaponHUD.updateWeapon(this.weapon);
                 }
                 _gameObject.Destroy();
             }

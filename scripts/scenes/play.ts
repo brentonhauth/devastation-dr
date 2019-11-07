@@ -5,6 +5,7 @@ module scenes {
         public player: objects.Player;
         public lifeCounter: hud.LifeCounter;
         public score: hud.Score;
+        public weaponHUD: hud.WeaponHUD;
 
         public playerBulletHandler: handlers.PlayerBulletHandler;
         public enemyBulletHandler: handlers.EnemyBulletHandler;
@@ -22,6 +23,7 @@ module scenes {
 
             this.lifeCounter = new hud.LifeCounter();
             this.score = new hud.Score();
+            this.weaponHUD = new hud.WeaponHUD();
 
             this.playerBulletHandler = new handlers.PlayerBulletHandler(this);
             this.enemyBulletHandler = new handlers.EnemyBulletHandler(this);
@@ -37,6 +39,8 @@ module scenes {
             this.addChild(this.player);
             this.addChild(this.lifeCounter);
             this.addChild(this.score);
+            this.addChild(this.weaponHUD);
+            
             this.dialogHandler.AppendDialogBox();
 
             this.Main();

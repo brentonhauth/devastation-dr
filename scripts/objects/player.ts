@@ -137,6 +137,7 @@ module objects {
                     {
                         this.ChangeWeapon(config.Weapon.MACHINEGUN);
                     }
+                    this.playScene.weaponHUD.updateWeapon(this.weapon);
                 }
                 (<objects.EnemyItem>_gameObject).Destroy();
             }

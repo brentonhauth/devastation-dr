@@ -20,6 +20,8 @@ var config;
             { id: "wolfSheet", src: "./assets/images/sheets/enemies/wolfSheet.png" },
             { id: "lizardSheet", src: "./assets/images/sheets/enemies/alligatorSheet.png" },
             { id: "powerup", src: "./assets/images/powerup.png" },
+            { id: "pistol", src: "./assets/images/pistol.png" },
+            { id: "machineGun", src: "./assets/images/MachineGun.png" },
             // Sounds
             { id: "explosion", src: "./assets/sounds/explosion.wav" },
             { id: "cyberpunker", src: "./assets/sounds/cyberpunker.ogg" }
