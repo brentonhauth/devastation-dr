@@ -16,16 +16,18 @@ var objects;
     var Player = /** @class */ (function (_super) {
         __extends(Player, _super);
         // Constructor
-        function Player() {
+        function Player(playScene) {
             var _this = _super.call(this) || this;
             _this.blink = false;
             _this.intangible = false;
             _this.oddBlink = 0;
             _this.moveSpeed = 8;
+            _this.playScene = playScene;
             _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("hummer"));
             var bounds = _this.sprite.getBounds();
             _this.width = bounds.width;
             _this.height = bounds.height;
+            _this.weapon = new objects.Pistol(playScene);
             _this.Init();
             _this.addChild(_this.sprite);
             _this.Start();
@@ -104,20 +106,40 @@ var objects;
             }
             */
         };
+        Player.prototype.ShootWeapon = function () {
+            this.weapon.Shoot();
+        };
+        Player.prototype.ChangeWeapon = function (weaponType) {
+            if (weaponType == config.Weapon.MACHINEGUN) {
+                this.weapon = new objects.MachineGun(this.playScene);
+            }
+        };
         Player.prototype.OnCollision = function (_gameObject) {
-            if (this.intangible) {
-                return;
+            if (_gameObject instanceof objects.EnemyItem) {
+                if (_gameObject.itemType == config.Item.MACHINEGUN) {
+                    if (this.weapon.weaponType == config.Weapon.MACHINEGUN) {
+                        this.weapon.Upgrade();
+                    }
+                    else {
+                        this.ChangeWeapon(config.Weapon.MACHINEGUN);
+                    }
+                }
+                _gameObject.Destroy();
             }
-            this.lives -= 1;
-            var cs = objects.Game.currentScene;
-            if (cs.lifeCounter) {
-                cs.lifeCounter.text(this.lives);
-            }
-            managers.Sound.sfx("explosion");
-            this.StartBlink();
-            if (this.lives == 0) {
-                objects.Game.currentState = config.Scene.OVER;
-                console.log("dead");
+            else {
+                if (!this.intangible) {
+                    this.lives -= 1;
+                    var cs = objects.Game.currentScene;
+                    if (cs.lifeCounter) {
+                        cs.lifeCounter.text(this.lives);
+                    }
+                    managers.Sound.sfx("explosion");
+                    this.StartBlink();
+                    if (this.lives == 0) {
+                        objects.Game.currentState = config.Scene.OVER;
+                        console.log("dead");
+                    }
+                }
             }
         };
         return Player;

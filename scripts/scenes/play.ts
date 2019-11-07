@@ -11,13 +11,15 @@ module scenes {
         public enemyHandler: handlers.EnemyHandler;
         public dialogHandler: handlers.DialogHandler;
         public waveHandler: handlers.WaveHandler;
+        public enemyItemHandler: handlers.EnemyItemHandler;
 
         constructor() {
             super();
 
             let levelType = config.Scene[objects.Game.currentState];
             this.background = new objects.Background(levelType.toLowerCase());
-            this.player = new objects.Player();
+            this.player = new objects.Player(this);
+
             this.lifeCounter = new hud.LifeCounter();
             this.score = new hud.Score();
 
@@ -26,6 +28,7 @@ module scenes {
             this.enemyHandler = new handlers.EnemyHandler(this);
             this.dialogHandler = new handlers.DialogHandler(this);
             this.waveHandler = new handlers.WaveHandler(this);
+            this.enemyItemHandler = new handlers.EnemyItemHandler(this);
         }
 
         public Start(): void {
@@ -50,19 +53,22 @@ module scenes {
             this.enemyBulletHandler.UpdateAndCheckCollision(this.player);
             this.playerBulletHandler.UpdateAndCheckCollision(this.waveHandler.ActiveEnemies);
 
+            this.enemyItemHandler.Update();
+            this.enemyItemHandler.CheckCollision(this.player);
+
             if (managers.Keyboard.down(config.Key.Space)) {
-                this.AddBullet();
+                this.player.ShootWeapon();
             }
         }
 
-        public AddBullet() {
-            let bullet = this.playerBulletHandler.SpawnBullet();
+        public AddEnemyBullet(enemy:objects.Enemy) {
+            let bullet = this.enemyBulletHandler.SpawnBullet(enemy);
             this.addChild(bullet);
         }
 
-        public AddEnemyBullet(enemy: objects.Enemy) {
-            let bullet = this.enemyBulletHandler.SpawnBullet(enemy);
-            this.addChild(bullet);
+        public AddEnemyItem(enemy:objects.Enemy) {
+            let item = this.enemyItemHandler.SpawnItem(enemy);
+            this.addChild(item);
         }
     }
 }

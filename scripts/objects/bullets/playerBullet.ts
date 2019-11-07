@@ -17,6 +17,7 @@ module objects {
             let playScene = this.bulletHandler.playScene;
 
             if (obj instanceof objects.Enemy || obj instanceof objects.Spider) {
+                playScene.AddEnemyItem(obj);
                 obj.Destroy();
                 this.Destroy();
 
