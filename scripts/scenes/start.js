@@ -15,29 +15,35 @@ var scenes;
 (function (scenes) {
     var StartScene = /** @class */ (function (_super) {
         __extends(StartScene, _super);
+        // private exitButton: ui.Button;
         // Constructor
         function StartScene() {
             var _this = _super.call(this) || this;
-            _this.background = new objects.Background("arctic");
+            _this.background = new createjs.Bitmap(objects.Game.assetManager.getResult("menu"));
             _this.logo = new createjs.Bitmap(objects.Game.assetManager.getResult("logo"));
             _this.infoLabel = new ui.Label("(c) Rude Rhino", "18px", "Arial", "#e1e1f1", 320, 800, true);
             _this.logo.scaleX *= .65;
             _this.logo.scaleY *= .65;
-            _this.logo.x = 10;
-            _this.logo.y = 10;
-            _this.startButton = new ui.Button("nextButton", 30, 120);
-            _this.startButton.scaleY *= 2.25;
-            _this.startButton.scaleX *= 2.25;
+            _this.logo.x = 350;
+            _this.logo.y = 80;
+            _this.startButton = new ui.Button("playButton", 640, 180);
             return _this;
+            //this.exitButton = new ui.Button("exitButton", 320, 260);
+            //this.startButton.scaleY *= 2.25;
+            //this.startButton.scaleX *= 2.25;
         }
         StartScene.prototype.Start = function () {
             this.addChild(this.background);
             this.addChild(this.startButton);
+            //this.addChild(this.exitButton);
             this.addChildAt(this.logo, 2);
             this.addChild(this.infoLabel);
             this.startButton.on("click", function () {
                 objects.Game.currentState = config.Scene.JUNGLE;
             });
+            // this.exitButton.on("click", () => {
+            //     window.close();
+            // });
         };
         return StartScene;
     }(scenes.Scene));

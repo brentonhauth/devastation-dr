@@ -5,7 +5,10 @@ module config {
             { id: "logo", src: "./assets/images/devastation-dr.PNG" },
             { id: "backButton", src: "./assets/images/BackButton.png" },
             { id: "nextButton", src: "./assets/images/NextButton.png" },
+            { id: "playButton", src: "./assets/images/play.png" },
+            { id: "exitButton", src: "./assets/images/exit.png" },
             { id: "background", src: "./assets/images/desert.png" },
+            { id: "menu", src: "./assets/images/menu.png" },
             { id: "desert", src: "./assets/images/desert.png" },
             { id: "arctic", src: "./assets/images/desert.png" },
             { id: "jungle", src: "./assets/images/desert.png" }, // "./assets/images/background.png"
