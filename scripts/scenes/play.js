@@ -32,7 +32,7 @@ var scenes;
             return _this;
         }
         PlayScene.prototype.Start = function () {
-            // this.addChild(this.background);
+            this.addChild(this.background);
             this.addChild(this.player);
             this.addChild(this.lifeCounter);
             this.addChild(this.score);

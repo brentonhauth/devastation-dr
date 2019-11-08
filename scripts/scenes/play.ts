@@ -35,7 +35,7 @@ module scenes {
 
         public Start(): void {
 
-            // this.addChild(this.background);
+            this.addChild(this.background);
             this.addChild(this.player);
             this.addChild(this.lifeCounter);
             this.addChild(this.score);

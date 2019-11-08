@@ -33,7 +33,7 @@ module scenes {
             this.addChild(this.infoLabel);
 
             this.startButton.on("click", () => {
-                objects.Game.currentState = config.Scene.JUNGLE;
+                objects.Game.currentState = config.Scene.PROLOGUE;
             });
         }
     }

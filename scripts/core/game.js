@@ -60,6 +60,10 @@
             case config.Scene.ARCTIC:
                 currentScene = new scenes.ArcticScene();
                 break;
+            // CUTSCENES
+            case config.Scene.PROLOGUE:
+                currentScene = new scenes.Prologue();
+                break;
         }
         stage.removeAllChildren();
         objects.Game.currentScene = currentScene;
