@@ -27,7 +27,7 @@ var scenes;
         };
         ArcticScene.prototype.Main = function () {
             _super.prototype.Main.call(this);
-            this.waveHandler.Add(new objects.Wave([objects.Penguin, 2]), new objects.Wave([objects.Penguin, 3]), new objects.Wave([objects.Penguin, 3]), new objects.Wave([objects.Wolf, 5]), new objects.Wave([objects.Wolf, 5], [objects.Penguin, 2]));
+            this.waveHandler.Add(new objects.Wave(new objects.PolarBear()));
         };
         return ArcticScene;
     }(scenes.PlayScene));

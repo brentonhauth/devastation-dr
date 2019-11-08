@@ -36,7 +36,7 @@ var scenes;
             this.addChildAt(this.logo, 2);
             this.addChild(this.infoLabel);
             this.startButton.on("click", function () {
-                objects.Game.currentState = config.Scene.JUNGLE;
+                objects.Game.currentState = config.Scene.ARCTIC;
             });
         };
         return StartScene;

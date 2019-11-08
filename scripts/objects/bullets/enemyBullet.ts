@@ -1,7 +1,7 @@
 module objects {
     export class EnemyBullet extends objects.Bullet {
         private dir: math.Vec2;
-        private speed: number = 3;
+        protected speed: number = 3;
         public spawnedFrom: objects.Enemy;
         public bulletHandler:handlers.EnemyBulletHandler;
 
@@ -24,7 +24,7 @@ module objects {
         }
 
         public CheckBound(): void {
-            if (this.x > 650 || this.x < 0 ||
+            if (this.x > 800 || this.x < 0 ||
                 this.y > 900 || this.y < 0) {
                     this.Destroy();
             }
