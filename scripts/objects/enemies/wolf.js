@@ -68,7 +68,10 @@ var objects;
             }, 10000);
         };
         Wolf.prototype.Update = function () {
-            this.position = math.Vec2.Sum(this.position, this.direction);
+            this.position = this.position.Add(this.direction);
+            if (this.position.y > 900) {
+                this.Destroy();
+            }
         };
         Wolf.prototype.Destroy = function () {
             _super.prototype.Destroy.call(this);

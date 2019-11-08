@@ -39,6 +39,12 @@ var handlers;
             delete this.bullets[bullet.id];
             this.playScene.removeChild(bullet);
         };
+        EnemyBulletHandler.prototype.AddExistingBullet = function (bullet) {
+            if (!this.bullets[bullet.id]) {
+                this.bullets[bullet.id] = bullet;
+                this.playScene.addChild(bullet);
+            }
+        };
         return EnemyBulletHandler;
     }(handlers.BulletHandler));
     handlers.EnemyBulletHandler = EnemyBulletHandler;

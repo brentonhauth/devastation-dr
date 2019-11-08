@@ -5,6 +5,7 @@ module config {
         OVER,
         JUNGLE,
         DESERT,
-        ARCTIC
+        ARCTIC,
+        PROLOGUE
     }
 }

@@ -47,5 +47,21 @@ module math {
         public static get Zero(): Vec2 {
             return new Vec2(0, 0);
         }
+
+        public static get Up(): Vec2 {
+            return new Vec2(0, -1);
+        }
+
+        public static get Down(): Vec2 {
+            return new Vec2(0, 1);
+        }
+
+        public static get Left(): Vec2 {
+            return new Vec2(-1, 0);
+        }
+
+        public static get Right(): Vec2 {
+            return new Vec2(1, 0);
+        }
     }
 }

@@ -4,7 +4,7 @@ module objects {
 
         public isDestroyed: boolean = false;
         public bulletSpeed: number;
-        private sprite: createjs.Bitmap;
+        protected sprite: createjs.Bitmap;
 
         constructor(x:number, y:number, bulletType:string) {
             super();

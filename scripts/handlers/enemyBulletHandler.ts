@@ -32,5 +32,12 @@ module handlers {
             delete this.bullets[bullet.id];
             this.playScene.removeChild(bullet);
         }
+
+        public AddExistingBullet(bullet: objects.EnemyBullet) {
+            if (!this.bullets[bullet.id]) {
+                this.bullets[bullet.id] = bullet;
+                this.playScene.addChild(bullet);
+            }
+        }
     }
 }

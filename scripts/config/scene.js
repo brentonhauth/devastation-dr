@@ -8,6 +8,7 @@ var config;
         Scene[Scene["JUNGLE"] = 3] = "JUNGLE";
         Scene[Scene["DESERT"] = 4] = "DESERT";
         Scene[Scene["ARCTIC"] = 5] = "ARCTIC";
+        Scene[Scene["PROLOGUE"] = 6] = "PROLOGUE";
     })(Scene = config.Scene || (config.Scene = {}));
 })(config || (config = {}));
 //# sourceMappingURL=scene.js.map

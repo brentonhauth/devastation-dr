@@ -4,12 +4,12 @@ module handlers {
 
     export class DialogHandler {
 
-        public playScene: scenes.PlayScene;
+        public playScene: scenes.Scene;
 
         private queue: any[];
         private dialogBox: ui.Label;
 
-        constructor(playScene: scenes.PlayScene) {
+        constructor(playScene: scenes.Scene) {
             this.playScene = playScene;
             this.queue = new Array();
             this.dialogBox = new ui.Label("", "24px", "Arial", "#1d1d1d", 300, 500);

@@ -3,7 +3,7 @@ module objects {
         // Variables
         public lives: number;
         private blink: boolean = false;
-        private intangible: boolean = false;
+        public intangible: boolean = false;
         private oddBlink = 0;
         private moveSpeed = 8;
         private moved: math.Vec2;
@@ -56,11 +56,11 @@ module objects {
             }
 
             if (managers.Keyboard.pressed(config.Key.A)) {
-                this.moved.x = -this.moveSpeed;
+                this.moved.x = -(this.moveSpeed * .8);
             }
 
             if (managers.Keyboard.pressed(config.Key.D)) {
-                this.moved.x += this.moveSpeed;
+                this.moved.x += (this.moveSpeed * .8);
             }
 
             if (this.moved.x || this.moved.y) {
@@ -122,6 +122,7 @@ module objects {
             {
                 this.weapon = new objects.MachineGun(this.playScene);
             }
+            managers.Sound.sfx("reload");
         }
 
         public OnCollision(_gameObject: objects.GameObject): void {

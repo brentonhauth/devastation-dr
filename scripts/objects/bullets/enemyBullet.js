@@ -32,7 +32,7 @@ var objects;
             this.CheckBound();
         };
         EnemyBullet.prototype.CheckBound = function () {
-            if (this.x > 650 || this.x < 0 ||
+            if (this.x > 800 || this.x < 0 ||
                 this.y > 900 || this.y < 0) {
                 this.Destroy();
             }

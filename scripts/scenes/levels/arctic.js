@@ -16,18 +16,64 @@ var scenes;
     var ArcticScene = /** @class */ (function (_super) {
         __extends(ArcticScene, _super);
         function ArcticScene() {
-            return _super.call(this) || this;
+            var _this = _super.call(this) || this;
+            _this.finishedCheck = false;
+            _this.ending = false;
+            _this.backings = new Array();
+            _this.backings.push(new createjs.Bitmap(objects.Game.assetManager.getResult("arctic")), new createjs.Bitmap(objects.Game.assetManager.getResult("arctic")));
+            _this.backings.forEach(function (b, i) {
+                b.x = 0;
+                b.scaleX = b.scaleY = 1.6;
+                _this.addChild(b);
+            });
+            // 1107[.2] = 692 * 1.6
+            // 537 = 1107 - 570
+            _this.backings[1].y = -537;
+            // -1540 = (-537 - 1107) + 104
+            _this.backings[0].y = -1540;
+            return _this;
         }
         ArcticScene.prototype.Start = function () {
+            var _this = this;
             _super.prototype.Start.call(this);
-            this.waveHandler.Start();
+            this.removeChild(this.background);
+            managers.Sound.music("cyberpunker");
+            this.dialogHandler.TriggerMany(["Brrr... When did it get so cold...", 3], ["", 1, function () { return _this.waveHandler.Start(); }]);
         };
         ArcticScene.prototype.Update = function () {
+            var _this = this;
             _super.prototype.Update.call(this);
+            // this.backings[0].x=objects.Game.stage.mouseX;
+            // this.backings[0].y=objects.Game.stage.mouseY;
+            if (!this.finishedCheck && this.waveHandler.CompletedAllWaves) {
+                managers.Keyboard.disable();
+                this.player.intangible = true;
+                this.dialogHandler.TriggerMany(["Hopefully that's the last of 'em.", 2], ["", 1], ["Wait what's that in the distance?!", 3], ["Whatever it is, it\ndoesn't look normal...", 3, function () { return _this.ending = true; }], ["", 2.5], ["[  to be continued...  ]", 3, function () {
+                        objects.Game.currentState = config.Scene.START;
+                        managers.Keyboard.enable();
+                    }]);
+                this.finishedCheck = true;
+            }
+            if (this.ending) {
+                this.player.position = this.player.position.Add(new math.Vec2(0, -8));
+            }
+            this.backings.forEach(function (b, i) {
+                b.y += 1.5;
+                // 104 = 65 * 1.6
+                if (b.y >= 570) {
+                    var b2 = _this.backings[!!i ? 0 : 1];
+                    _this.removeChild(b, b2);
+                    var h = 692 * 1.6;
+                    _this.addChildAt(b, 0);
+                    _this.addChildAt(b2, 1);
+                    b.y = b2.y - h + 104;
+                    console.log(b.y, b2.y);
+                }
+            });
         };
         ArcticScene.prototype.Main = function () {
             _super.prototype.Main.call(this);
-            this.waveHandler.Add(new objects.Wave([objects.Penguin, 2]), new objects.Wave([objects.Penguin, 3]), new objects.Wave([objects.Penguin, 3]), new objects.Wave([objects.Wolf, 5]), new objects.Wave([objects.Wolf, 5], [objects.Penguin, 2]));
+            this.waveHandler.Add(new objects.Wave([objects.Penguin, 2]), new objects.Wave([objects.Penguin, 3]), new objects.Wave([objects.Penguin, 5]), new objects.Wave([objects.Wolf, 5], [objects.Penguin, 3]), new objects.Wave(new objects.PolarBear()), new objects.Wave(new objects.PolarBear(), [objects.Penguin, 2]), new objects.Wave([objects.PolarBear, 3]));
         };
         return ArcticScene;
     }(scenes.PlayScene));

@@ -67,6 +67,34 @@ var math;
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(Vec2, "Up", {
+            get: function () {
+                return new Vec2(0, -1);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Vec2, "Down", {
+            get: function () {
+                return new Vec2(0, 1);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Vec2, "Left", {
+            get: function () {
+                return new Vec2(-1, 0);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Vec2, "Right", {
+            get: function () {
+                return new Vec2(1, 0);
+            },
+            enumerable: true,
+            configurable: true
+        });
         return Vec2;
     }(createjs.Point));
     math.Vec2 = Vec2;
