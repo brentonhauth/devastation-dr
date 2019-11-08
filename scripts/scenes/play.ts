@@ -1,7 +1,7 @@
 module scenes {
     export class PlayScene extends Scene {
 
-        private background: objects.Background;
+        public background: objects.Background;
         public player: objects.Player;
         public lifeCounter: hud.LifeCounter;
         public score: hud.Score;
@@ -35,7 +35,7 @@ module scenes {
 
         public Start(): void {
 
-            this.addChild(this.background);
+            // this.addChild(this.background);
             this.addChild(this.player);
             this.addChild(this.lifeCounter);
             this.addChild(this.score);

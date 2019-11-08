@@ -77,12 +77,12 @@ module objects {
                     this.shootBuffer--;
                 } else {
                     this.shootBuffer = 20;
-                    this.polarBearAnimator.gotoAndPlay("throw_" + this.lastFacing);
+                    // this.polarBearAnimator.gotoAndPlay("throw_" + this.lastFacing);
 
-                    this.position = this.position.Add(math.Vec2.Down);
-
+                    
                     this.throwFish();
                 }
+                this.position = this.position.Add(math.Vec2.Down);
             }
         }
 

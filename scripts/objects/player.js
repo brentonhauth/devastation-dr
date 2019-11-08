@@ -57,10 +57,10 @@ var objects;
                 this.moved.y += this.moveSpeed;
             }
             if (managers.Keyboard.pressed(config.Key.A)) {
-                this.moved.x = -this.moveSpeed;
+                this.moved.x = -(this.moveSpeed * .8);
             }
             if (managers.Keyboard.pressed(config.Key.D)) {
-                this.moved.x += this.moveSpeed;
+                this.moved.x += (this.moveSpeed * .8);
             }
             if (this.moved.x || this.moved.y) {
                 if (this.moved.x && this.moved.y) {

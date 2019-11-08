@@ -10,7 +10,7 @@ module scenes {
         constructor() {
             super();
 
-            this.background = new objects.Background("arctic");
+            this.background = new objects.Background("jungle");
             this.logo = new createjs.Bitmap(objects.Game.assetManager.getResult("logo"));
             this.infoLabel = new ui.Label(
                 "(c) Rude Rhino", "18px", "Arial", "#e1e1f1", 320, 800, true);

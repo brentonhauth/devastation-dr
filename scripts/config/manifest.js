@@ -8,7 +8,7 @@ var config;
             { id: "nextButton", src: "./assets/images/NextButton.png" },
             { id: "background", src: "./assets/images/desert.png" },
             { id: "desert", src: "./assets/images/desert.png" },
-            { id: "arctic", src: "./assets/images/desert.png" },
+            { id: "arctic", src: "./assets/images/winter2.png" },
             { id: "jungle", src: "./assets/images/desert.png" },
             { id: "player", src: "./assets/images/car.png" },
             { id: "enemy", src: "./assets/images/ship.png" },

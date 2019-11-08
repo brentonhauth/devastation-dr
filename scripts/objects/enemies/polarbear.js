@@ -66,10 +66,10 @@ var objects;
                 }
                 else {
                     this.shootBuffer = 20;
-                    this.polarBearAnimator.gotoAndPlay("throw_" + this.lastFacing);
-                    this.position = this.position.Add(math.Vec2.Down);
+                    // this.polarBearAnimator.gotoAndPlay("throw_" + this.lastFacing);
                     this.throwFish();
                 }
+                this.position = this.position.Add(math.Vec2.Down);
             }
         };
         PolarBear.prototype.facePlayer = function () {
