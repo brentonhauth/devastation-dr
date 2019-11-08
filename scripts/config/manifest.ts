@@ -22,6 +22,7 @@ module config {
             { id: "fish", src: "./assets/images/fish.png" },
             { id: "store", src: "./assets/images/store.png" },
 
+
             { id: "wolfSheet", src: "./assets/images/sheets/enemies/wolfSheet.png" },
             { id: "polarBearSheet", src: "./assets/images/sheets/enemies/polarBearSheet.png" },
             { id: "penguinSheet", src: "./assets/images/sheets/enemies/penguinSheet.png" },
