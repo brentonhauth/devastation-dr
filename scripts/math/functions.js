@@ -1,5 +1,6 @@
 var math;
 (function (math) {
+    var PI_OVER_180 = Math.PI / 180;
     function cosWaveFunction(stretch, depth) {
         var o = { stretch: stretch, depth: depth };
         o.fn = function (val) {
@@ -21,5 +22,12 @@ var math;
         return min + r;
     }
     math.randRange = randRange;
+    function pointOnCircle(center, degree) {
+        var radian = degree * PI_OVER_180;
+        var x = center.x + Math.cos(radian);
+        var y = center.y + Math.sin(radian);
+        return new math.Vec2(x, y);
+    }
+    math.pointOnCircle = pointOnCircle;
 })(math || (math = {}));
 //# sourceMappingURL=functions.js.map

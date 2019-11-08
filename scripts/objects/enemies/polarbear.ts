@@ -73,15 +73,10 @@ module objects {
             } else {
                 this.facePlayer();
 
-                if (this.shootBuffer > 0) {
-                    this.shootBuffer--;
-                } else {
-                    this.shootBuffer = 20;
-                    // this.polarBearAnimator.gotoAndPlay("throw_" + this.lastFacing);
-
-                    
+                if ((createjs.Ticker.getTicks() % 20) === 0) {
                     this.throwFish();
                 }
+
                 this.position = this.position.Add(math.Vec2.Down);
             }
         }

@@ -20,9 +20,13 @@ var scenes;
         }
         DesertScene.prototype.Start = function () {
             _super.prototype.Start.call(this);
+            this.waveHandler.Start();
         };
         DesertScene.prototype.Update = function () {
             _super.prototype.Update.call(this);
+        };
+        DesertScene.prototype.Main = function () {
+            this.waveHandler.Add(new objects.Wave([objects.Turtle, 1]));
         };
         return DesertScene;
     }(scenes.PlayScene));
