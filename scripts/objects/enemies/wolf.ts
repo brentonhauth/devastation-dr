@@ -71,7 +71,11 @@ module objects {
         }
 
         public Update() {
-            this.position = math.Vec2.Sum(this.position, this.direction);
+            this.position = this.position.Add(this.direction);
+
+            if (this.position.y > 900) {
+                this.Destroy();
+            }
         }
 
         public Destroy() {

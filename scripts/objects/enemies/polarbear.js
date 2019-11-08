@@ -31,10 +31,10 @@ var objects;
                     move_left: { speed: speed, frames: [3, 4, 5] },
                     move_right: { speed: speed, frames: [6, 7, 8] },
                     move_up: { speed: speed, frames: [9, 10, 11] },
-                    throw_down: [0, 1, "idle_down", .05],
-                    throw_left: [3, 4, "idle_left", .05],
-                    throw_right: [6, 7, "idle_right", .05],
-                    throw_up: [9, 10, "idle_up", .05],
+                    throw_down: [0, 1, "idle_down", speed],
+                    throw_left: [3, 4, "idle_left", speed],
+                    throw_right: [6, 7, "idle_right", speed],
+                    throw_up: [9, 10, "idle_up", speed],
                 }
             });
             var cs = objects.Game.currentScene;
@@ -67,6 +67,7 @@ var objects;
                 else {
                     this.shootBuffer = 20;
                     this.polarBearAnimator.gotoAndPlay("throw_" + this.lastFacing);
+                    this.position = this.position.Add(math.Vec2.Down);
                     this.throwFish();
                 }
             }

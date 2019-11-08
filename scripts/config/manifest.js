@@ -27,7 +27,8 @@ var config;
             { id: "machineGun", src: "./assets/images/MachineGun.png" },
             // Sounds
             { id: "explosion", src: "./assets/sounds/explosion.wav" },
-            { id: "cyberpunker", src: "./assets/sounds/cyberpunker.ogg" }
+            { id: "cyberpunker", src: "./assets/sounds/cyberpunker.ogg" },
+            { id: "reload", src: "./assets/sounds/reload.mp3" }
         ];
     }
     config.getManifest = getManifest;

@@ -3,7 +3,7 @@ module objects {
         // Variables
         public lives: number;
         private blink: boolean = false;
-        private intangible: boolean = false;
+        public intangible: boolean = false;
         private oddBlink = 0;
         private moveSpeed = 8;
         private moved: math.Vec2;
