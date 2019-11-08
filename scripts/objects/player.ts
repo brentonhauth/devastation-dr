@@ -122,6 +122,7 @@ module objects {
             {
                 this.weapon = new objects.MachineGun(this.playScene);
             }
+            managers.Sound.sfx("reload");
         }
 
         public OnCollision(_gameObject: objects.GameObject): void {

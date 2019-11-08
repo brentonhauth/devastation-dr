@@ -113,6 +113,7 @@ var objects;
             if (weaponType == config.Weapon.MACHINEGUN) {
                 this.weapon = new objects.MachineGun(this.playScene);
             }
+            managers.Sound.sfx("reload");
         };
         Player.prototype.OnCollision = function (_gameObject) {
             if (_gameObject instanceof objects.EnemyItem) {
