@@ -18,7 +18,9 @@ var objects;
         function Bullet(x, y, bulletType) {
             var _this = _super.call(this) || this;
             _this.isDestroyed = false;
-            _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("bullet"));
+            _this.bulletType = bulletType;
+            //console.log(bulletType);
+            _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult(bulletType));
             _this.addChild(_this.sprite);
             var bounds = _this.sprite.getBounds();
             _this.width = bounds.width;

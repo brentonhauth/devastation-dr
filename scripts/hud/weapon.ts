@@ -15,7 +15,7 @@ module hud {
             this.tempMap = new Object;
             this.tempMap[config.Weapon.MACHINEGUN] = "machineGun";
             this.tempMap[config.Weapon.PISTOL] = "pistol";
-            this.tempMap[config.Weapon.LAZER] = "machineGun";
+            this.tempMap[config.Weapon.LASER] = "machineGun";
             this.tempMap[config.Weapon.FLAMETHROWER] = "machineGun";
 
             this.weaponImage.x = 640;

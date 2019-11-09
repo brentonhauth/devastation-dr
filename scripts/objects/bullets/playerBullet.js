@@ -15,11 +15,9 @@ var objects;
 (function (objects) {
     var PlayerBullet = /** @class */ (function (_super) {
         __extends(PlayerBullet, _super);
-        function PlayerBullet(x, y, bulletHandler) {
-            var _this = _super.call(this, x, y, "playerBullet") || this;
+        function PlayerBullet(x, y, bulletType, bulletHandler) {
+            var _this = _super.call(this, x, y, bulletType) || this;
             _this.position = new math.Vec2(x, y);
-            // this.x = x;
-            // this.y = y;
             _this.bulletHandler = bulletHandler;
             _this.Start();
             return _this;

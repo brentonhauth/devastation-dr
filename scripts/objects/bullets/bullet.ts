@@ -5,10 +5,13 @@ module objects {
         public isDestroyed: boolean = false;
         public bulletSpeed: number;
         protected sprite: createjs.Bitmap;
+        public bulletType: config.BulletType;
 
-        constructor(x:number, y:number, bulletType:string) {
+        constructor(x:number, y:number, bulletType:config.BulletType) {
             super();
-            this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("bullet"));
+            this.bulletType = bulletType;
+            //console.log(bulletType);
+            this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult(bulletType));
             this.addChild(this.sprite);
             let bounds = this.sprite.getBounds();
             this.width = bounds.width;

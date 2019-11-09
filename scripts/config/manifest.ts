@@ -14,7 +14,6 @@ module config {
             { id: "jungle", src: "./assets/images/desert.png" }, // "./assets/images/background.png"
             { id: "player", src: "./assets/images/car.png" },
             { id: "enemy", src: "./assets/images/ship.png" },
-            { id: "bullet", src: "./assets/images/bullet.png" },
             { id: "basicEnemy", src: "./assets/images/enemy.png" },
             { id: "spider", src: "./assets/images/spider1.png" },
             { id: "playerSheet", src: "./assets/images/sheets/player_sheet112x146.png" },
@@ -32,6 +31,11 @@ module config {
             { id: "powerup", src: "./assets/images/powerup.png" },
             { id: "pistol", src: "./assets/images/Pistol.png" },
             { id: "machineGun", src: "./assets/images/MachineGun.png" },
+
+            { id: "bullet", src: "./assets/images/bullet.png" },
+            { id: "pistolBullet", src: "./assets/images/pistolBullet.png" },
+            { id: "machineGunBullet", src: "./assets/images/machineGunBullet.png" },
+
 
 
             // Sounds
