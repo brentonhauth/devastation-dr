@@ -119,7 +119,12 @@ var objects;
             if (_gameObject instanceof objects.EnemyItem) {
                 if (_gameObject.itemType == config.Item.MACHINEGUN) {
                     if (this.weapon.weaponType == config.Weapon.MACHINEGUN) {
-                        this.weapon.Upgrade();
+                        if (this.weapon.upgradeLevel >= 3) {
+                            this.playScene.score.addPoints(100);
+                        }
+                        else {
+                            this.weapon.Upgrade();
+                        }
                     }
                     else {
                         this.ChangeWeapon(config.Weapon.MACHINEGUN);

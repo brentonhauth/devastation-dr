@@ -17,7 +17,7 @@ var hud;
         __extends(WeaponHUD, _super);
         function WeaponHUD() {
             var _this = _super.call(this) || this;
-            _this.weaponText = new ui.Label("Weapon level: 0", "16px", "Consolas", "#FFFFFF", 540, 30, true);
+            _this.weaponText = new ui.Label("Weapon level: 1", "16px", "Consolas", "#FFFFFF", 540, 30, true);
             _this.weaponImage = new createjs.Bitmap(objects.Game.assetManager.getResult("pistol"));
             _this.tempMap = new Object;
             _this.tempMap[config.Weapon.MACHINEGUN] = "machineGun";
