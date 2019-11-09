@@ -6,7 +6,7 @@ module handlers {
         }
 
         public SpawnBullet(enemy:objects.Enemy):objects.EnemyBullet {
-            let bullet = new objects.EnemyBullet(enemy.position, this.playScene.player.position, enemy, this);
+            let bullet = new objects.EnemyBullet(enemy.position, this.playScene.player.position, enemy, this, config.BulletType.ENEMYBULLET);
             this.bullets[bullet.id] = bullet;
 
             return bullet;

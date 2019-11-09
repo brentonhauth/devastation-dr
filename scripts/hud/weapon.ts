@@ -9,13 +9,13 @@ module hud {
 
         constructor() {
             super();
-            this.weaponText = new ui.Label("Weapon level: 0", "16px", "Consolas", "#FFFFFF", 540, 30, true);
+            this.weaponText = new ui.Label("Weapon level: 1", "16px", "Consolas", "#FFFFFF", 540, 30, true);
             this.weaponImage = new createjs.Bitmap(objects.Game.assetManager.getResult("pistol"));
 
             this.tempMap = new Object;
             this.tempMap[config.Weapon.MACHINEGUN] = "machineGun";
             this.tempMap[config.Weapon.PISTOL] = "pistol";
-            this.tempMap[config.Weapon.LAZER] = "machineGun";
+            this.tempMap[config.Weapon.LASER] = "machineGun";
             this.tempMap[config.Weapon.FLAMETHROWER] = "machineGun";
 
             this.weaponImage.x = 640;

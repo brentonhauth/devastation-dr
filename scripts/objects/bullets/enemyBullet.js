@@ -15,8 +15,9 @@ var objects;
 (function (objects) {
     var EnemyBullet = /** @class */ (function (_super) {
         __extends(EnemyBullet, _super);
-        function EnemyBullet(pos, target, spawnedFrom, bulletHandler) {
-            var _this = _super.call(this, pos.x, pos.y, "enemyBullet") || this;
+        function EnemyBullet(pos, target, spawnedFrom, bulletHandler, bulletType) {
+            if (bulletType === void 0) { bulletType = config.BulletType.ENEMYBULLET; }
+            var _this = _super.call(this, pos.x, pos.y, config.BulletType.ENEMYBULLET) || this;
             _this.speed = 3;
             _this.bulletHandler = bulletHandler;
             _this.spawnedFrom = spawnedFrom;

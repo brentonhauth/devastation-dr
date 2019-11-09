@@ -30,7 +30,7 @@ var objects;
             _this.width = bounds.width;
             _this.height = bounds.height;
             _this.Init();
-            _this.position = new math.Vec2(spawnedFrom.x, spawnedFrom.y);
+            _this.position = new math.Vec2(spawnedFrom.x, spawnedFrom.boxCollider.aabb.max.y);
             _this.Start();
             return _this;
         }

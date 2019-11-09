@@ -26,7 +26,8 @@ module objects {
             this.width = bounds.width;
             this.height = bounds.height;
             this.Init();
-            this.position = new math.Vec2(spawnedFrom.x, spawnedFrom.y);
+            
+            this.position = new math.Vec2(spawnedFrom.x, spawnedFrom.boxCollider.aabb.max.y);
             this.Start();
 
         }

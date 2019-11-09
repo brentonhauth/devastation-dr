@@ -19,7 +19,7 @@ var handlers;
             return _super.call(this, playScene) || this;
         }
         EnemyBulletHandler.prototype.SpawnBullet = function (enemy) {
-            var bullet = new objects.EnemyBullet(enemy.position, this.playScene.player.position, enemy, this);
+            var bullet = new objects.EnemyBullet(enemy.position, this.playScene.player.position, enemy, this, config.BulletType.ENEMYBULLET);
             this.bullets[bullet.id] = bullet;
             return bullet;
         };

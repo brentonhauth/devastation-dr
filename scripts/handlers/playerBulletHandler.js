@@ -18,8 +18,8 @@ var handlers;
         function PlayerBulletHandler(playScene) {
             return _super.call(this, playScene) || this;
         }
-        PlayerBulletHandler.prototype.SpawnBullet = function (position) {
-            var bullet = new objects.PlayerBullet(position.x, position.y, this);
+        PlayerBulletHandler.prototype.SpawnBullet = function (position, bulletType) {
+            var bullet = new objects.PlayerBullet(position.x, position.y, bulletType, this);
             this.bullets[bullet.id] = bullet;
             return bullet;
         };

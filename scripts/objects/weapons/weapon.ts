@@ -10,7 +10,7 @@ module objects {
         }
 
         public Upgrade(): void{
-            this.upgradeLevel ++;
+            this.upgradeLevel++;
         }
 
         public Shoot(): void {}
