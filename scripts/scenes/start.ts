@@ -36,8 +36,8 @@ module scenes {
             this.addChild(this.infoLabel);
 
             this.startButton.on("click", () => {
-                //objects.Game.currentState = config.Scene.PROLOGUE;
-                objects.Game.currentState = config.Scene.ARCTIC;
+                objects.Game.currentState = config.Scene.PROLOGUE;
+                //objects.Game.currentState = config.Scene.ARCTIC;
             });
             // this.exitButton.on("click", () => {
             //     window.close();
