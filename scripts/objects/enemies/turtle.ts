@@ -70,6 +70,10 @@ module objects {
             } else {
                 this.position = this.position.Add(new math.Vec2(0, 3));
             }
+
+            if (this.y > objects.Game.canvas.height) {
+                this.Destroy();
+            }
         }
     }
 }

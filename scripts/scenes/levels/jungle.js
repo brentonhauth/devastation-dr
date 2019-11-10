@@ -18,23 +18,60 @@ var scenes;
         function JungleScene() {
             var _this = _super.call(this) || this;
             _this.finishedCheck = false;
+            _this.ending = false;
+            _this.bgs = new Array();
+            _this.bgs.push(new createjs.Bitmap(objects.Game.assetManager.getResult("jungle")), new createjs.Bitmap(objects.Game.assetManager.getResult("jungle")));
+            _this.bgs.forEach(function (b) {
+                b.x = 0;
+                b.scaleX = b.scaleY = 1.35;
+                _this.addChild(b);
+            });
+            // 1142[.1] = 846 * 1.35
+            _this.bgs[1].y = -572; // -1142 + 570
+            _this.bgs[0].y = -1704; // (-572 - 1142) + 10
             return _this;
         }
         JungleScene.prototype.Start = function () {
             var _this = this;
             _super.prototype.Start.call(this);
-            managers.Sound.music("cyberpunker");
+            this.removeChild(this.background);
+            if (!managers.Sound.isPlayingMusic) {
+                managers.Sound.music("cyberpunker");
+            }
             this.dialogHandler.TriggerMany(["I've entered this part!", 2], ["I hope something bad\ndoesn't happen...", 2,
                 function () { return _this.waveHandler.Start(); }]);
         };
         JungleScene.prototype.Update = function () {
+            var _this = this;
             _super.prototype.Update.call(this);
             if (this.waveHandler.CompletedAllWaves && !this.finishedCheck) {
-                this.dialogHandler.TriggerMany(["It looks like that's the last of 'em!", 2.5], ["The drive home feels a lot\nlonger than normal...", 3], ["", 1], ["I have to keep a clear head!", 3], ["I'll reach the end eventually!", 3], ["", 2, function () {
+                this.player.intangible = true;
+                managers.Keyboard.disable();
+                this.dialogHandler.TriggerMany(["It looks like that's the last of 'em!", 2.5], ["The drive home feels a lot\nlonger than normal...", 3], ["", 1], ["I have to keep a clear head!", 3], ["I'll reach the end eventually!", 3, function () {
+                        _this.ending = true;
+                        _this.player.canLeaveBounds = true;
+                    }], ["", 2.5, function () {
                         objects.Game.currentState = config.Scene.DESERT;
+                        managers.Keyboard.enable();
                     }]);
                 this.finishedCheck = true;
             }
+            if (this.ending) {
+                this.player.position = this.player.position.Add(new math.Vec2(0, -8));
+            }
+            this.bgs.forEach(function (b, i) {
+                b.y += 1.5;
+                // 104 = 65 * 1.6
+                if (b.y >= 570) {
+                    var b2 = _this.bgs[!!i ? 0 : 1];
+                    _this.removeChild(b, b2);
+                    var h = 1142;
+                    _this.addChildAt(b, 0);
+                    _this.addChildAt(b2, 1);
+                    b.y = b2.y - h + 10;
+                    console.log(b.y, b2.y);
+                }
+            });
         };
         JungleScene.prototype.Main = function () {
             _super.prototype.Main.call(this);

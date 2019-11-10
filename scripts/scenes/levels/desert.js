@@ -16,17 +16,45 @@ var scenes;
     var DesertScene = /** @class */ (function (_super) {
         __extends(DesertScene, _super);
         function DesertScene() {
-            return _super.call(this) || this;
+            var _this = _super.call(this) || this;
+            _this.finishedCheck = false;
+            _this.ending = false;
+            return _this;
         }
         DesertScene.prototype.Start = function () {
+            var _this = this;
             _super.prototype.Start.call(this);
-            this.waveHandler.Start();
+            if (!managers.Sound.isPlayingMusic) {
+                managers.Sound.music("cyberpunker");
+            }
+            this.dialogHandler.TriggerMany(["Man, when did it get so hot?", 2.5,
+                function () {
+                    _this.waveHandler.Start();
+                }]);
         };
         DesertScene.prototype.Update = function () {
+            var _this = this;
             _super.prototype.Update.call(this);
+            if (this.waveHandler.CompletedAllWaves && !this.finishedCheck) {
+                this.player.intangible = true;
+                managers.Keyboard.disable();
+                this.dialogHandler.TriggerMany(["I think that's it for now...", 2], ["We're pretty far north, but it's\n" +
+                        "really hot for some reason...", 3,
+                    function () {
+                        _this.ending = true;
+                        _this.player.canLeaveBounds = true;
+                    }], ["", 2.5, function () {
+                        managers.Keyboard.enable();
+                        objects.Game.currentState = config.Scene.ARCTIC;
+                    }]);
+                this.finishedCheck = true;
+            }
+            if (this.ending) {
+                this.player.position = this.player.position.Add(new math.Vec2(0, -8));
+            }
         };
         DesertScene.prototype.Main = function () {
-            this.waveHandler.Add(new objects.Wave([objects.Turtle, 1]));
+            this.waveHandler.Add(new objects.Wave(new objects.Lizard()), new objects.Wave(new objects.Turtle()), new objects.Wave([objects.Turtle, 2]), new objects.Wave([objects.Lizard, 2], [objects.Turtle, 1]), new objects.Wave([objects.Turtle, 2], [objects.Lizard, 2]));
         };
         return DesertScene;
     }(scenes.PlayScene));

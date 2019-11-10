@@ -22,6 +22,7 @@ var objects;
             _this.intangible = false;
             _this.oddBlink = 0;
             _this.moveSpeed = 8;
+            _this.canLeaveBounds = false;
             _this.playScene = playScene;
             _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("hummer"));
             var bounds = _this.sprite.getBounds();
@@ -68,6 +69,9 @@ var objects;
                 }
                 this.position = this.position.Add(this.moved);
             }
+            if (!this.canLeaveBounds) {
+                this.CheckBound();
+            }
         };
         Player.prototype.Blink = function () {
             if (this.blink) {
@@ -89,22 +93,25 @@ var objects;
             }, 1000);
         };
         Player.prototype.CheckBound = function () {
+            var setX = null;
+            var setY = null;
             // Right boundary
-            if (this.x >= 640 - this.halfW) {
-                this.x = 640 - this.halfW;
+            if (this.x >= (objects.Game.canvas.width - this.halfW)) {
+                setX = objects.Game.canvas.width - this.halfW;
             }
             // Left boundary
             if (this.x <= this.halfW) {
-                this.x = this.halfW;
+                setX = this.halfW;
             }
             if (this.y <= this.halfH) {
-                this.y = this.halfH;
+                setY = this.halfH;
             }
-            /*
-            if (this.y >= 900 - this.halfH) {
-                this.y = this.halfH;
+            if (this.y >= (objects.Game.canvas.height - this.halfH)) {
+                setY = objects.Game.canvas.height - this.halfH;
             }
-            */
+            if (setX || setY) {
+                this.position = new math.Vec2(setX || this.x, setY || this.y);
+            }
         };
         Player.prototype.ShootWeapon = function () {
             this.weapon.Shoot();

@@ -21,36 +21,36 @@ var scenes;
             _this.ending = false;
             _this.backings = new Array();
             _this.backings.push(new createjs.Bitmap(objects.Game.assetManager.getResult("arctic")), new createjs.Bitmap(objects.Game.assetManager.getResult("arctic")));
-            _this.backings.forEach(function (b, i) {
+            _this.backings.forEach(function (b) {
                 b.x = 0;
                 b.scaleX = b.scaleY = 1.6;
                 _this.addChild(b);
             });
             // 1107[.2] = 692 * 1.6
-            // 537 = 1107 - 570
-            _this.backings[1].y = -537;
-            // -1540 = (-537 - 1107) + 104
-            _this.backings[0].y = -1540;
+            _this.backings[1].y = -537; // -1107 + 570
+            _this.backings[0].y = -1540; // (-537 - 1107) + 104
             return _this;
         }
         ArcticScene.prototype.Start = function () {
             var _this = this;
             _super.prototype.Start.call(this);
             this.removeChild(this.background);
-            managers.Sound.music("cyberpunker");
+            if (!managers.Sound.isPlayingMusic) {
+                managers.Sound.music("cyberpunker");
+            }
             this.dialogHandler.TriggerMany(["Brrr... When did it get so cold...", 3], ["", 1, function () { return _this.waveHandler.Start(); }]);
         };
         ArcticScene.prototype.Update = function () {
             var _this = this;
             _super.prototype.Update.call(this);
-            // this.backings[0].x=objects.Game.stage.mouseX;
-            // this.backings[0].y=objects.Game.stage.mouseY;
             if (!this.finishedCheck && this.waveHandler.CompletedAllWaves) {
                 managers.Keyboard.disable();
                 this.player.intangible = true;
+                this.player.canLeaveBounds = true;
                 this.dialogHandler.TriggerMany(["Hopefully that's the last of 'em.", 2], ["", 1], ["Wait what's that in the distance?!", 3], ["Whatever it is, it\ndoesn't look normal...", 3, function () { return _this.ending = true; }], ["", 2.5], ["[  to be continued...  ]", 3, function () {
                         objects.Game.currentState = config.Scene.START;
                         managers.Keyboard.enable();
+                        managers.Sound.music(false);
                     }]);
                 this.finishedCheck = true;
             }
@@ -63,7 +63,7 @@ var scenes;
                 if (b.y >= 570) {
                     var b2 = _this.backings[!!i ? 0 : 1];
                     _this.removeChild(b, b2);
-                    var h = 692 * 1.6;
+                    var h = 1107;
                     _this.addChildAt(b, 0);
                     _this.addChildAt(b2, 1);
                     b.y = b2.y - h + 104;

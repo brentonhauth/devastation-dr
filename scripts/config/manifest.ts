@@ -5,13 +5,15 @@ module config {
             { id: "logo", src: "./assets/images/devastation-dr.PNG" },
             { id: "backButton", src: "./assets/images/BackButton.png" },
             { id: "nextButton", src: "./assets/images/NextButton.png" },
+            { id: "blueButton", src: "./assets/images/blueButton.png" },
+            { id: "greenButton", src: "./assets/images/greenButton.png" },
             { id: "playButton", src: "./assets/images/play.png" },
             { id: "exitButton", src: "./assets/images/exit.png" },
             { id: "background", src: "./assets/images/desert.png" },
             { id: "menu", src: "./assets/images/menu.png" },
             { id: "desert", src: "./assets/images/desert.png" },
             { id: "arctic", src: "./assets/images/winter2.png" },
-            { id: "jungle", src: "./assets/images/desert.png" }, // "./assets/images/background.png"
+            { id: "jungle", src: "./assets/images/Jungle-3.jpg" }, // "./assets/images/background.png"
             { id: "player", src: "./assets/images/car.png" },
             { id: "enemy", src: "./assets/images/ship.png" },
             { id: "basicEnemy", src: "./assets/images/enemy.png" },

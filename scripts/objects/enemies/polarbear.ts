@@ -79,6 +79,10 @@ module objects {
 
                 this.position = this.position.Add(math.Vec2.Down);
             }
+
+            if (this.y > objects.Game.canvas.height) {
+                this.Destroy();
+            }
         }
 
         private facePlayer() {

@@ -73,7 +73,7 @@ module objects {
         public Update() {
             this.position = this.position.Add(this.direction);
 
-            if (this.position.y > 900) {
+            if (this.y > objects.Game.canvas.height) {
                 this.Destroy();
             }
         }

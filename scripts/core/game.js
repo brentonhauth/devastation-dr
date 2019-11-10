@@ -17,6 +17,7 @@
         console.log("Starting Application...");
         // Initialize CreateJS
         objects.Game.stage = stage = new createjs.Stage(canvas);
+        objects.Game.canvas = canvas;
         // Freqeuncy of checks. Computationally expensive. Turn on in menus, Turn off in game
         stage.enableMouseOver(20);
         createjs.Ticker.framerate = 60; // 60 FPS
@@ -48,7 +49,7 @@
                 // currentScene = new scenes.PlayScene();
                 break;
             case config.Scene.OVER:
-                currentScene = new scenes.GameOverScene();
+                currentScene = new scenes.GameOverScene(currentState);
                 break;
             // LEVELS
             case config.Scene.JUNGLE:

@@ -66,6 +66,9 @@ var objects;
                 }
                 this.position = this.position.Add(math.Vec2.Down);
             }
+            if (this.y > objects.Game.canvas.height) {
+                this.Destroy();
+            }
         };
         PolarBear.prototype.facePlayer = function () {
             var face, diff = math.Vec2.Difference(this.position, this.playerRef.position);
