@@ -20,8 +20,22 @@ module math {
             }
         }
 
+        /**
+         * Returns a new scaled Vector
+         * @param {Number} s
+         */
         public Scale(s: number) {
             return new Vec2(this.x * s, this.y * s);
+        }
+
+        /**
+         * Scales the current Vector
+         * @param {Number} s
+         */
+        public ScaleEq(s: number) {
+            this.x *= s;
+            this.y *= s;
+            return this;
         }
 
         public Add(v: Vec2) {

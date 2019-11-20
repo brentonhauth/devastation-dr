@@ -37,8 +37,7 @@ var objects;
                     throw_up: [9, 10, "idle_up", speed],
                 }
             });
-            var cs = objects.Game.currentScene;
-            _this.playerRef = cs.player || { position: math.Vec2.Zero };
+            _this.playerRef = _this.playScene.player || { position: math.Vec2.Zero };
             _this.polarBearAnimator = new createjs.Sprite(sheet, "move_down");
             _this.width = 72;
             _this.height = 72;
@@ -46,7 +45,7 @@ var objects;
             return _this;
         }
         PolarBear.prototype.Start = function () {
-            this.position = new math.Vec2(this.startingPosition.x, this.startingPosition.y - 200);
+            this.position = new math.Vec2(this.startingPosition.x, this.startingPosition.y - math.randRange(250, 350));
             this.removeChild(this.sprite);
             this.addChild(this.polarBearAnimator);
         };
@@ -64,9 +63,9 @@ var objects;
                 if ((createjs.Ticker.getTicks() % 20) === 0) {
                     this.throwFish();
                 }
-                this.position = this.position.Add(math.Vec2.Down);
+                this.position = this.position.Add(math.Vec2.Down.ScaleEq(this.playScene.background.Speed));
             }
-            if (this.y > objects.Game.canvas.height) {
+            if (this.y > (objects.Game.canvas.height + 100)) {
                 this.Destroy();
             }
         };

@@ -72,7 +72,9 @@ var managers;
             }
         };
         Sound.sfx = function (id) {
-            createjs.Sound.play(id); //, 0, 0, 0, 0, this.sfxVol * this.masterVol);
+            var sfx = createjs.Sound.play(id); //, 0, 0, 0, 0, this.sfxVol * this.masterVol);
+            sfx.volume = this.sfxVol * this.masterVol;
+            return sfx;
         };
         Sound.musicVol = 1.0;
         Sound.sfxVol = 1.0;

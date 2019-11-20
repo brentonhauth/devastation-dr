@@ -74,7 +74,9 @@ module managers {
         }
 
         public static sfx(id: string) {
-            createjs.Sound.play(id);//, 0, 0, 0, 0, this.sfxVol * this.masterVol);
+            let sfx = createjs.Sound.play(id);//, 0, 0, 0, 0, this.sfxVol * this.masterVol);
+            sfx.volume = this.sfxVol * this.masterVol;
+            return sfx;
         }
     }
 }

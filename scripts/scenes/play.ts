@@ -16,9 +16,7 @@ module scenes {
 
         constructor() {
             super();
-
-            let levelType = config.Scene[objects.Game.currentState];
-            this.background = new objects.Background(levelType.toLowerCase());
+            this.background = new objects.Background();
             this.player = new objects.Player(this);
 
             this.lifeCounter = new hud.LifeCounter();

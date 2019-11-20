@@ -10,6 +10,7 @@ module objects {
         private aggressiveRange: number;
 
         private playerRef: Player;
+        private playScene: scenes.PlayScene;
         
         private isAggressive = false;
         private setSlideAnimation = false;
@@ -39,8 +40,8 @@ module objects {
                 }
             });
 
-            let cs = <scenes.PlayScene>objects.Game.currentScene;
-            this.playerRef = cs.player || <Player>{position:math.Vec2.Zero};
+            this.playScene = <scenes.PlayScene>objects.Game.currentScene;
+            this.playerRef = this.playScene.player || <Player>{position:math.Vec2.Zero};
 
 
             let arr = ["down", "left", "right"];
@@ -84,7 +85,7 @@ module objects {
             } else if (math.Vec2.Distance(this.playerRef.position, this.position) < this.aggressiveRange) {
                 this.isAggressive = true;
             } else {
-                this.position = this.position.Add(new math.Vec2(0, 1.5));
+                this.position = this.position.Add(new math.Vec2(0, this.playScene.background.Speed));
             }
 
 

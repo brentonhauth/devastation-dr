@@ -42,8 +42,7 @@ module objects {
                 }
             });
 
-            let cs = <scenes.PlayScene>objects.Game.currentScene;
-            this.playerRef = cs.player || <Player>{position:math.Vec2.Zero};
+            this.playerRef = this.playScene.player || <Player>{position:math.Vec2.Zero};
 
             this.polarBearAnimator = new createjs.Sprite(sheet, "move_down");
 
@@ -56,7 +55,7 @@ module objects {
         public Start() {
             this.position = new math.Vec2(
                 this.startingPosition.x,
-                this.startingPosition.y - 200
+                this.startingPosition.y - math.randRange(250, 350)
             );
 
             this.removeChild(this.sprite);
@@ -77,10 +76,12 @@ module objects {
                     this.throwFish();
                 }
 
-                this.position = this.position.Add(math.Vec2.Down);
+                this.position = this.position.Add(
+                    math.Vec2.Down.ScaleEq(this.playScene.background.Speed)
+                );
             }
 
-            if (this.y > objects.Game.canvas.height) {
+            if (this.y > (objects.Game.canvas.height + 100)) {
                 this.Destroy();
             }
         }

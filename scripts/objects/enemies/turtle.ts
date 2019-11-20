@@ -2,6 +2,7 @@ module objects {
     export class Turtle extends Enemy {
 
         private playerRef: Player;
+        private playScene: scenes.PlayScene;
         private turtleAnimator: createjs.Sprite;
         private isAggressive = false;
         private aggressiveRange: number;
@@ -34,8 +35,8 @@ module objects {
                 }
             });
 
-            let cs = <scenes.PlayScene>objects.Game.currentScene;
-            this.playerRef = cs.player || <Player>{position:math.Vec2.Zero};
+            this.playScene = <scenes.PlayScene>objects.Game.currentScene;
+            this.playerRef = this.playScene.player || <Player>{position:math.Vec2.Zero};
 
             this.turtleAnimator = new createjs.Sprite(sheet, "walk_down");
 
@@ -60,11 +61,10 @@ module objects {
                 this.turtleAnimator.rotation += 10;
                 if ((tick % 10) === 0) {
                     let point = math.pointOnCircle(this.position, (tick*2) % 360);
-                    let cs = <scenes.PlayScene>objects.Game.currentScene;
-                    let b = new EnemyBullet(this.position, point, this, cs.enemyBulletHandler);
-                    cs.enemyBulletHandler.AddExistingBullet(b);
+                    let b = new EnemyBullet(this.position, point, this, this.playScene.enemyBulletHandler);
+                    this.playScene.enemyBulletHandler.AddExistingBullet(b);
                 }
-                this.position = this.position.Add(new math.Vec2(0, .5));
+                this.position = this.position.Add(new math.Vec2(0, this.playScene.background.Speed));
             } else if (math.Vec2.Distance(this.playerRef.position, this.position) < this.aggressiveRange) {
                 this.isAggressive = true;
             } else {

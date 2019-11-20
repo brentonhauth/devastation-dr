@@ -33,8 +33,8 @@ var objects;
                     idle_up: 9, walk_up: { speed: speed, frames: [9, 11] },
                 }
             });
-            var cs = objects.Game.currentScene;
-            _this.playerRef = cs.player || { position: math.Vec2.Zero };
+            _this.playScene = objects.Game.currentScene;
+            _this.playerRef = _this.playScene.player || { position: math.Vec2.Zero };
             _this.turtleAnimator = new createjs.Sprite(sheet, "walk_down");
             _this.width = 48;
             _this.height = 48;
@@ -56,11 +56,10 @@ var objects;
                 this.turtleAnimator.rotation += 10;
                 if ((tick % 10) === 0) {
                     var point = math.pointOnCircle(this.position, (tick * 2) % 360);
-                    var cs = objects.Game.currentScene;
-                    var b = new objects.EnemyBullet(this.position, point, this, cs.enemyBulletHandler);
-                    cs.enemyBulletHandler.AddExistingBullet(b);
+                    var b = new objects.EnemyBullet(this.position, point, this, this.playScene.enemyBulletHandler);
+                    this.playScene.enemyBulletHandler.AddExistingBullet(b);
                 }
-                this.position = this.position.Add(new math.Vec2(0, .5));
+                this.position = this.position.Add(new math.Vec2(0, this.playScene.background.Speed));
             }
             else if (math.Vec2.Distance(this.playerRef.position, this.position) < this.aggressiveRange) {
                 this.isAggressive = true;

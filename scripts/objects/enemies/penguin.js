@@ -35,8 +35,8 @@ var objects;
                     idle_up: 10, slide_up: 22,
                 }
             });
-            var cs = objects.Game.currentScene;
-            _this.playerRef = cs.player || { position: math.Vec2.Zero };
+            _this.playScene = objects.Game.currentScene;
+            _this.playerRef = _this.playScene.player || { position: math.Vec2.Zero };
             var arr = ["down", "left", "right"];
             var da = Math.round(math.randRange(0, 2));
             _this.penguinAnimator = new createjs.Sprite(sheet, "idle_" + arr[da]);
@@ -76,7 +76,7 @@ var objects;
                 this.isAggressive = true;
             }
             else {
-                this.position = this.position.Add(new math.Vec2(0, 1.5));
+                this.position = this.position.Add(new math.Vec2(0, this.playScene.background.Speed));
             }
             if (this.x < -100 || this.x > 700 ||
                 this.y < -200 || this.y > 900) {

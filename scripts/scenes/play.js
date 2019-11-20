@@ -17,8 +17,7 @@ var scenes;
         __extends(PlayScene, _super);
         function PlayScene() {
             var _this = _super.call(this) || this;
-            var levelType = config.Scene[objects.Game.currentState];
-            _this.background = new objects.Background(levelType.toLowerCase());
+            _this.background = new objects.Background();
             _this.player = new objects.Player(_this);
             _this.lifeCounter = new hud.LifeCounter();
             _this.score = new hud.Score();

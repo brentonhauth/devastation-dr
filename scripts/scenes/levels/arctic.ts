@@ -4,36 +4,16 @@ module scenes {
         private finishedCheck = false;
         private ending = false;
 
-        private backings: createjs.Bitmap[];
-
         constructor() {
             super();
-
-            this.backings = new Array<createjs.Bitmap>();
-
-
-            this.backings.push(
-                new createjs.Bitmap(objects.Game.assetManager.getResult("arctic")),
-                new createjs.Bitmap(objects.Game.assetManager.getResult("arctic"))
-            );
-
-
-            this.backings.forEach(b => {
-                b.x = 0;
-                b.scaleX = b.scaleY = 1.6;
-                this.addChild(b);
-            });
-            
-            // 1107[.2] = 692 * 1.6
-            this.backings[1].y = -537; // -1107 + 570
-            this.backings[0].y = -1540; // (-537 - 1107) + 104
-
         }
 
         public Start() {
             super.Start();
 
-            this.removeChild(this.background);
+            this.background.Overlap = 104;
+
+            // this.removeChild(this.background);
 
             if (!managers.Sound.isPlayingMusic) {
                 managers.Sound.music("cyberpunker");
@@ -70,21 +50,6 @@ module scenes {
             if (this.ending) {
                 this.player.position = this.player.position.Add(new math.Vec2(0, -8));
             }
-
-
-            this.backings.forEach((b, i) => {
-                b.y += 1.5;
-                // 104 = 65 * 1.6
-                if (b.y >= 570) {
-                    let b2 = this.backings[!!i?0:1];
-                    this.removeChild(b, b2);
-                    let h = 1107;
-                    this.addChildAt(b, 0);
-                    this.addChildAt(b2, 1);
-                    b.y = b2.y - h + 104;
-                    console.log(b.y, b2.y)
-                }
-            });        
         }
 
         public Main() {

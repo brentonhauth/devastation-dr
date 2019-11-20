@@ -42,8 +42,21 @@ var math;
             enumerable: true,
             configurable: true
         });
+        /**
+         * Returns a new scaled Vector
+         * @param {Number} s
+         */
         Vec2.prototype.Scale = function (s) {
             return new Vec2(this.x * s, this.y * s);
+        };
+        /**
+         * Scales the current Vector
+         * @param {Number} s
+         */
+        Vec2.prototype.ScaleEq = function (s) {
+            this.x *= s;
+            this.y *= s;
+            return this;
         };
         Vec2.prototype.Add = function (v) {
             return Vec2.Sum(this, v);
