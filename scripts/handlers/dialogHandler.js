@@ -33,10 +33,12 @@ var handlers;
             this.dialogBox.text = current.text;
             setTimeout(function () {
                 if (_this.queue.length > 0) {
-                    _this.ShowNext();
+                    requestAnimationFrame(_this.ShowNext.bind(_this));
+                    // this.ShowNext();
                 }
                 else {
-                    _this.Clear();
+                    requestAnimationFrame(_this.Clear.bind(_this));
+                    // this.Clear();
                 }
                 if (typeof current.cb === "function") {
                     current.cb();

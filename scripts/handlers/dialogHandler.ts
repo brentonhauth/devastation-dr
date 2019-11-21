@@ -1,17 +1,18 @@
 module handlers {
 
-    type Dialog = [string, number, Function?]
+    type DialogArg = [string, number, Function?];
+    type Dialog = { text: string, delay: number, cb?: Function };
 
     export class DialogHandler {
 
         public playScene: scenes.Scene;
 
-        private queue: any[];
+        private queue: Dialog[];
         private dialogBox: ui.Label;
 
         constructor(playScene: scenes.Scene) {
             this.playScene = playScene;
-            this.queue = new Array();
+            this.queue = new Array<Dialog>();
             this.dialogBox = new ui.Label("", "24px", "Arial", "#1d1d1d", 300, 500);
             this.dialogBox.visible = false;
         }
@@ -25,7 +26,7 @@ module handlers {
             }
         }
 
-        public TriggerMany(...dialog: Dialog[]) {
+        public TriggerMany(...dialog: DialogArg[]) {
             dialog.forEach(d => {
                 if (Array.isArray(d)) {
                     this.Trigger(d[0], d[1], d[2]);
@@ -42,9 +43,11 @@ module handlers {
 
             setTimeout(() => {
                 if (this.queue.length > 0) {
-                    this.ShowNext();
+                    requestAnimationFrame(this.ShowNext.bind(this));
+                    // this.ShowNext();
                 } else {
-                    this.Clear();
+                    requestAnimationFrame(this.Clear.bind(this));
+                    // this.Clear();
                 }
 
                 if (typeof current.cb === "function") {
