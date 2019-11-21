@@ -78,7 +78,7 @@ module objects {
                         slide = diff.y > 0 ? "slide_down" : "slide_up";
                     }
                     this.penguinAnimator.gotoAndPlay(slide);
-                    this.direction = diff.Scale(Penguin.moveSpeed);
+                    this.direction = diff.ScaleEq(Penguin.moveSpeed);
                     this.setSlideAnimation = true;
                 }
                 this.position = this.position.Add(this.direction);

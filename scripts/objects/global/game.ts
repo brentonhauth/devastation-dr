@@ -15,5 +15,10 @@ module objects {
                 return true;
             }
         }
+
+        public static getAsset(tag: string) {
+            return Game.assetManager.getResult(tag);
+        }
+
     }
 }

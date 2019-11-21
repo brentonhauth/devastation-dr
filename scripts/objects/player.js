@@ -20,9 +20,9 @@ var objects;
             var _this = _super.call(this) || this;
             _this.blink = false;
             _this.intangible = false;
-            _this.oddBlink = 0;
-            _this.moveSpeed = 8;
+            _this.vMoveSpeed = 8;
             _this.canLeaveBounds = false;
+            _this.hMoveSpeed = _this.vMoveSpeed * .75;
             _this.playScene = playScene;
             _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("hummer"));
             var bounds = _this.sprite.getBounds();
@@ -39,7 +39,7 @@ var objects;
             // Set the initial position
             this.position = new math.Vec2(320, 500);
             this.lives = 3;
-            this.moved = new math.Vec2(0, 0);
+            this.moved = new math.Vec2();
             //this.scaleX = 0.25;
             //this.scaleY = 0.25;
         };
@@ -52,62 +52,55 @@ var objects;
         Player.prototype.Move = function () {
             this.moved.x = this.moved.y = 0;
             if (managers.Keyboard.pressed(config.Key.W)) {
-                this.moved.y = -this.moveSpeed;
+                this.moved.y = -this.vMoveSpeed;
             }
             if (managers.Keyboard.pressed(config.Key.S)) {
-                this.moved.y += this.moveSpeed;
+                this.moved.y += this.vMoveSpeed;
             }
             if (managers.Keyboard.pressed(config.Key.A)) {
-                this.moved.x = -(this.moveSpeed * .8);
+                this.moved.x = -this.hMoveSpeed;
             }
             if (managers.Keyboard.pressed(config.Key.D)) {
-                this.moved.x += (this.moveSpeed * .8);
+                this.moved.x += this.hMoveSpeed;
             }
             if (this.moved.x || this.moved.y) {
                 if (this.moved.x && this.moved.y) {
-                    this.moved = this.moved.Scale(Math.SQRT1_2);
+                    this.moved = this.moved.ScaleEq(Math.SQRT1_2);
                 }
                 this.position = this.position.Add(this.moved);
-            }
-            if (!this.canLeaveBounds) {
-                this.CheckBound();
+                if (!this.canLeaveBounds) {
+                    this.CheckBound();
+                }
             }
         };
         Player.prototype.Blink = function () {
-            if (this.blink) {
-                if (this.oddBlink == 2) {
-                    this.visible = !this.visible;
-                    this.oddBlink = 0;
-                }
-                else {
-                    this.oddBlink++;
-                }
+            if (this.blink && !(createjs.Ticker.getTicks() % 3)) {
+                this.visible = !this.visible;
             }
         };
         Player.prototype.StartBlink = function () {
             var _this = this;
             this.blink = this.intangible = true;
             setTimeout(function () {
-                _this.blink = _this.intangible = false;
-                _this.visible = true;
+                requestAnimationFrame(function () {
+                    _this.blink = _this.intangible = false;
+                    _this.visible = true;
+                });
             }, 1000);
         };
         Player.prototype.CheckBound = function () {
-            var setX = null;
-            var setY = null;
-            // Right boundary
+            var setX, setY;
             if (this.x >= (objects.Game.canvas.width - this.halfW)) {
                 setX = objects.Game.canvas.width - this.halfW;
             }
-            // Left boundary
-            if (this.x <= this.halfW) {
+            else if (this.x <= this.halfW) {
                 setX = this.halfW;
-            }
-            if (this.y <= this.halfH) {
-                setY = this.halfH;
             }
             if (this.y >= (objects.Game.canvas.height - this.halfH)) {
                 setY = objects.Game.canvas.height - this.halfH;
+            }
+            else if (this.y <= this.halfH) {
+                setY = this.halfH;
             }
             if (setX || setY) {
                 this.position = new math.Vec2(setX || this.x, setY || this.y);

@@ -14,6 +14,9 @@ var objects;
                 return true;
             }
         };
+        Game.getAsset = function (tag) {
+            return Game.assetManager.getResult(tag);
+        };
         return Game;
     }());
     objects.Game = Game;

@@ -54,6 +54,26 @@ module math {
             return Math.sqrt((x * x) + (y * y));
         }
 
+        /**
+         * Checks if the distance between 2 vectors is within a certain range.
+         * 
+         * @example
+         * // Use instead of:
+         * Vec2.Distance(a, b) <= range
+         * @param {Vec2} a
+         * @param {Vec2} b
+         * @param {number} range
+         */
+        public static WithinRange(a: Vec2, b: Vec2, range: number): boolean {
+            let x = a.x - b.x,
+                y = a.y - b.y;
+            range *= range;
+
+            let disSq = (x * x) + (y * y);
+
+            return disSq <= range;
+        }
+
         public static Difference(a: Vec2, b: Vec2): Vec2 {
             return new math.Vec2(a.x - b.x, a.y - b.y);
         }

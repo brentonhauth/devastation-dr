@@ -4,8 +4,8 @@ module objects {
         public lives: number;
         private blink: boolean = false;
         public intangible: boolean = false;
-        private oddBlink = 0;
-        private moveSpeed = 8;
+        private vMoveSpeed = 8;
+        private hMoveSpeed: number;
         private moved: math.Vec2;
         
         private sprite: createjs.Bitmap;
@@ -19,6 +19,7 @@ module objects {
         // Constructor
         constructor(playScene: scenes.PlayScene) {
             super();
+            this.hMoveSpeed = this.vMoveSpeed * .75;
             this.playScene = playScene;
             this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("hummer"));
             let bounds = this.sprite.getBounds();
@@ -34,7 +35,7 @@ module objects {
             // Set the initial position
             this.position = new math.Vec2(320, 500);
             this.lives = 3;
-            this.moved = new math.Vec2(0, 0);
+            this.moved = new math.Vec2();
 
             //this.scaleX = 0.25;
             //this.scaleY = 0.25;
@@ -50,78 +51,71 @@ module objects {
             this.moved.x = this.moved.y = 0;
 
             if (managers.Keyboard.pressed(config.Key.W)) {
-                this.moved.y = -this.moveSpeed;
+                this.moved.y = -this.vMoveSpeed;
             }
 
             if (managers.Keyboard.pressed(config.Key.S)) {
-                this.moved.y += this.moveSpeed;
+                this.moved.y += this.vMoveSpeed;
             }
 
             if (managers.Keyboard.pressed(config.Key.A)) {
-                this.moved.x = -(this.moveSpeed * .8);
+                this.moved.x = -this.hMoveSpeed;
             }
 
             if (managers.Keyboard.pressed(config.Key.D)) {
-                this.moved.x += (this.moveSpeed * .8);
+                this.moved.x += this.hMoveSpeed;
             }
 
             if (this.moved.x || this.moved.y) {
                 if (this.moved.x && this.moved.y) {
-                    this.moved = this.moved.Scale(Math.SQRT1_2);
+                    this.moved = this.moved.ScaleEq(Math.SQRT1_2);
                 }
 
                 this.position = this.position.Add(this.moved);
+
+                if (!this.canLeaveBounds) {
+                    this.CheckBound();
+                }
             }
 
-            if (!this.canLeaveBounds) {
-                this.CheckBound();
-            }
         }
 
         private Blink() {
-            if (this.blink) {
-                if (this.oddBlink == 2) {
-                    this.visible = !this.visible;
-                    this.oddBlink = 0;
-                } else {
-                    this.oddBlink++;
-                }
+            if (this.blink && !(createjs.Ticker.getTicks() % 3)) {
+                this.visible = !this.visible;
             }
         }
 
         public StartBlink() {
             this.blink = this.intangible = true;
+
             setTimeout(() => {
-                this.blink = this.intangible = false;
-                this.visible = true;
+                requestAnimationFrame(() => {
+                    this.blink = this.intangible = false;
+                    this.visible = true;
+                });
             }, 1000);
         }
 
         public CheckBound(): void {
 
-            let setX: number = null;
-            let setY: number = null;
-            // Right boundary
+            let setX: number, setY: number;
+
             if(this.x >= (objects.Game.canvas.width - this.halfW)) {
                 setX = objects.Game.canvas.width - this.halfW;
-            }
-
-            // Left boundary
-            if(this.x <= this.halfW) {
+            } else if (this.x <= this.halfW) {
                 setX = this.halfW;
-            }
-
-            if (this.y <= this.halfH) {
-                setY = this.halfH;
             }
 
             if (this.y >= (objects.Game.canvas.height - this.halfH)) {
                 setY = objects.Game.canvas.height - this.halfH;
+            } else if (this.y <= this.halfH) {
+                setY = this.halfH;
             }
 
             if (setX || setY) {
-                this.position = new math.Vec2(setX||this.x, setY||this.y);
-            }            
+                this.position = new math.Vec2(setX || this.x, setY || this.y);
+            }
         }
 
         public ShootWeapon():void {

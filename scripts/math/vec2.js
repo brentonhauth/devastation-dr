@@ -70,6 +70,22 @@ var math;
             var y = a.y - b.y;
             return Math.sqrt((x * x) + (y * y));
         };
+        /**
+         * Checks if the distance between 2 vectors is within a certain range.
+         *
+         * @example
+         * // Use instead of:
+         * Vec2.Distance(a, b) <= range
+         * @param {Vec2} a
+         * @param {Vec2} b
+         * @param {number} range
+         */
+        Vec2.WithinRange = function (a, b, range) {
+            var x = a.x - b.x, y = a.y - b.y;
+            range *= range;
+            var disSq = (x * x) + (y * y);
+            return disSq <= range;
+        };
         Vec2.Difference = function (a, b) {
             return new math.Vec2(a.x - b.x, a.y - b.y);
         };

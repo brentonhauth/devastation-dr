@@ -25,10 +25,9 @@ module scenes {
 
             this.storePos = new math.Vec2(100, 100);
 
-            this.counterPoint = new math.Vec2(56, 65).Scale(this.storeScale).Add(this.storePos);
-            this.doorPoint = new math.Vec2(74, 119).Scale(this.storeScale).Add(this.storePos);
+            this.counterPoint = new math.Vec2(56, 65).ScaleEq(this.storeScale).Add(this.storePos);
+            this.doorPoint = new math.Vec2(74, 119).ScaleEq(this.storeScale).Add(this.storePos);
             this.dir = math.Vec2.Difference(this.doorPoint, this.counterPoint).Normalized;
-
             this.dir = this.dir.Scale(5);
 
 

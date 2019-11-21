@@ -36,7 +36,7 @@ module objects {
 
             let diff = math.Vec2.Difference(moveTo, this.spawn).Normalized;
 
-            this.direction = diff.Scale(Wolf.moveSpeed);
+            this.direction = diff.ScaleEq(Wolf.moveSpeed);
 
             let anim = "move_down";
 

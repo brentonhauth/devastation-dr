@@ -17,7 +17,6 @@ var objects;
         __extends(PolarBear, _super);
         function PolarBear() {
             var _this = _super.call(this, "polarBearSheet") || this;
-            _this.shootBuffer = 0;
             _this.reachedSpot = false;
             _this.playScene = objects.Game.currentScene;
             _this.startingPosition = new math.Vec2(math.randRange(20, 540), math.randRange(50, 250));
@@ -51,7 +50,7 @@ var objects;
         };
         PolarBear.prototype.Update = function () {
             if (!this.reachedSpot) {
-                if (math.Vec2.Distance(this.position, this.startingPosition) < 15) {
+                if (math.Vec2.WithinRange(this.position, this.startingPosition, 15)) {
                     this.reachedSpot = true;
                 }
                 else {
@@ -60,10 +59,10 @@ var objects;
             }
             else {
                 this.facePlayer();
-                if ((createjs.Ticker.getTicks() % 20) === 0) {
+                if (!(createjs.Ticker.getTicks() % 20)) {
                     this.throwFish();
                 }
-                this.position = this.position.Add(math.Vec2.Down.ScaleEq(this.playScene.background.Speed));
+                this.position = this.position.Add(new math.Vec2(0, this.playScene.background.Speed));
             }
             if (this.y > (objects.Game.canvas.height + 100)) {
                 this.Destroy();

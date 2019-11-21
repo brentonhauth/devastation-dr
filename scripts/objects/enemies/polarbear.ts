@@ -2,13 +2,10 @@ module objects {
     export class PolarBear extends Enemy {
 
         private startingPosition: math.Vec2;
-        
         private polarBearAnimator: createjs.Sprite;
         private playerRef: Player;
 
         private playScene: scenes.PlayScene;
-
-        private shootBuffer = 0;
 
         private lastFacing;
 
@@ -64,7 +61,7 @@ module objects {
 
         public Update() {
             if (!this.reachedSpot) {
-                if (math.Vec2.Distance(this.position, this.startingPosition) < 15) {
+                if (math.Vec2.WithinRange(this.position, this.startingPosition, 15)) {
                     this.reachedSpot = true;
                 } else {
                     this.position = this.position.Add(new math.Vec2(0, 6));
@@ -72,12 +69,12 @@ module objects {
             } else {
                 this.facePlayer();
 
-                if ((createjs.Ticker.getTicks() % 20) === 0) {
+                if (!(createjs.Ticker.getTicks() % 20)) {
                     this.throwFish();
                 }
 
                 this.position = this.position.Add(
-                    math.Vec2.Down.ScaleEq(this.playScene.background.Speed)
+                    new math.Vec2(0, this.playScene.background.Speed)
                 );
             }
 

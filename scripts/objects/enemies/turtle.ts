@@ -65,7 +65,8 @@ module objects {
                     this.playScene.enemyBulletHandler.AddExistingBullet(b);
                 }
                 this.position = this.position.Add(new math.Vec2(0, this.playScene.background.Speed));
-            } else if (math.Vec2.Distance(this.playerRef.position, this.position) < this.aggressiveRange) {
+            } else if (math.Vec2.WithinRange(this.playerRef.position, this.position, this.aggressiveRange)) {
+                //math.Vec2.Distance(this.playerRef.position, this.position) < this.aggressiveRange
                 this.isAggressive = true;
             } else {
                 this.position = this.position.Add(new math.Vec2(0, 3));

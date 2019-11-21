@@ -41,7 +41,7 @@ var objects;
                 }
             });
             var diff = math.Vec2.Difference(moveTo, _this.spawn).Normalized;
-            _this.direction = diff.Scale(Wolf.moveSpeed);
+            _this.direction = diff.ScaleEq(Wolf.moveSpeed);
             var anim = "move_down";
             if (Math.abs(diff.x) > Math.abs(diff.y)) {
                 anim = diff.x > 0 ? "move_right" : "move_left";
