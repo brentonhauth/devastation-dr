@@ -28,6 +28,7 @@ var config;
             { id: "penguinSheet", src: "./assets/images/sheets/enemies/penguinSheet.png" },
             { id: "lizardSheet", src: "./assets/images/sheets/enemies/alligatorSheet.png" },
             { id: "turtleSheet", src: "./assets/images/sheets/enemies/turtleSheet.png" },
+            { id: "jackalSheet", src: "./assets/images/sheets/enemies/jackalSheet.png" },
             { id: "powerup", src: "./assets/images/powerup.png" },
             { id: "pistol", src: "./assets/images/Pistol.png" },
             { id: "machineGun", src: "./assets/images/MachineGun.png" },

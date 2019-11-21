@@ -24,9 +24,21 @@ var objects;
         }
         PlayerBullet.prototype.OnCollision = function (obj) {
             var playScene = this.bulletHandler.playScene;
-            if (obj instanceof objects.Enemy || obj instanceof objects.Spider) {
-                var rr = Math.floor(math.randRange(1, 5));
-                if (rr == 2) {
+            if (obj instanceof objects.Enemy) {
+                var spawnItem = false;
+                if (obj instanceof objects.Jackal) {
+                    // TODO: improve upon 'yoink' system with Jackals
+                    if (obj.yoinked) {
+                        spawnItem = true;
+                    }
+                }
+                else {
+                    var rr = Math.floor(math.randRange(1, 5));
+                    if (rr == 2) {
+                        spawnItem = true;
+                    }
+                }
+                if (spawnItem) {
                     playScene.AddEnemyItem(obj);
                 }
                 obj.Destroy();

@@ -115,9 +115,9 @@ var objects;
             }
             managers.Sound.sfx("reload");
         };
-        Player.prototype.OnCollision = function (_gameObject) {
-            if (_gameObject instanceof objects.EnemyItem) {
-                if (_gameObject.itemType == config.Item.MACHINEGUN) {
+        Player.prototype.OnCollision = function (gameObject) {
+            if (gameObject instanceof objects.EnemyItem) {
+                if (gameObject.itemType == config.Item.MACHINEGUN) {
                     if (this.weapon.weaponType == config.Weapon.MACHINEGUN) {
                         if (this.weapon.upgradeLevel >= 3) {
                             this.playScene.score.addPoints(100);
@@ -131,7 +131,7 @@ var objects;
                     }
                     this.playScene.weaponHUD.updateWeapon(this.weapon);
                 }
-                _gameObject.Destroy();
+                gameObject.Destroy();
             }
             else {
                 if (!this.intangible) {
@@ -145,6 +145,11 @@ var objects;
                     if (this.lives == 0) {
                         objects.Game.currentState = config.Scene.OVER;
                         console.log("dead");
+                    }
+                    if (gameObject instanceof objects.Jackal) {
+                        // TODO: improve upon downgrade system (when hit by Jackal)
+                        this.weapon.Downgrade();
+                        gameObject.yoink(this.weapon.weaponType);
                     }
                 }
             }

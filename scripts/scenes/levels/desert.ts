@@ -59,6 +59,10 @@ module scenes {
             this.waveHandler.Add(
 
                 new objects.Wave(
+                    [objects.Jackal, 3]
+                ),
+
+                new objects.Wave(
                     new objects.Lizard()
                 ),
 

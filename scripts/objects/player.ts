@@ -130,10 +130,10 @@ module objects {
             managers.Sound.sfx("reload");
         }
 
-        public OnCollision(_gameObject: objects.GameObject): void {
-            if(_gameObject instanceof objects.EnemyItem)
+        public OnCollision(gameObject: objects.GameObject): void {
+            if(gameObject instanceof objects.EnemyItem)
             {
-                if ((<objects.EnemyItem>_gameObject).itemType == config.Item.MACHINEGUN)
+                if ((<objects.EnemyItem>gameObject).itemType == config.Item.MACHINEGUN)
                 {
                     if (this.weapon.weaponType == config.Weapon.MACHINEGUN)
                     {
@@ -153,7 +153,7 @@ module objects {
                     }
                     this.playScene.weaponHUD.updateWeapon(this.weapon);
                 }
-                (<objects.EnemyItem>_gameObject).Destroy();
+                (<objects.EnemyItem>gameObject).Destroy();
             }
             else
             {
@@ -168,6 +168,12 @@ module objects {
                     if (this.lives == 0) {
                         objects.Game.currentState = config.Scene.OVER;
                         console.log("dead");
+                    }
+
+                    if (gameObject instanceof objects.Jackal) {
+                        // TODO: improve upon downgrade system (when hit by Jackal)
+                        this.weapon.Downgrade();
+                        gameObject.yoink(this.weapon.weaponType);
                     }
                 }
             }
