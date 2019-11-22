@@ -182,8 +182,10 @@ var objects;
                 this.playScene.lifeCounter.text(this.lives);
             }
             else if (gameObject.itemType == config.Item.shield) {
-                this.hasShield = true;
-                this.changeSprite();
+                if (!this.hasShield) {
+                    this.hasShield = true;
+                    this.changeSprite();
+                }
             }
             gameObject.Destroy();
         };
