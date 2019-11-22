@@ -22,6 +22,7 @@ module objects {
                         spawnItem = true;
                     }
                 } else {
+                    //let rr = Math.floor(math.randRange(1, 1));
                     let rr = Math.floor(math.randRange(1, 5));
                     if (rr == 1)
                     {

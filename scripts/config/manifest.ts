@@ -20,6 +20,8 @@ module config {
             { id: "spider", src: "./assets/images/spider1.png" },
             { id: "playerSheet", src: "./assets/images/sheets/player_sheet112x146.png" },
             { id: "hummer", src: "./assets/images/hummer.png" },
+            { id: "hummerShield", src: "./assets/images/hummer_shield.png" },
+
             { id: "fish", src: "./assets/images/fish.png" },
             { id: "store", src: "./assets/images/store.png" },
 

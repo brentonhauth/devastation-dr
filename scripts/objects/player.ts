@@ -166,6 +166,7 @@ module objects {
                     else
                     {
                         this.hasShield = false;
+                        this.changeSprite();
                         this.StartBlink(); // this.startShieldBlink();
 
                     }
@@ -221,9 +222,22 @@ module objects {
             else if (gameObject.itemType == config.Item.shield)
             {
                 this.hasShield = true;
+                this.changeSprite();
             }
 
             gameObject.Destroy();
+        }
+
+        private changeSprite(): void{
+            let spriteString = this.hasShield ? "hummerShield" : "hummer";
+            this.removeChild(this.sprite)
+            this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult(spriteString));
+            let bounds = this.sprite.getBounds();
+            this.width = bounds.width;
+            this.height = bounds.height;
+            this.Init();
+            this.addChild(this.sprite);
+            //this.Start();
         }
     }
 }
