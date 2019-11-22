@@ -23,6 +23,7 @@ var scenes;
             _this.score = new hud.Score();
             _this.weaponHUD = new hud.WeaponHUD();
             _this.playerBulletHandler = new handlers.PlayerBulletHandler(_this);
+            _this.flamethrowerBulletHandler = new handlers.FlamethrowerBulletHandler(_this);
             _this.enemyBulletHandler = new handlers.EnemyBulletHandler(_this);
             _this.enemyHandler = new handlers.EnemyHandler(_this);
             _this.dialogHandler = new handlers.DialogHandler(_this);
@@ -48,8 +49,19 @@ var scenes;
             this.playerBulletHandler.UpdateAndCheckCollision(this.waveHandler.ActiveEnemies);
             this.enemyItemHandler.Update();
             this.enemyItemHandler.CheckCollision(this.player);
-            if (managers.Keyboard.down(config.Key.Space)) {
-                this.player.ShootWeapon();
+            if (this.player.weapon.weaponType == config.Weapon.FLAMETHROWER) {
+                this.flamethrowerBulletHandler.UpdateAndCheckCollision(this.waveHandler.ActiveEnemies);
+                if (managers.Keyboard.pressed(config.Key.Space)) {
+                    this.player.ShootWeapon();
+                }
+                else {
+                    this.player.weapon.stopShooting();
+                }
+            }
+            else {
+                if (managers.Keyboard.down(config.Key.Space)) {
+                    this.player.ShootWeapon();
+                }
             }
         };
         PlayScene.prototype.AddEnemyBullet = function (enemy) {

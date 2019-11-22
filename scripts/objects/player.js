@@ -117,6 +117,9 @@ var objects;
             else if (weaponType == config.Weapon.LASER) {
                 this.weapon = new objects.Laser(this.playScene);
             }
+            else if (weaponType == config.Weapon.FLAMETHROWER) {
+                this.weapon = new objects.Flamethrower(this.playScene);
+            }
             managers.Sound.sfx("reload");
         };
         Player.prototype.OnCollision = function (gameObject) {
@@ -174,6 +177,20 @@ var objects;
                 }
                 else {
                     this.ChangeWeapon(config.Weapon.LASER);
+                }
+                this.playScene.weaponHUD.updateWeapon(this.weapon);
+            }
+            else if (gameObject.itemType == config.Item.flamethrower) {
+                if (this.weapon.weaponType == config.Weapon.FLAMETHROWER) {
+                    if (this.weapon.upgradeLevel >= 3) {
+                        this.playScene.score.addPoints(100);
+                    }
+                    else {
+                        this.weapon.Upgrade();
+                    }
+                }
+                else {
+                    this.ChangeWeapon(config.Weapon.FLAMETHROWER);
                 }
                 this.playScene.weaponHUD.updateWeapon(this.weapon);
             }

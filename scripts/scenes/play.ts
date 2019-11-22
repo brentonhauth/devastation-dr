@@ -8,6 +8,8 @@ module scenes {
         public weaponHUD: hud.WeaponHUD;
 
         public playerBulletHandler: handlers.PlayerBulletHandler;
+        public flamethrowerBulletHandler: handlers.FlamethrowerBulletHandler;
+
         public enemyBulletHandler: handlers.EnemyBulletHandler;
         public enemyHandler: handlers.EnemyHandler;
         public dialogHandler: handlers.DialogHandler;
@@ -24,6 +26,7 @@ module scenes {
             this.weaponHUD = new hud.WeaponHUD();
 
             this.playerBulletHandler = new handlers.PlayerBulletHandler(this);
+            this.flamethrowerBulletHandler = new handlers.FlamethrowerBulletHandler(this);
             this.enemyBulletHandler = new handlers.EnemyBulletHandler(this);
             this.enemyHandler = new handlers.EnemyHandler(this);
             this.dialogHandler = new handlers.DialogHandler(this);
@@ -58,9 +61,28 @@ module scenes {
             this.enemyItemHandler.Update();
             this.enemyItemHandler.CheckCollision(this.player);
 
-            if (managers.Keyboard.down(config.Key.Space)) {
-                this.player.ShootWeapon();
+            if (this.player.weapon.weaponType == config.Weapon.FLAMETHROWER)
+            {
+                this.flamethrowerBulletHandler.UpdateAndCheckCollision(this.waveHandler.ActiveEnemies);
+
+                if (managers.Keyboard.pressed(config.Key.Space))
+                {
+                    this.player.ShootWeapon();
+                }
+                else
+                {
+                    (<objects.Flamethrower>this.player.weapon).stopShooting();
+                }
+                
             }
+            else  
+            {
+                if(managers.Keyboard.down(config.Key.Space))
+                {
+                    this.player.ShootWeapon();   
+                }
+            }
+
         }
 
         public AddEnemyBullet(enemy:objects.Enemy) {

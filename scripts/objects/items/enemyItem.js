@@ -19,12 +19,13 @@ var objects;
             var _this = _super.call(this) || this;
             _this.isDestroyed = false;
             _this.speed = 3;
+            _this.itemTypeMap = ["machineGun", "laser", "flamethrower", "shield", "life"];
             _this.itemID = String(EnemyItem.counter);
             EnemyItem.counter++;
             _this.itemHandler = itemHandler;
             _this.spawnedFrom = spawnedFrom;
             _this.itemType = _this.chooseItemType();
-            _this.itemTypeString = ["machineGun", "laser", "shield", "life"][_this.itemType];
+            _this.itemTypeString = _this.itemTypeMap[_this.itemType];
             //console.log(this.itemTypeString);
             _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("item_" + _this.itemTypeString));
             _this.addChild(_this.sprite);
@@ -37,10 +38,9 @@ var objects;
             return _this;
         }
         EnemyItem.prototype.chooseItemType = function () {
-            var itemTypeMap = ["machineGun", "laser", "shield", "life"];
-            var rr = Math.floor(math.randRange(1, 5));
-            var itemType = config.Item[itemTypeMap[rr - 1]];
-            //console.log(rr);
+            var rr = Math.floor(math.randRange(0, 5));
+            //let itemType = config.Item[this.itemTypeMap[rr]];
+            var itemType = config.Item.flamethrower;
             return itemType;
         };
         EnemyItem.prototype.setInitialPosition = function () {

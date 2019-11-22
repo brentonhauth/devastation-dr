@@ -11,6 +11,7 @@ module objects {
         public itemID: string;
         public itemType: config.Item;
         public itemTypeString: String;
+        public itemTypeMap = ["machineGun", "laser", "flamethrower", "shield", "life"];
 
 
         constructor(spawnedFrom:objects.Enemy, itemHandler:handlers.EnemyItemHandler) {
@@ -22,7 +23,7 @@ module objects {
             this.spawnedFrom = spawnedFrom;
 
             this.itemType = this.chooseItemType();
-            this.itemTypeString = ["machineGun", "laser", "shield", "life"][this.itemType];
+            this.itemTypeString = this.itemTypeMap[this.itemType];
             //console.log(this.itemTypeString);
 
             this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("item_" + this.itemTypeString));
@@ -38,10 +39,10 @@ module objects {
         }
 
         private chooseItemType(): config.Item{
-            let itemTypeMap = ["machineGun", "laser", "shield", "life"];
-            let rr = Math.floor(math.randRange(1, 5));
-            let itemType = config.Item[itemTypeMap[rr-1]];
-            //console.log(rr);
+            let rr = Math.floor(math.randRange(0, 5));
+            //let itemType = config.Item[this.itemTypeMap[rr]];
+            let itemType = config.Item.flamethrower;
+
             return itemType;
         }
 

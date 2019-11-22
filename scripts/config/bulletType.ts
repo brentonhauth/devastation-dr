@@ -3,7 +3,8 @@ module config {
         ENEMYBULLET = "bullet",
         PISTOL = "pistolBullet",
         MACHINEGUN = "machineGunBullet",
-        LASER = "laserBullet"
+        LASER = "laserBullet",
+        FLAMETHROWER = "flamethrowerBullet"
 
     }
 }
