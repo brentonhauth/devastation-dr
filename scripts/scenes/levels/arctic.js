@@ -25,7 +25,6 @@ var scenes;
             var _this = this;
             _super.prototype.Start.call(this);
             this.background.Overlap = 104;
-            // this.removeChild(this.background);
             if (!managers.Sound.isPlayingMusic) {
                 managers.Sound.music("cyberpunker");
             }

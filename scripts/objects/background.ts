@@ -55,8 +55,8 @@ module objects {
                 this.addChild(img);
             });
 
-            this.imageWidth = Math.round(bounds.width * scale);
-            this.imageHeight = Math.round(bounds.height * scale);
+            this.imageWidth = bounds.width * scale;
+            this.imageHeight = bounds.height * scale;
 
             this.Reset();
         }

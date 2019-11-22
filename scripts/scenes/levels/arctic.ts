@@ -13,8 +13,6 @@ module scenes {
 
             this.background.Overlap = 104;
 
-            // this.removeChild(this.background);
-
             if (!managers.Sound.isPlayingMusic) {
                 managers.Sound.music("cyberpunker");
             }

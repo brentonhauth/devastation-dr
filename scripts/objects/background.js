@@ -60,8 +60,8 @@ var objects;
                 img.scaleX = img.scaleY = scale;
                 _this.addChild(img);
             });
-            this.imageWidth = Math.round(bounds.width * scale);
-            this.imageHeight = Math.round(bounds.height * scale);
+            this.imageWidth = bounds.width * scale;
+            this.imageHeight = bounds.height * scale;
             this.Reset();
         };
         // Updated 60 times per second (60FPS)
