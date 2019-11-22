@@ -22,6 +22,7 @@ var objects;
             _this.intangible = false;
             _this.vMoveSpeed = 8;
             _this.canLeaveBounds = false;
+            _this.hasShield = false;
             _this.hMoveSpeed = _this.vMoveSpeed * .75;
             _this.playScene = playScene;
             _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("hummer"));
@@ -113,46 +114,76 @@ var objects;
             if (weaponType == config.Weapon.MACHINEGUN) {
                 this.weapon = new objects.MachineGun(this.playScene);
             }
+            else if (weaponType == config.Weapon.LASER) {
+                this.weapon = new objects.Laser(this.playScene);
+            }
             managers.Sound.sfx("reload");
         };
         Player.prototype.OnCollision = function (gameObject) {
             if (gameObject instanceof objects.EnemyItem) {
-                if (gameObject.itemType == config.Item.MACHINEGUN) {
-                    if (this.weapon.weaponType == config.Weapon.MACHINEGUN) {
-                        if (this.weapon.upgradeLevel >= 3) {
-                            this.playScene.score.addPoints(100);
-                        }
-                        else {
-                            this.weapon.Upgrade();
-                        }
-                    }
-                    else {
-                        this.ChangeWeapon(config.Weapon.MACHINEGUN);
-                    }
-                    this.playScene.weaponHUD.updateWeapon(this.weapon);
-                }
-                gameObject.Destroy();
+                this.handleItemCollision(gameObject);
             }
             else {
                 if (!this.intangible) {
-                    this.lives -= 1;
-                    var cs = objects.Game.currentScene;
-                    if (cs.lifeCounter) {
-                        cs.lifeCounter.text(this.lives);
+                    if (!this.hasShield) {
+                        this.StartBlink();
+                        this.lives -= 1;
+                        this.playScene.lifeCounter.text(this.lives);
+                        managers.Sound.sfx("explosion");
+                        if (this.lives == 0) {
+                            objects.Game.currentState = config.Scene.OVER;
+                            console.log("dead");
+                        }
+                        if (gameObject instanceof objects.Jackal) {
+                            // TODO: improve upon downgrade system (when hit by Jackal)
+                            this.weapon.Downgrade();
+                            gameObject.yoink(this.weapon.weaponType);
+                        }
                     }
-                    managers.Sound.sfx("explosion");
-                    this.StartBlink();
-                    if (this.lives == 0) {
-                        objects.Game.currentState = config.Scene.OVER;
-                        console.log("dead");
-                    }
-                    if (gameObject instanceof objects.Jackal) {
-                        // TODO: improve upon downgrade system (when hit by Jackal)
-                        this.weapon.Downgrade();
-                        gameObject.yoink(this.weapon.weaponType);
+                    else {
+                        this.hasShield = false;
+                        this.StartBlink(); // this.startShieldBlink();
                     }
                 }
             }
+        };
+        Player.prototype.handleItemCollision = function (gameObject) {
+            if (gameObject.itemType == config.Item.machineGun) {
+                if (this.weapon.weaponType == config.Weapon.MACHINEGUN) {
+                    if (this.weapon.upgradeLevel >= 3) {
+                        this.playScene.score.addPoints(100);
+                    }
+                    else {
+                        this.weapon.Upgrade();
+                    }
+                }
+                else {
+                    this.ChangeWeapon(config.Weapon.MACHINEGUN);
+                }
+                this.playScene.weaponHUD.updateWeapon(this.weapon);
+            }
+            else if (gameObject.itemType == config.Item.laser) {
+                if (this.weapon.weaponType == config.Weapon.LASER) {
+                    if (this.weapon.upgradeLevel >= 3) {
+                        this.playScene.score.addPoints(100);
+                    }
+                    else {
+                        this.weapon.Upgrade();
+                    }
+                }
+                else {
+                    this.ChangeWeapon(config.Weapon.LASER);
+                }
+                this.playScene.weaponHUD.updateWeapon(this.weapon);
+            }
+            else if (gameObject.itemType == config.Item.life) {
+                this.lives++;
+                this.playScene.lifeCounter.text(this.lives);
+            }
+            else if (gameObject.itemType == config.Item.shield) {
+                this.hasShield = true;
+            }
+            gameObject.Destroy();
         };
         return Player;
     }(objects.GameObject));

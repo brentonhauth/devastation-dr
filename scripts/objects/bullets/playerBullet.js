@@ -34,7 +34,7 @@ var objects;
                 }
                 else {
                     var rr = Math.floor(math.randRange(1, 5));
-                    if (rr == 2) {
+                    if (rr == 1) {
                         spawnItem = true;
                     }
                 }

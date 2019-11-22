@@ -10,17 +10,22 @@ module objects {
         public static counter: number = 1;
         public itemID: string;
         public itemType: config.Item;
+        public itemTypeString: String;
+
 
         constructor(spawnedFrom:objects.Enemy, itemHandler:handlers.EnemyItemHandler) {
             super();
 
-            this.itemType = config.Item.MACHINEGUN;
             this.itemID = String(EnemyItem.counter);
             EnemyItem.counter++;
             this.itemHandler = itemHandler;
             this.spawnedFrom = spawnedFrom;
 
-            this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("powerup"));
+            this.itemType = this.chooseItemType();
+            this.itemTypeString = ["machineGun", "laser", "shield", "life"][this.itemType];
+            //console.log(this.itemTypeString);
+
+            this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("item_" + this.itemTypeString));
             this.addChild(this.sprite);
             let bounds = this.sprite.getBounds();
             this.width = bounds.width;
@@ -32,6 +37,13 @@ module objects {
 
         }
 
+        private chooseItemType(): config.Item{
+            let itemTypeMap = ["machineGun", "laser", "shield", "life"];
+            let rr = Math.floor(math.randRange(1, 5));
+            let itemType = config.Item[itemTypeMap[rr-1]];
+            //console.log(rr);
+            return itemType;
+        }
 
         public setInitialPosition(): void{
 

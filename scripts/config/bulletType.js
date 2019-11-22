@@ -5,6 +5,7 @@ var config;
         BulletType["ENEMYBULLET"] = "bullet";
         BulletType["PISTOL"] = "pistolBullet";
         BulletType["MACHINEGUN"] = "machineGunBullet";
+        BulletType["LASER"] = "laserBullet";
     })(BulletType = config.BulletType || (config.BulletType = {}));
 })(config || (config = {}));
 //# sourceMappingURL=bulletType.js.map

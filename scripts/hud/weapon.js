@@ -22,7 +22,7 @@ var hud;
             _this.tempMap = new Object;
             _this.tempMap[config.Weapon.MACHINEGUN] = "machineGun";
             _this.tempMap[config.Weapon.PISTOL] = "pistol";
-            _this.tempMap[config.Weapon.LASER] = "machineGun";
+            _this.tempMap[config.Weapon.LASER] = "laser";
             _this.tempMap[config.Weapon.FLAMETHROWER] = "machineGun";
             _this.weaponImage.x = 640;
             _this.weaponImage.y = 20;
