@@ -1,6 +1,7 @@
 module objects {
     export class FlamethrowerBullet extends objects.Bullet {
 
+        public flameAnimator:createjs.Sprite;
         public bulletHandler:handlers.PlayerBulletHandler;
 
         constructor(x:number, y:number, bulletType:config.BulletType, bulletHandler: handlers.PlayerBulletHandler) {
@@ -9,6 +10,28 @@ module objects {
             this.bulletHandler = bulletHandler;
 
             this.Start();
+
+            let sheet = new createjs.SpriteSheet({
+                images: [objects.Game.getAsset('flameStartSheet')],
+                frames: { width: 40, height: 150, count: 9 },
+                animations: {
+                    //flameIdle: {speed:speed, frames: [8], next:"flameStart"},
+                    //flameStart: { speed: speed, frames: [0, 1, 2, 3, 4 , 5, 6, 7, 8], next: "flameIdle"}
+                    flameIdle: [7,8,true,0.4],
+                    flameStart: [ 0,8, "flameIdle", 0.5]
+                }
+            });
+            
+
+            //this.flameAnimator = new createjs.Sprite(sheet, "flameStart");
+            this.flameAnimator = new createjs.Sprite(sheet,"flameStart");
+
+            //this.bulletHandler.playScene.addChild(this.flameAnimator);
+            this.removeChild(this.sprite);
+            this.addChild(this.flameAnimator);
+            //console.log(this.flameAnimator);
+            //this.flameAnimator.gotoAndPlay("flameStart");
+            //this.flameAnimator.play();
         }
 
         private checkSpawnItem(obj: objects.Enemy): void {
@@ -49,6 +72,7 @@ module objects {
         }
 
         public Update(): void {
+            //console.log(this.flameAnimator.currentFrame);
             this.Move();
             this.CheckBounds();
         }
