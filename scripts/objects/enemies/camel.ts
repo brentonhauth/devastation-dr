@@ -4,8 +4,8 @@ module objects {
         None,
         Spiral = 1,
         Oscillate = 2,
-        ReverseSpiral = 4,
-        Direct = 8
+        ReverseSpiral = 3,
+        Direct = 4
     }
 
     enum CamelState {

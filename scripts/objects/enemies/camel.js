@@ -18,8 +18,8 @@ var objects;
         CamelAttack[CamelAttack["None"] = 0] = "None";
         CamelAttack[CamelAttack["Spiral"] = 1] = "Spiral";
         CamelAttack[CamelAttack["Oscillate"] = 2] = "Oscillate";
-        CamelAttack[CamelAttack["ReverseSpiral"] = 4] = "ReverseSpiral";
-        CamelAttack[CamelAttack["Direct"] = 8] = "Direct";
+        CamelAttack[CamelAttack["ReverseSpiral"] = 3] = "ReverseSpiral";
+        CamelAttack[CamelAttack["Direct"] = 4] = "Direct";
     })(CamelAttack || (CamelAttack = {}));
     var CamelState;
     (function (CamelState) {

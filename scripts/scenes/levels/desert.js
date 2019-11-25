@@ -54,9 +54,7 @@ var scenes;
             }
         };
         DesertScene.prototype.Main = function () {
-            this.waveHandler.Add(
-            // new objects.Wave(new objects.Camel()),
-            new objects.Wave([objects.Jackal, 3]), new objects.Wave(new objects.Lizard()), new objects.Wave(new objects.Turtle()), new objects.Wave([objects.Turtle, 2]), new objects.Wave([objects.Lizard, 2], [objects.Turtle, 1]), new objects.Wave([objects.Turtle, 2], [objects.Lizard, 2]));
+            this.waveHandler.Add(new objects.Wave([objects.Jackal, 3]), new objects.Wave(new objects.Lizard()), new objects.Wave(new objects.Turtle()), new objects.Wave([objects.Turtle, 2]), new objects.Wave([objects.Lizard, 2], [objects.Turtle, 1]), new objects.Wave([objects.Turtle, 2], [objects.Lizard, 2]), new objects.Wave(new objects.Camel()));
         };
         return DesertScene;
     }(scenes.PlayScene));

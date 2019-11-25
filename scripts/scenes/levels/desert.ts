@@ -58,8 +58,6 @@ module scenes {
         public Main() {
             this.waveHandler.Add(
 
-                // new objects.Wave(new objects.Camel()),
-
                 new objects.Wave(
                     [objects.Jackal, 3]
                 ),
@@ -84,7 +82,9 @@ module scenes {
                 new objects.Wave(
                     [objects.Turtle, 2],
                     [objects.Lizard, 2]
-                )
+                ),
+
+                new objects.Wave(new objects.Camel()),
 
             );
         }
