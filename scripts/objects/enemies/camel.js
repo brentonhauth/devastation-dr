@@ -34,6 +34,7 @@ var objects;
             var _this = _super.call(this, 'camelSheet') || this;
             _this.isSettingUp = true;
             _this.oscillateCountUp = true;
+            _this.initialTrigger = true;
             _this.attackTime = 7.5; // seconds
             _this.oscillateCounter = 60;
             _this.health = 30;
@@ -75,6 +76,7 @@ var objects;
                 if (math.Vec2.WithinRange(this.position, this.startingPos, 10)) {
                     this.state = CamelState.Attacking;
                     if (!managers.Sound.isPlayingMusic) {
+                        this.playScene.dialogHandler.Trigger('What is that?!', 2.5);
                         managers.Sound.music(true);
                     }
                     if (this.currentAttack === CamelAttack.Oscillate) {

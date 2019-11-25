@@ -76,7 +76,7 @@ var scenes;
                     this.playerAnimator.alpha =
                         this.storeBg.alpha = 1;
                     this.initialTrigger = false;
-                    this.dialogHandler.TriggerMany(["What was that?!", 2], ["", 1.5], ["No time to waste!\nI gotte get home!", 2,
+                    this.dialogHandler.TriggerMany(["What was that?!", 2], ["", 1.5], ["No time to waste!\nI gotta get home!", 2,
                         function () {
                             _this.secondaryTrigger = true;
                             _this.playerAnimator.gotoAndPlay("walk_down");

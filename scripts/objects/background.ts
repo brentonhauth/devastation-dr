@@ -96,7 +96,7 @@ module objects {
                 case config.Scene.JUNGLE:
                     return 10;
                 case config.Scene.DESERT:
-                    return 0;
+                    return 20;
                 case config.Scene.ARCTIC:
                     return 104;
             }

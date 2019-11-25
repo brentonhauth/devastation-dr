@@ -72,11 +72,22 @@ module scenes {
 
                 new objects.Wave([objects.PolarBear, 3]),
 
-                // new objects.Wave([objects.Wolf, 5]),
-                // new objects.Wave(
-                //     [objects.Wolf, 5],
-                //     [objects.Penguin, 2]
-                // )
+                new objects.Wave(
+                    [objects.Penguin, 4],
+                    [objects.Wolf, 5]
+                ),
+
+                new objects.Wave(
+                    [objects.Wolf, 5],
+                    [objects.Penguin, 4],
+                    [objects.PolarBear, 3]
+                ),
+
+                new objects.Wave(
+                    [objects.Wolf, 10],
+                    [objects.Penguin, 4],
+                    [objects.PolarBear, 5]
+                )
             );
         }
     }

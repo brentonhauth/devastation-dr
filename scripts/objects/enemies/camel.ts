@@ -27,6 +27,7 @@ module objects {
 
         private isSettingUp = true;
         private oscillateCountUp = true;
+        private initialTrigger = true;
 
         private attackTime = 7.5; // seconds
         private oscillateCounter = 60;
@@ -90,6 +91,7 @@ module objects {
                 if (math.Vec2.WithinRange(this.position, this.startingPos, 10)) {
                     this.state = CamelState.Attacking;
                     if (!managers.Sound.isPlayingMusic) {
+                        this.playScene.dialogHandler.Trigger('What is that?!', 2.5);
                         managers.Sound.music(true);
                     }
                     if (this.currentAttack === CamelAttack.Oscillate) {

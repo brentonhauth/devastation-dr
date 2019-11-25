@@ -82,7 +82,7 @@ module scenes {
                     this.initialTrigger = false;
                     this.dialogHandler.TriggerMany(
                         ["What was that?!", 2], ["", 1.5],
-                        ["No time to waste!\nI gotte get home!", 2,
+                        ["No time to waste!\nI gotta get home!", 2,
                         () => {
                             this.secondaryTrigger = true;
                             this.playerAnimator.gotoAndPlay("walk_down");
