@@ -40,7 +40,7 @@ var scenes;
             this.addChild(this.infoLabel);
             this.startButton.on("click", function () {
                 objects.Game.currentState = config.Scene.PROLOGUE;
-                //objects.Game.currentState = config.Scene.ARCTIC;
+                // objects.Game.currentState = config.Scene.ARCTIC;
             });
             // this.exitButton.on("click", () => {
             //     window.close();

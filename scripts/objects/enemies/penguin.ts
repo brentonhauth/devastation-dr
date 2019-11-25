@@ -90,8 +90,8 @@ module objects {
 
 
             if (this.x < -100 || this.x > 700 ||
-            this.y < -200 || this.y > 900) {
-                this.Destroy();    
+            this.y < -200 || this.y > (objects.Game.canvas.height + 100)) {
+                this.Destroy();
             }
         }
 
