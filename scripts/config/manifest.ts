@@ -20,6 +20,8 @@ module config {
             { id: "spider", src: "./assets/images/spider1.png" },
             { id: "playerSheet", src: "./assets/images/sheets/player_sheet112x146.png" },
             { id: "hummer", src: "./assets/images/hummer.png" },
+            { id: "hummerShield", src: "./assets/images/hummer_shield.png" },
+
             { id: "fish", src: "./assets/images/fish.png" },
             { id: "store", src: "./assets/images/store.png" },
 
@@ -35,12 +37,23 @@ module config {
             { id: "powerup", src: "./assets/images/powerup.png" },
             { id: "pistol", src: "./assets/images/Pistol.png" },
             { id: "machineGun", src: "./assets/images/MachineGun.png" },
+            { id: "laser", src: "./assets/images/Laser.png" },
+            { id: "flamethrower", src: "./assets/images/Flamethrower.png" },
 
             { id: "bullet", src: "./assets/images/bullet.png" },
             { id: "pistolBullet", src: "./assets/images/pistolBullet.png" },
             { id: "machineGunBullet", src: "./assets/images/machineGunBullet.png" },
+            { id: "laserBullet", src: "./assets/images/laserBullet.png" },
+            { id: "flamethrowerBullet", src: "./assets/images/flame.png" },
+
+            { id: "flameStartSheet", src: "./assets/images/sheets/flame1.png" },
 
 
+            { id: "item_machineGun", src: "./assets/images/item_machineGun.png" },
+            { id: "item_laser", src: "./assets/images/item_laser.png" },
+            { id: "item_flamethrower", src: "./assets/images/item_flamethrower.png" },
+            { id: "item_shield", src: "./assets/images/item_shield.png" },
+            { id: "item_life", src: "./assets/images/item_life.png" },
 
             // Sounds
             { id: "explosion", src: "./assets/sounds/explosion.wav" },
