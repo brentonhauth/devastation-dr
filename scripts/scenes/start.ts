@@ -11,8 +11,8 @@ module scenes {
         constructor() {
             super();
 
-            this.background = new createjs.Bitmap(objects.Game.assetManager.getResult("menu"));
-            this.logo = new createjs.Bitmap(objects.Game.assetManager.getResult("logo"));
+            this.background = new createjs.Bitmap(objects.Game.getAsset("menu"));
+            this.logo = new createjs.Bitmap(objects.Game.getAsset("logo"));
             this.infoLabel = new ui.Label(
                 "(c) Rude Rhino", "18px", "Arial", "#e1e1f1", 320, 800, true);
             this.logo.scaleX *= .65;

@@ -209,7 +209,7 @@ var objects;
         Player.prototype.changeSprite = function () {
             var spriteString = this.hasShield ? "hummerShield" : "hummer";
             this.removeChild(this.sprite);
-            this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult(spriteString));
+            this.sprite = new createjs.Bitmap(objects.Game.getAsset(spriteString));
             var bounds = this.sprite.getBounds();
             this.width = bounds.width;
             this.height = bounds.height;

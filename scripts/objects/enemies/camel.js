@@ -18,8 +18,8 @@ var objects;
         CamelAttack[CamelAttack["None"] = 0] = "None";
         CamelAttack[CamelAttack["Spiral"] = 1] = "Spiral";
         CamelAttack[CamelAttack["Oscillate"] = 2] = "Oscillate";
-        CamelAttack[CamelAttack["ReverseSpiral"] = 3] = "ReverseSpiral";
-        CamelAttack[CamelAttack["Direct"] = 4] = "Direct";
+        CamelAttack[CamelAttack["ReverseSpiral"] = 4] = "ReverseSpiral";
+        CamelAttack[CamelAttack["Direct"] = 8] = "Direct";
     })(CamelAttack || (CamelAttack = {}));
     var CamelState;
     (function (CamelState) {
@@ -32,10 +32,7 @@ var objects;
         __extends(Camel, _super);
         function Camel() {
             var _this = _super.call(this, 'camelSheet') || this;
-            _this.isSettingUp = true;
             _this.oscillateCountUp = true;
-            _this.initialTrigger = true;
-            _this.attackTime = 7.5; // seconds
             _this.oscillateCounter = 60;
             _this.health = 30;
             _this.playScene = objects.Game.currentScene;
@@ -53,7 +50,7 @@ var objects;
                     oscillate: { speed: .05, frames: [4, 7] }
                 }
             });
-            _this.startingPos = Camel.randomStartingPos();
+            _this.startingPos = Camel.randomStartingPosition();
             _this.camalAnimator = new createjs.Sprite(sheet, 'idle_down');
             _this.width = 72;
             _this.height = 72;
@@ -70,55 +67,25 @@ var objects;
             this.dirToNextPost = math.Vec2.Difference(this.startingPos, this.position).Normalized;
         };
         Camel.prototype.Update = function () {
-            var _this = this;
             var point, bullet, tick = createjs.Ticker.getTicks();
             if (this.state === CamelState.SettingUp) {
-                if (math.Vec2.WithinRange(this.position, this.startingPos, 10)) {
-                    this.state = CamelState.Attacking;
-                    if (!managers.Sound.isPlayingMusic) {
-                        this.playScene.dialogHandler.Trigger('What is that?!', 2.5);
-                        managers.Sound.music(true);
-                    }
-                    if (this.currentAttack === CamelAttack.Oscillate) {
-                        this.camalAnimator.gotoAndPlay('oscillate');
-                    }
-                    else {
-                        this.camalAnimator.gotoAndPlay('walk_backwards');
-                    }
-                    setTimeout(function () {
-                        _this.state = CamelState.Pending;
-                    }, math.randRange(4, 8) * 1000);
-                }
-                else {
-                    this.position = this.position.Add(this.dirToNextPost);
-                }
+                this.SettingUp();
             }
             else if (this.state === CamelState.Pending) {
-                var prevAttack = this.currentAttack;
-                while (prevAttack === this.currentAttack) {
-                    this.currentAttack = Camel.randomAttack();
-                }
-                this.startingPos = Camel.randomStartingPos();
-                this.state = CamelState.SettingUp;
-                this.dirToNextPost = math.Vec2.Difference(this.startingPos, this.position).Normalized;
-                this.dirToNextPost = this.dirToNextPost.Scale(3);
+                this.Pending();
             }
             else if (this.state === CamelState.Attacking) {
-                if (this.currentAttack === CamelAttack.Spiral) {
-                    if (!(tick % 9)) {
-                        point = math.pointOnCircle(this.position, (tick * 2.5) % 360);
-                        bullet = new objects.EnemyBullet(this.position, point, this, this.playScene.enemyBulletHandler);
-                        this.playScene.enemyBulletHandler.AddExistingBullet(bullet);
-                    }
+                if (this.hasAttack(CamelAttack.Spiral) && !(tick % 9)) {
+                    point = math.pointOnCircle(this.position, (tick * 2.5) % 360);
+                    bullet = new objects.EnemyBullet(this.position, point, this, this.playScene.enemyBulletHandler);
+                    this.playScene.enemyBulletHandler.AddExistingBullet(bullet);
                 }
-                else if (this.currentAttack === CamelAttack.ReverseSpiral) {
-                    if (!(tick % 9)) {
-                        point = math.pointOnCircle(this.position, 360 - ((tick * 2.5) % 360));
-                        bullet = new objects.EnemyBullet(this.position, point, this, this.playScene.enemyBulletHandler);
-                        this.playScene.enemyBulletHandler.AddExistingBullet(bullet);
-                    }
+                if (this.hasAttack(CamelAttack.ReverseSpiral) && !(tick % 9)) {
+                    point = math.pointOnCircle(this.position, 360 - ((tick * 2.5) % 360));
+                    bullet = new objects.EnemyBullet(this.position, point, this, this.playScene.enemyBulletHandler);
+                    this.playScene.enemyBulletHandler.AddExistingBullet(bullet);
                 }
-                else if (this.currentAttack === CamelAttack.Oscillate) {
+                if (this.hasAttack(CamelAttack.Oscillate)) {
                     if (this.oscillateCountUp) {
                         if (this.oscillateCounter > 120) {
                             this.oscillateCountUp = false;
@@ -142,18 +109,71 @@ var objects;
                     }
                     this.position = this.position.Add(new math.Vec2(this.oscillateCountUp ? -1 : 1));
                 }
-                else if (this.currentAttack === CamelAttack.Direct && !(tick % 15)) {
+                if (this.hasAttack(CamelAttack.Direct) && !(tick % 15)) {
                     bullet = new objects.EnemyBullet(this.position, this.playScene.player.position, this, this.playScene.enemyBulletHandler);
                     this.playScene.enemyBulletHandler.AddExistingBullet(bullet);
                 }
             }
         };
+        Camel.prototype.SettingUp = function () {
+            var _this = this;
+            if (math.Vec2.WithinRange(this.position, this.startingPos, 10)) {
+                this.state = CamelState.Attacking;
+                if (!managers.Sound.isPlayingMusic) {
+                    this.playScene.dialogHandler.Trigger('What is that?!', 2.5);
+                    managers.Sound.music(true);
+                }
+                if (this.currentAttack === CamelAttack.Oscillate) {
+                    this.camalAnimator.gotoAndPlay('oscillate');
+                }
+                else {
+                    this.camalAnimator.gotoAndPlay('walk_backwards');
+                }
+                setTimeout(function () {
+                    _this.state = CamelState.Pending;
+                }, math.randRange(4, 8) * 1000);
+            }
+            else {
+                this.position = this.position.Add(this.dirToNextPost);
+            }
+        };
+        Camel.prototype.Pending = function () {
+            var prevAttack = this.currentAttack, newAttack = CamelAttack.None, curAttack = CamelAttack.None, numOfAttacks = 1;
+            if (this.health <= 10) {
+                numOfAttacks = 3;
+            }
+            else if (this.health <= 20) {
+                numOfAttacks = 2;
+            }
+            for (var i = 0; i < numOfAttacks; i++) {
+                do {
+                    newAttack = Camel.randomAttack();
+                } while ((curAttack & newAttack) !== 0);
+                curAttack |= newAttack;
+            }
+            this.currentAttack = curAttack;
+            // while (prevAttack === this.currentAttack) {
+            //     this.currentAttack = Camel.randomAttack();
+            // }
+            this.startingPos = Camel.randomStartingPosition();
+            this.state = CamelState.SettingUp;
+            this.dirToNextPost = math.Vec2.Difference(this.startingPos, this.position).Normalized;
+            this.dirToNextPost = this.dirToNextPost.Scale(3);
+        };
         Camel.randomAttack = function () {
             var rnd = Math.floor(math.randRange(1, 5));
-            console.log('Random Attack', CamelAttack[rnd]);
-            return CamelAttack[CamelAttack[rnd]];
+            switch (rnd) {
+                case 1: return CamelAttack.Direct;
+                case 2: return CamelAttack.Oscillate;
+                case 3: return CamelAttack.Spiral;
+                case 4: return CamelAttack.ReverseSpiral;
+                default: return CamelAttack.Direct;
+            }
         };
-        Camel.randomStartingPos = function () {
+        Camel.prototype.hasAttack = function (attack) {
+            return (this.currentAttack & attack) !== 0;
+        };
+        Camel.randomStartingPosition = function () {
             return new math.Vec2(math.randRange(50, 400), math.randRange(50, 250));
         };
         Camel.prototype.Destroy = function () {

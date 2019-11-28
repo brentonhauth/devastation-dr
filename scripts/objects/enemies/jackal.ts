@@ -1,7 +1,4 @@
 module objects {
-
-    enum JackalDirection { Left, Right }
-
     export class Jackal extends Enemy {
 
         private static speed = 9;
@@ -10,7 +7,7 @@ module objects {
 
         private jackalAnimator: createjs.Sprite;
 
-        private startSide: JackalDirection;
+        private startSide: config.Direction;
 
         private sweeps: number;
         private sweepCount = 1;
@@ -26,12 +23,12 @@ module objects {
 
             if (side) {
                 this.startSide = side === 'left' ?
-                JackalDirection.Left :
-                JackalDirection.Right;
+                config.Direction.Left :
+                config.Direction.Right;
             } else {
                 this.startSide = Math.random() <= .5 ?
-                JackalDirection.Left :
-                JackalDirection.Right;
+                config.Direction.Left :
+                config.Direction.Right;
             }
 
             this.sweeps = sweeps;
@@ -74,14 +71,14 @@ module objects {
         }
 
         private getOpositeSide() {
-            return this.startSide === JackalDirection.Right ?
-            JackalDirection.Left : JackalDirection.Right;
+            return this.startSide === config.Direction.Right ?
+            config.Direction.Left : config.Direction.Right;
         }
 
         public Reset() {
             let r = math.randRange(25, 100);
             this.position = new math.Vec2(
-                this.startSide === JackalDirection.Left ? -r :
+                this.startSide === config.Direction.Left ? -r :
                 (objects.Game.canvas.width + r),
                 this.playScene.player.y -
                 math.randRange(-50, 50)
@@ -89,14 +86,14 @@ module objects {
 
             this.direction = math.Vec2.Difference(this.playScene.player.position, this.position).Normalized;
             this.direction = this.direction.ScaleEq(Jackal.speed);
-            this.jackalAnimator.gotoAndPlay('walk_' + JackalDirection[this.getOpositeSide()]);
+            this.jackalAnimator.gotoAndPlay('walk_' + config.Direction[this.getOpositeSide()]);
         }
 
         public CheckBounds() {
-            if ((this.startSide === JackalDirection.Left &&
+            if ((this.startSide === config.Direction.Left &&
             this.x > (objects.Game.canvas.width + 100)) ||
             this.x < -100) {
-                if (this.yoinked || this.sweepCount === this.sweeps) {
+                if (!!this.yoinked || this.sweepCount === this.sweeps) {
                     this.Destroy();
                 } else {
                     this.sweepCount++;
@@ -107,7 +104,7 @@ module objects {
         }
 
         public yoink(item: any) {
-            this.jackalAnimator.gotoAndPlay('walk_' + JackalDirection[this.startSide]);
+            this.jackalAnimator.gotoAndPlay('walk_' + config.Direction[this.startSide]);
             this.startSide = this.getOpositeSide();
             this.yoinked = item;
             this.direction = new math.Vec2(

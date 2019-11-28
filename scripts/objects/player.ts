@@ -257,7 +257,7 @@ module objects {
         private changeSprite(): void{
             let spriteString = this.hasShield ? "hummerShield" : "hummer";
             this.removeChild(this.sprite)
-            this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult(spriteString));
+            this.sprite = new createjs.Bitmap(objects.Game.getAsset(spriteString));
             let bounds = this.sprite.getBounds();
             this.width = bounds.width;
             this.height = bounds.height;
