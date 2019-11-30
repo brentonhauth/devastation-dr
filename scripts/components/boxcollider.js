@@ -13,21 +13,25 @@ var components;
         }
         Object.defineProperty(BoxCollider.prototype, "position", {
             set: function (pos) {
-                var m = math.Vec2.Difference(pos, this.center);
-                // let mx = v2.x - this.center.x;
-                // let my = v2.y - this.center.y;
-                this.aabb.min.x += m.x;
-                this.aabb.min.y += m.y;
-                this.aabb.max.x += m.x;
-                this.aabb.max.y += m.y;
-                this.center.x = pos.x;
-                this.center.y = pos.y;
+                // let m = math.Vec2.Difference(pos, this.center);
+                // let dx = pos.x - this.center.x,
+                //     dy = pos.y - this.center.y;
+                var m = {
+                    x: pos.x - this.center.x,
+                    y: pos.y - this.center.y
+                };
+                this.aabb.min.Add(m);
+                // this.aabb.min.x += dx; // m.x;
+                // this.aabb.min.y += dy; // m.y;
+                this.aabb.max.Add(m);
+                // this.aabb.max.x += dx; // m.x;
+                // this.aabb.max.y += dy; // m.y;
+                this.center.setValues(pos.x, pos.y);
+                // this.center.x = pos.x;
+                // this.center.y = pos.y;
                 if (this.drawMode) {
                     this.draw();
                 }
-                // else {
-                //     objects.Game.stage.removeChild(this.shape);
-                // }
             },
             enumerable: true,
             configurable: true

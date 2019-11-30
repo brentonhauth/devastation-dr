@@ -31,40 +31,38 @@ var objects;
     var Camel = /** @class */ (function (_super) {
         __extends(Camel, _super);
         function Camel() {
-            var _this = _super.call(this, 'camelSheet') || this;
-            _this.oscillateCountUp = true;
-            _this.oscillateCounter = 60;
-            _this.health = 30;
-            _this.playScene = objects.Game.currentScene;
-            _this.state = CamelState.SettingUp;
-            var speed = .1;
-            var sheet = new createjs.SpriteSheet({
+            var _this = _super.call(this, new createjs.SpriteSheet({
                 images: [objects.Game.getAsset('camelSheet')],
                 frames: { width: 72, height: 72, count: 12 },
                 animations: {
-                    idle_down: 1, walk_down: { speed: speed, frames: [0, 1, 2] },
-                    idle_left: 4, walk_left: { speed: speed, frames: [3, 4, 5] },
-                    idle_right: 7, walk_right: { speed: speed, frames: [6, 7, 8] },
-                    idle_up: 10, walk_up: { speed: speed, frames: [9, 10, 11] },
-                    walk_backwards: { speed: speed, frames: [2, 1, 0] },
+                    idle_down: 1, walk_down: { speed: .1, frames: [0, 1, 2] },
+                    idle_left: 4, walk_left: { speed: .1, frames: [3, 4, 5] },
+                    idle_right: 7, walk_right: { speed: .1, frames: [6, 7, 8] },
+                    idle_up: 10, walk_up: { speed: .1, frames: [9, 10, 11] },
+                    walk_backwards: { speed: .1, frames: [2, 1, 0] },
                     oscillate: { speed: .05, frames: [4, 7] }
                 }
-            });
-            _this.startingPos = Camel.randomStartingPosition();
-            _this.camalAnimator = new createjs.Sprite(sheet, 'idle_down');
-            _this.width = 72;
-            _this.height = 72;
+            })) || this;
+            _this.oscillateCountUp = true;
+            _this.oscillateCounter = 60;
+            _this.health = 30;
+            // this.width = 72;
+            // this.height = 72;
             _this.Init();
+            _this.Reset();
             return _this;
         }
         Camel.prototype.Start = function () {
-            this.camalAnimator.gotoAndPlay('walk_down');
+            this.animator.gotoAndPlay('walk_down');
             managers.Sound.music(false);
-            this.removeChild(this.sprite);
-            this.addChild(this.camalAnimator);
             this.currentAttack = Camel.randomAttack();
             this.position = new math.Vec2(this.startingPos.x, this.startingPos.y - 300);
-            this.dirToNextPost = math.Vec2.Difference(this.startingPos, this.position).Normalized;
+            this.dirToNextPost = math.Vec2.Down; // math.Vec2.Direction(this.startingPos, this.position);
+        };
+        Camel.prototype.Reset = function () {
+            this.state = CamelState.SettingUp;
+            this.health = 30;
+            this.startingPos = Camel.randomStartingPosition();
         };
         Camel.prototype.Update = function () {
             var point, bullet, tick = createjs.Ticker.getTicks();
@@ -124,10 +122,10 @@ var objects;
                     managers.Sound.music(true);
                 }
                 if (this.currentAttack === CamelAttack.Oscillate) {
-                    this.camalAnimator.gotoAndPlay('oscillate');
+                    this.animator.gotoAndPlay('oscillate');
                 }
                 else {
-                    this.camalAnimator.gotoAndPlay('walk_backwards');
+                    this.animator.gotoAndPlay('walk_backwards');
                 }
                 setTimeout(function () {
                     _this.state = CamelState.Pending;
@@ -138,13 +136,12 @@ var objects;
             }
         };
         Camel.prototype.Pending = function () {
-            var prevAttack = this.currentAttack, newAttack = CamelAttack.None, curAttack = CamelAttack.None, numOfAttacks = 1;
-            if (this.health <= 10) {
-                numOfAttacks = 3;
-            }
-            else if (this.health <= 20) {
-                numOfAttacks = 2;
-            }
+            var prevAttack = this.currentAttack, newAttack = CamelAttack.None, curAttack = CamelAttack.None, numOfAttacks = this.health <= 15 ? 2 : 1;
+            // if (this.health <= 10) {
+            //     numOfAttacks = 3;
+            // } else if (this.health <= 20) {
+            //     numOfAttacks = 2;
+            // }
             for (var i = 0; i < numOfAttacks; i++) {
                 do {
                     newAttack = Camel.randomAttack();
@@ -157,16 +154,15 @@ var objects;
             // }
             this.startingPos = Camel.randomStartingPosition();
             this.state = CamelState.SettingUp;
-            this.dirToNextPost = math.Vec2.Difference(this.startingPos, this.position).Normalized;
-            this.dirToNextPost = this.dirToNextPost.Scale(3);
+            this.dirToNextPost = math.Vec2.Direction(this.startingPos, this.position).ScaleEq(3);
         };
         Camel.randomAttack = function () {
-            var rnd = Math.floor(math.randRange(1, 5));
-            switch (rnd) {
+            switch (math.randInt(1, 4)) {
                 case 1: return CamelAttack.Direct;
                 case 2: return CamelAttack.Oscillate;
                 case 3: return CamelAttack.Spiral;
                 case 4: return CamelAttack.ReverseSpiral;
+                // prevents unexpected failure
                 default: return CamelAttack.Direct;
             }
         };
@@ -174,7 +170,7 @@ var objects;
             return (this.currentAttack & attack) !== 0;
         };
         Camel.randomStartingPosition = function () {
-            return new math.Vec2(math.randRange(50, 400), math.randRange(50, 250));
+            return math.randVec2([50, 400], [50, 250]);
         };
         Camel.prototype.Destroy = function () {
             this.health--;

@@ -18,7 +18,15 @@ var objects;
         function Jackal(side, sweeps) {
             if (side === void 0) { side = null; }
             if (sweeps === void 0) { sweeps = 5; }
-            var _this = _super.call(this, "jackalSheet") || this;
+            var _this = _super.call(this, new createjs.SpriteSheet({
+                images: [objects.Game.getAsset('jackalSheet')],
+                frames: { width: 48, height: 48, count: 12 },
+                animations: {
+                    // idle_down: 1, walk_down: { speed, frames: [0, 1, 2] },
+                    idle_Left: 4, walk_Left: { speed: .1, frames: [3, 4, 5] },
+                    idle_Right: 7, walk_Right: { speed: .1, frames: [6, 7, 8] },
+                }
+            })) || this;
             _this.sweepCount = 1;
             _this.yoinked = null;
             if (side) {
@@ -27,31 +35,19 @@ var objects;
                     config.Direction.Right;
             }
             else {
-                _this.startSide = Math.random() <= .5 ?
+                _this.startSide = math.oneIn(2) ?
                     config.Direction.Left :
                     config.Direction.Right;
             }
             _this.sweeps = sweeps;
-            _this.playScene = objects.Game.currentScene;
-            var speed = .125;
-            var sheet = new createjs.SpriteSheet({
-                images: [objects.Game.getAsset('jackalSheet')],
-                frames: { width: 48, height: 48, count: 12 },
-                animations: {
-                    // idle_down: 1, walk_down: { speed, frames: [0, 1, 2] },
-                    idle_Left: 4, walk_Left: { speed: speed, frames: [3, 4, 5] },
-                    idle_Right: 7, walk_Right: { speed: speed, frames: [6, 7, 8] },
-                }
-            });
-            _this.jackalAnimator = new createjs.Sprite(sheet, 'idle_Left');
-            _this.width = 48;
-            _this.height = 48;
+            // this.width = 48;
+            // this.height = 48;
             _this.Init();
             return _this;
         }
         Jackal.prototype.Start = function () {
-            this.removeChild(this.sprite);
-            this.addChild(this.jackalAnimator);
+            // this.removeChild(this.sprite);
+            // this.addChild(this.jackalAnimator);
             this.Reset();
         };
         Jackal.prototype.Update = function () {
@@ -69,7 +65,7 @@ var objects;
                 math.randRange(-50, 50));
             this.direction = math.Vec2.Difference(this.playScene.player.position, this.position).Normalized;
             this.direction = this.direction.ScaleEq(Jackal.speed);
-            this.jackalAnimator.gotoAndPlay('walk_' + config.Direction[this.getOpositeSide()]);
+            this.animator.gotoAndPlay('walk_' + config.Direction[this.getOpositeSide()]);
         };
         Jackal.prototype.CheckBounds = function () {
             if ((this.startSide === config.Direction.Left &&
@@ -86,7 +82,7 @@ var objects;
             }
         };
         Jackal.prototype.yoink = function (item) {
-            this.jackalAnimator.gotoAndPlay('walk_' + config.Direction[this.startSide]);
+            this.animator.gotoAndPlay('walk_' + config.Direction[this.startSide]);
             this.startSide = this.getOpositeSide();
             this.yoinked = item;
             this.direction = new math.Vec2(-this.direction.x, this.direction.y).ScaleEq(.7);

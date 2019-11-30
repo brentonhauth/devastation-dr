@@ -1,5 +1,12 @@
 var handlers;
 (function (handlers) {
+    /**
+     * TODO:
+     * - loop through waves and create a pool of all the required enemies
+     * - instantiate only the required amount per wave
+     * - use gameObject.Reset() to reset an enemy
+     * - On gameObject.Destroy(), remove object from scene, and store object in pool.
+     */
     var WaveHandler = /** @class */ (function () {
         function WaveHandler(playScene) {
             this.hasStarted = false;

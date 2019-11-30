@@ -3,10 +3,6 @@ module objects {
 
         private static speed = 9;
 
-        private playScene: scenes.PlayScene;
-
-        private jackalAnimator: createjs.Sprite;
-
         private startSide: config.Direction;
 
         private sweeps: number;
@@ -19,46 +15,38 @@ module objects {
 
 
         constructor(side: 'left'|'right'=null, sweeps=5) {
-            super("jackalSheet");
+            super(new createjs.SpriteSheet({
+                images: [objects.Game.getAsset('jackalSheet')],
+                frames: { width: 48, height: 48, count: 12 },
+                animations: {
+                    // idle_down: 1, walk_down: { speed, frames: [0, 1, 2] },
+                    idle_Left: 4, walk_Left: { speed: .1, frames: [3, 4, 5] },
+                    idle_Right: 7, walk_Right: { speed: .1, frames: [6, 7, 8] },
+                    // idle_up: 10, walk_up: { speed, frames: [9, 10, 11] }
+                }
+            }));
 
             if (side) {
                 this.startSide = side === 'left' ?
                 config.Direction.Left :
                 config.Direction.Right;
             } else {
-                this.startSide = Math.random() <= .5 ?
+                this.startSide = math.oneIn(2) ?
                 config.Direction.Left :
                 config.Direction.Right;
             }
 
             this.sweeps = sweeps;
 
-            this.playScene = <scenes.PlayScene>objects.Game.currentScene;
-
-            let speed = .125;
-
-            let sheet = new createjs.SpriteSheet({
-                images: [objects.Game.getAsset('jackalSheet')],
-                frames: { width: 48, height: 48, count: 12 },
-                animations: {
-                    // idle_down: 1, walk_down: { speed, frames: [0, 1, 2] },
-                    idle_Left: 4, walk_Left: { speed, frames: [3, 4, 5] },
-                    idle_Right: 7, walk_Right: { speed, frames: [6, 7, 8] },
-                    // idle_up: 10, walk_up: { speed, frames: [9, 10, 11] }
-                }
-            });
-
-            this.jackalAnimator = new createjs.Sprite(sheet, 'idle_Left');
-
             
-            this.width = 48;
-            this.height = 48;
+            // this.width = 48;
+            // this.height = 48;
             this.Init();
         }
 
         public Start(): void {
-            this.removeChild(this.sprite);
-            this.addChild(this.jackalAnimator);
+            // this.removeChild(this.sprite);
+            // this.addChild(this.jackalAnimator);
 
             this.Reset();
         }
@@ -86,7 +74,7 @@ module objects {
 
             this.direction = math.Vec2.Difference(this.playScene.player.position, this.position).Normalized;
             this.direction = this.direction.ScaleEq(Jackal.speed);
-            this.jackalAnimator.gotoAndPlay('walk_' + config.Direction[this.getOpositeSide()]);
+            this.animator.gotoAndPlay('walk_' + config.Direction[this.getOpositeSide()]);
         }
 
         public CheckBounds() {
@@ -104,7 +92,7 @@ module objects {
         }
 
         public yoink(item: any) {
-            this.jackalAnimator.gotoAndPlay('walk_' + config.Direction[this.startSide]);
+            this.animator.gotoAndPlay('walk_' + config.Direction[this.startSide]);
             this.startSide = this.getOpositeSide();
             this.yoinked = item;
             this.direction = new math.Vec2(

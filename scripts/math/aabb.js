@@ -7,10 +7,10 @@ var math;
             this.max = max;
         }
         AABB.Intersect = function (a, b) {
-            if (a.max.x < b.min.x || a.min.x > b.max.x) {
+            if (a.max.y < b.min.y || a.min.y > b.max.y) {
                 return false;
             }
-            else if (a.max.y < b.min.y || a.min.y > b.max.y) {
+            else if (a.max.x < b.min.x || a.min.x > b.max.x) {
                 return false;
             }
             else {

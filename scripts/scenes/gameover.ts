@@ -63,10 +63,6 @@ module scenes {
             "white", this.halfCanvasW, this.halfCanvasH + backOff - 5, true);
 
 
-            this.backBtn.on("click", () => {
-                objects.Game.currentState = config.Scene.START;
-            });
-
             this.Main();
         }
 

@@ -17,7 +17,7 @@ module objects {
             this.Init();
             
             this.removeChild(this.sprite)
-            this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("fish"));
+            this.sprite = new createjs.Bitmap(objects.Game.getAsset('fish'));
             this.addChild(this.sprite);
             this.sprite.regX = 18;
             this.sprite.regY = 8;

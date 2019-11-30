@@ -16,45 +16,38 @@ var objects;
     var Turtle = /** @class */ (function (_super) {
         __extends(Turtle, _super);
         function Turtle(spawn) {
-            if (spawn === void 0) { spawn = null; }
-            var _this = _super.call(this, "turtleSheet") || this;
-            _this.isAggressive = false;
-            _this.shootDegree = 0;
-            _this.spawn = spawn ? spawn : new math.Vec2(math.randRange(1, 600), -math.randRange(25, 125));
-            _this.aggressiveRange = Math.floor(math.randRange(350, 450));
-            var speed = .1, sheet = new createjs.SpriteSheet({
-                images: [objects.Game.assetManager.getResult("turtleSheet")],
+            var _this = _super.call(this, new createjs.SpriteSheet({
+                images: [objects.Game.getAsset('turtleSheet')],
                 frames: { width: 48, height: 48, count: 12 },
                 animations: {
                     shell: 10,
-                    idle_down: 1, walk_down: { speed: speed, frames: [0, 1, 2] },
-                    idle_left: 4, walk_left: { speed: speed, frames: [3, 4, 5] },
-                    idle_right: 7, walk_right: { speed: speed, frames: [6, 7, 8] },
-                    idle_up: 9, walk_up: { speed: speed, frames: [9, 11] },
+                    idle_down: 1, walk_down: { speed: .1, frames: [0, 1, 2] },
+                    idle_left: 4, walk_left: { speed: .1, frames: [3, 4, 5] },
+                    idle_right: 7, walk_right: { speed: .1, frames: [6, 7, 8] },
+                    idle_up: 9, walk_up: { speed: .1, frames: [9, 11] },
                 }
-            });
-            _this.playScene = objects.Game.currentScene;
+            })) || this;
+            _this.isAggressive = false;
+            _this.spawn = spawn ? spawn : Turtle.randomStartPosition();
             _this.playerRef = _this.playScene.player || { position: math.Vec2.Zero };
-            _this.turtleAnimator = new createjs.Sprite(sheet, "walk_down");
-            _this.width = 48;
-            _this.height = 48;
+            // this.width = 48;
+            // this.height = 48;
             _this.Init();
+            _this.Reset();
             return _this;
         }
         Turtle.prototype.Start = function () {
-            this.removeChild(this.sprite);
-            this.addChild(this.turtleAnimator);
             this.position = this.spawn;
-            this.turtleAnimator.x = this.turtleAnimator.y = 24;
-            this.turtleAnimator.regX = 24;
-            this.turtleAnimator.regY = 30;
+            this.animator.x = this.animator.y = 24;
+            this.animator.regX = 24;
+            this.animator.regY = 30;
         };
         Turtle.prototype.Update = function () {
             if (this.isAggressive) {
                 var tick = createjs.Ticker.getTicks();
-                this.turtleAnimator.gotoAndPlay("shell");
-                this.turtleAnimator.rotation += 10;
-                if ((tick % 10) === 0) {
+                this.animator.gotoAndPlay('shell');
+                this.animator.rotation += 10;
+                if (!(tick % 10)) {
                     var point = math.pointOnCircle(this.position, (tick * 2) % 360);
                     var b = new objects.EnemyBullet(this.position, point, this, this.playScene.enemyBulletHandler);
                     this.playScene.enemyBulletHandler.AddExistingBullet(b);
@@ -62,7 +55,6 @@ var objects;
                 this.position = this.position.Add(new math.Vec2(0, this.playScene.background.Speed));
             }
             else if (math.Vec2.WithinRange(this.playerRef.position, this.position, this.aggressiveRange)) {
-                //math.Vec2.Distance(this.playerRef.position, this.position) < this.aggressiveRange
                 this.isAggressive = true;
             }
             else {
@@ -71,6 +63,16 @@ var objects;
             if (this.y > objects.Game.canvas.height) {
                 this.Destroy();
             }
+        };
+        Turtle.prototype.Reset = function () {
+            this.spawn = Turtle.randomStartPosition();
+            this.isAggressive = false;
+            this.aggressiveRange = math.randInt(350, 450);
+            this.animator.gotoAndPlay('walk_down');
+            this.animator.rotation = 0;
+        };
+        Turtle.randomStartPosition = function () {
+            return new math.Vec2(math.randRange(1, 600), -math.randRange(25, 125));
         };
         return Turtle;
     }(objects.Enemy));

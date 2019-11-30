@@ -16,37 +16,31 @@ var objects;
     var PolarBear = /** @class */ (function (_super) {
         __extends(PolarBear, _super);
         function PolarBear() {
-            var _this = _super.call(this, "polarBearSheet") || this;
-            _this.reachedSpot = false;
-            _this.playScene = objects.Game.currentScene;
-            _this.startingPosition = new math.Vec2(math.randRange(20, 540), math.randRange(50, 250));
-            var speed = .1, sheet = new createjs.SpriteSheet({
-                images: [objects.Game.assetManager.getResult("polarBearSheet")],
+            var _this = _super.call(this, new createjs.SpriteSheet({
+                images: [objects.Game.getAsset('polarBearSheet')],
                 frames: { width: 72, height: 72, count: 12 },
                 animations: {
-                    idle_down: 1, idle_left: 4,
-                    idle_right: 7, idle_up: 10,
-                    move_down: { speed: speed, frames: [0, 1, 2] },
-                    move_left: { speed: speed, frames: [3, 4, 5] },
-                    move_right: { speed: speed, frames: [6, 7, 8] },
-                    move_up: { speed: speed, frames: [9, 10, 11] },
-                    throw_down: [0, 1, "idle_down", speed],
-                    throw_left: [3, 4, "idle_left", speed],
-                    throw_right: [6, 7, "idle_right", speed],
-                    throw_up: [9, 10, "idle_up", speed],
+                    idle_Down: 1, walk_Down: { speed: .1, frames: [0, 1, 2] },
+                    idle_Left: 4, walk_Left: { speed: .1, frames: [3, 4, 5] },
+                    idle_Right: 7, walk_Right: { speed: .1, frames: [6, 7, 8] },
+                    idle_Up: 10, walk_Up: { speed: .1, frames: [9, 10, 11] },
                 }
-            });
+            })) || this;
+            _this.reachedSpot = false;
             _this.playerRef = _this.playScene.player || { position: math.Vec2.Zero };
-            _this.polarBearAnimator = new createjs.Sprite(sheet, "move_down");
-            _this.width = 72;
-            _this.height = 72;
+            // this.width = 72;
+            // this.height = 72;
             _this.Init();
+            _this.Reset();
             return _this;
         }
         PolarBear.prototype.Start = function () {
             this.position = new math.Vec2(this.startingPosition.x, this.startingPosition.y - math.randRange(250, 350));
-            this.removeChild(this.sprite);
-            this.addChild(this.polarBearAnimator);
+        };
+        PolarBear.prototype.Reset = function () {
+            this.startingPosition = math.randVec2([30, 540], [50, 250]);
+            this.animator.gotoAndPlay('walk_Down');
+            this.reachedSpot = false;
         };
         PolarBear.prototype.Update = function () {
             if (!this.reachedSpot) {
@@ -71,13 +65,13 @@ var objects;
         PolarBear.prototype.facePlayer = function () {
             var face, diff = math.Vec2.Difference(this.position, this.playerRef.position);
             if (Math.abs(diff.x) > Math.abs(diff.y)) {
-                face = diff.x < 0 ? "right" : "left";
+                face = diff.x < 0 ? config.Direction.Right : config.Direction.Left;
             }
             else {
-                face = diff.y > 0 ? "up" : "down";
+                face = diff.y > 0 ? config.Direction.Up : config.Direction.Down;
             }
             if (this.lastFacing !== face) {
-                this.polarBearAnimator.gotoAndPlay("idle_" + face);
+                this.animator.gotoAndPlay('idle_' + config.Direction[face]);
                 this.lastFacing = face;
             }
         };

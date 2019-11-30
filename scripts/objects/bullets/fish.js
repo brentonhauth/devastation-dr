@@ -23,7 +23,7 @@ var objects;
             _this.height = 20;
             _this.Init();
             _this.removeChild(_this.sprite);
-            _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("fish"));
+            _this.sprite = new createjs.Bitmap(objects.Game.getAsset('fish'));
             _this.addChild(_this.sprite);
             _this.sprite.regX = 18;
             _this.sprite.regY = 8;

@@ -27,14 +27,14 @@ module scenes {
 
             this.counterPoint = new math.Vec2(56, 65).ScaleEq(this.storeScale).Add(this.storePos);
             this.doorPoint = new math.Vec2(74, 119).ScaleEq(this.storeScale).Add(this.storePos);
-            this.dir = math.Vec2.Difference(this.doorPoint, this.counterPoint).Normalized;
-            this.dir = this.dir.Scale(5);
+            console.log('Counter Point', this.counterPoint, '\nDoor', this.doorPoint)
+            this.dir = math.Vec2.Direction(this.doorPoint, this.counterPoint).ScaleEq(5);
 
 
             this.dialogHandler = new handlers.DialogHandler(this);
-            
+
             this.playerAnimator = new components.PlayerAnimator();
-            this.storeBg = new createjs.Bitmap(objects.Game.assetManager.getResult("store"));
+            this.storeBg = new createjs.Bitmap(objects.Game.getAsset("store"));
 
             this.storeBg.scaleX = this.storeBg.scaleY = this.storeScale;
             this.resetStorePos();
@@ -94,15 +94,14 @@ module scenes {
             } else if (this.secondaryTrigger) {
                 this.playerAnimator.x += this.dir.x;
                 this.playerAnimator.y += this.dir.y;
-                if (math.Vec2.Distance(this.playerPos, this.doorPoint) < 5) {
+                // console.log(this.playerAnimator.x, this.playerAnimator.y, '<---->', this.dir);
+                if (math.Vec2.WithinRange(this.playerPos, this.doorPoint, 5)) {
                     this.secondaryTrigger = false;
                     this.playerAnimator.visible = false;
 
-                    this.dialogHandler.TriggerMany(
-                        ["Hey look a car!", 2, () => {
-                            objects.Game.currentState = config.Scene.JUNGLE;
-                        }]
-                    );
+                    this.dialogHandler.Trigger("Hey look a car!", 2, () => {
+                        objects.Game.currentState = config.Scene.JUNGLE;
+                    });
                 }
             }
         }

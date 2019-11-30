@@ -1,5 +1,10 @@
 var handlers;
 (function (handlers) {
+    /**
+     * TODO:
+     * - create 'Time' manager for delayed callbacks instead of using setTimeout()
+     *  - Useful in pausing is ever implemented.
+     */
     var DialogHandler = /** @class */ (function () {
         function DialogHandler(playScene) {
             this.playScene = playScene;

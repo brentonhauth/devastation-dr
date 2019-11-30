@@ -47,6 +47,7 @@ var objects;
                     w = 0;
                 }
                 this.m_width = w;
+                // this.regX = this.halfW = w * .5;
                 if (this.boxCollider) {
                     this.boxCollider.width = w;
                 }
@@ -63,6 +64,7 @@ var objects;
                     h = 0;
                 }
                 this.m_height = h;
+                // this.regY = this.halfH = h * .5;
                 if (this.boxCollider) {
                     this.boxCollider.height = h;
                 }

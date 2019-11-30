@@ -2,51 +2,32 @@ module objects {
     export class PolarBear extends Enemy {
 
         private startingPosition: math.Vec2;
-        private polarBearAnimator: createjs.Sprite;
         private playerRef: Player;
 
-        private playScene: scenes.PlayScene;
-
-        private lastFacing;
+        private lastFacing: config.Direction;
 
         private reachedSpot = false;
 
 
         constructor() {
-            super("polarBearSheet");
-
-            this.playScene = <scenes.PlayScene>objects.Game.currentScene;
-
-            this.startingPosition = new math.Vec2(
-                math.randRange(20, 540),
-                math.randRange(50, 250)
-            );
-
-            let speed=.1,sheet=new createjs.SpriteSheet({
-                images: [objects.Game.assetManager.getResult("polarBearSheet")],
+            super(new createjs.SpriteSheet({
+                images: [objects.Game.getAsset('polarBearSheet')],
                 frames: { width: 72, height: 72, count: 12 },
                 animations: {
-                    idle_down: 1, idle_left: 4,
-                    idle_right: 7, idle_up: 10,
-                    move_down: { speed, frames: [0, 1, 2] },
-                    move_left: { speed, frames: [3, 4, 5] },
-                    move_right: { speed, frames: [6, 7, 8] },
-                    move_up: { speed, frames: [9, 10, 11] },
-                    throw_down: [0, 1, "idle_down", speed],
-                    throw_left: [3, 4, "idle_left", speed],
-                    throw_right: [6, 7, "idle_right", speed],
-                    throw_up: [9, 10, "idle_up", speed],
+                    idle_Down: 1, walk_Down: { speed: .1, frames: [0, 1, 2] },
+                    idle_Left: 4, walk_Left: { speed: .1, frames: [3, 4, 5] },
+                    idle_Right: 7, walk_Right: { speed: .1, frames: [6, 7, 8] },
+                    idle_Up: 10, walk_Up: { speed: .1, frames: [9, 10, 11] },
                 }
-            });
+            }));
 
             this.playerRef = this.playScene.player || <Player>{position:math.Vec2.Zero};
 
-            this.polarBearAnimator = new createjs.Sprite(sheet, "move_down");
-
-            this.width = 72;
-            this.height = 72;
+            // this.width = 72;
+            // this.height = 72;
 
             this.Init();
+            this.Reset();
         }
 
         public Start() {
@@ -54,9 +35,12 @@ module objects {
                 this.startingPosition.x,
                 this.startingPosition.y - math.randRange(250, 350)
             );
+        }
 
-            this.removeChild(this.sprite);
-            this.addChild(this.polarBearAnimator);
+        public Reset() {
+            this.startingPosition = math.randVec2([30, 540], [50, 250]);
+            this.animator.gotoAndPlay('walk_Down');
+            this.reachedSpot = false;
         }
 
         public Update() {
@@ -84,16 +68,16 @@ module objects {
         }
 
         private facePlayer() {
-            let face: string, diff = math.Vec2.Difference(this.position, this.playerRef.position);
+            let face: config.Direction, diff = math.Vec2.Difference(this.position, this.playerRef.position);
 
             if (Math.abs(diff.x) > Math.abs(diff.y)) {
-                face = diff.x < 0 ? "right" : "left";
+                face = diff.x < 0 ? config.Direction.Right : config.Direction.Left;
             } else {
-                face = diff.y > 0 ? "up" : "down";
+                face = diff.y > 0 ? config.Direction.Up : config.Direction.Down;
             }
 
             if (this.lastFacing !== face) {
-                this.polarBearAnimator.gotoAndPlay("idle_" + face);
+                this.animator.gotoAndPlay('idle_' + config.Direction[face]);
                 this.lastFacing = face;
             }
         }

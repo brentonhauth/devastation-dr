@@ -6,10 +6,10 @@ module objects {
 
         private m_width: number;
         private m_height: number;
+
         public halfW: number;   // Half-width; Useful for collision detection
         public halfH: number;   // Half-height
         public isColliding: boolean;
-        
         public boxCollider: components.BoxCollider;
 
         // Constructor
@@ -20,8 +20,6 @@ module objects {
             // this.width = width;
             // this.height = height;
             // this.Init();
-
-
 
             // this.boxCollider = new components.BoxCollider(this.x, this.y, this.width, this.height);
         }
@@ -50,6 +48,7 @@ module objects {
         public set width(w: number) {
             if (w < 0) { w = 0; }
             this.m_width = w;
+            // this.regX = this.halfW = w * .5;
             if (this.boxCollider) {
                 this.boxCollider.width = w;
             }
@@ -58,6 +57,7 @@ module objects {
         public set height(h: number) {
             if (h < 0) { h = 0; }
             this.m_height = h;
+            // this.regY = this.halfH = h * .5;
             if (this.boxCollider) {
                 this.boxCollider.height = h;
             }

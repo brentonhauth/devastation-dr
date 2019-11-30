@@ -3,14 +3,39 @@ module objects {
         // Variables
         public pointsWorth: number;
         protected sprite: createjs.Bitmap;
+        protected animator: createjs.Sprite;
+        protected playScene: scenes.PlayScene;
         // Constructor
-        constructor(enemyType:string) {
+        constructor(sprite?: createjs.Bitmap|createjs.Sprite|createjs.SpriteSheet|string) {
             super();
-            this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult(enemyType));
-            this.addChild(this.sprite);
-            let bounds = this.sprite.getBounds();
-            this.width = bounds.width;
-            this.height = bounds.height;
+            this.playScene = <scenes.PlayScene>objects.Game.currentScene;
+            if (sprite) {
+                let isStr: boolean, isSheet: boolean, isSprite = true;
+                if ((isStr=typeof sprite === 'string') || sprite instanceof createjs.Bitmap) {
+                    this.sprite = sprite = !isStr ? <createjs.Bitmap>sprite : new createjs.Bitmap(
+                        objects.Game.getAsset(<string>sprite)
+                    );
+                    this.addChild(this.sprite);
+                } else if ((isSheet=sprite instanceof createjs.SpriteSheet) || sprite instanceof createjs.Sprite) {
+                    this.animator = sprite = !isSheet ? <createjs.Sprite>sprite :
+                        new createjs.Sprite(<createjs.SpriteSheet>sprite);
+                    this.addChild(this.animator);
+                    this.animator.stop();
+                } else {
+                    isSprite = false;
+                }
+
+                if (isSprite) {
+                    let bounds = (<createjs.Bitmap|createjs.Sprite>sprite).getBounds();
+                    this.width = bounds.width;
+                    this.height = bounds.height;
+                }
+            }
+            // this.sprite = new createjs.Bitmap(objects.Game.getAsset(enemyType));
+            // this.addChild(this.sprite);
+            // let bounds = this.sprite.getBounds();
+            // this.width = bounds.width;
+            // this.height = bounds.height;
             this.Init();
             //this.pointsWorth = pointsWorth;
             // this.Start();
@@ -48,5 +73,7 @@ module objects {
                 cw.Remove(this);
             }
         }
+
+        public Pool(): void {}
     }
 }

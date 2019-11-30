@@ -4,7 +4,7 @@ var math;
     function cosWaveFunction(stretch, depth) {
         var o = { stretch: stretch, depth: depth };
         o.fn = function (val) {
-            if (o.stretch == 0) {
+            if (o.stretch === 0) {
                 return o.depth;
             }
             return Math.cos(val / o.stretch) * o.depth;
@@ -13,15 +13,58 @@ var math;
     }
     math.cosWaveFunction = cosWaveFunction;
     function randRange(min, max) {
-        var _a;
-        if (max === void 0) { max = null; }
-        if (max === null) {
-            _a = [0, min], min = _a[0], max = _a[1];
+        if (max === undefined) {
+            max = min;
+            min = 0;
         }
-        var r = Math.random() * (max - min);
-        return min + r;
+        var rnd = Math.random() * (max - min);
+        return min + rnd;
     }
     math.randRange = randRange;
+    function randInt(min, max) {
+        if (max === undefined) {
+            max = min;
+            min = 0;
+        }
+        else if (min % 1) {
+            min = Math.round(min);
+        }
+        if (max % 1) {
+            max = Math.round(max);
+        }
+        var rnd = Math.random() * (max - min);
+        return min + Math.round(rnd);
+    }
+    math.randInt = randInt;
+    /**
+     *
+     * @param {Number|[Number, Number]} x Range for the x value
+     * @param {Number|[Number, Number]} y Range for the y value
+     */
+    function randVec2(x, y) {
+        return new math.Vec2(typeof x !== 'number' ?
+            randRange(x[0], x[1]) :
+            randRange(x), typeof y !== 'number' ?
+            randRange(y[0], y[1]) :
+            randRange(y));
+    }
+    math.randVec2 = randVec2;
+    /**
+     * Random odds
+     * @example
+     * math.oneIn(2); // 50% chance to return true
+     * math.oneIn();
+     *
+     * math.oneIn(8); // 12.5% chance to return true
+     * math.oneIn(1); // will always return true
+     * math.oneIn(1.5) // ~66.7% chance to return true
+     * @param {Number} bias
+     */
+    function oneIn(bias) {
+        if (bias === void 0) { bias = 2; }
+        return Math.random() <= (1 / Math.abs(bias));
+    }
+    math.oneIn = oneIn;
     function pointOnCircle(center, degree) {
         var radian = degree * PI_OVER_180;
         var x = center.x + Math.cos(radian);

@@ -24,11 +24,11 @@ var scenes;
             _this.storePos = new math.Vec2(100, 100);
             _this.counterPoint = new math.Vec2(56, 65).ScaleEq(_this.storeScale).Add(_this.storePos);
             _this.doorPoint = new math.Vec2(74, 119).ScaleEq(_this.storeScale).Add(_this.storePos);
-            _this.dir = math.Vec2.Difference(_this.doorPoint, _this.counterPoint).Normalized;
-            _this.dir = _this.dir.Scale(5);
+            console.log('Counter Point', _this.counterPoint, '\nDoor', _this.doorPoint);
+            _this.dir = math.Vec2.Direction(_this.doorPoint, _this.counterPoint).ScaleEq(5);
             _this.dialogHandler = new handlers.DialogHandler(_this);
             _this.playerAnimator = new components.PlayerAnimator();
-            _this.storeBg = new createjs.Bitmap(objects.Game.assetManager.getResult("store"));
+            _this.storeBg = new createjs.Bitmap(objects.Game.getAsset("store"));
             _this.storeBg.scaleX = _this.storeBg.scaleY = _this.storeScale;
             _this.resetStorePos();
             return _this;
@@ -87,12 +87,13 @@ var scenes;
             else if (this.secondaryTrigger) {
                 this.playerAnimator.x += this.dir.x;
                 this.playerAnimator.y += this.dir.y;
-                if (math.Vec2.Distance(this.playerPos, this.doorPoint) < 5) {
+                // console.log(this.playerAnimator.x, this.playerAnimator.y, '<---->', this.dir);
+                if (math.Vec2.WithinRange(this.playerPos, this.doorPoint, 5)) {
                     this.secondaryTrigger = false;
                     this.playerAnimator.visible = false;
-                    this.dialogHandler.TriggerMany(["Hey look a car!", 2, function () {
-                            objects.Game.currentState = config.Scene.JUNGLE;
-                        }]);
+                    this.dialogHandler.Trigger("Hey look a car!", 2, function () {
+                        objects.Game.currentState = config.Scene.JUNGLE;
+                    });
                 }
             }
         };

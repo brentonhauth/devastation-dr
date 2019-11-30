@@ -42,9 +42,6 @@ var scenes;
             this.tryAgainLabel = new ui.Label("Try Again", "32px", "Consolas", "white", this.halfCanvasW, this.halfCanvasH + tryOff - 5, true);
             this.backBtn = new ui.Button("greenButton", alignBtnX, alignBtnY + backOff);
             this.backLabel = new ui.Label("Main Menu", "32px", "Consolas", "white", this.halfCanvasW, this.halfCanvasH + backOff - 5, true);
-            this.backBtn.on("click", function () {
-                objects.Game.currentState = config.Scene.START;
-            });
             this.Main();
         };
         GameOverScene.prototype.Main = function () {

@@ -1,4 +1,12 @@
 module handlers {
+
+    /**
+     * TODO:
+     * - loop through waves and create a pool of all the required enemies
+     * - instantiate only the required amount per wave
+     * - use gameObject.Reset() to reset an enemy
+     * - On gameObject.Destroy(), remove object from scene, and store object in pool.
+     */
     export class WaveHandler {
         public currentWave: objects.Wave;
         private waves: objects.Wave[];

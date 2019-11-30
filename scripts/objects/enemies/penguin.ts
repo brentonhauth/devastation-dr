@@ -3,81 +3,60 @@ module objects {
 
         private static moveSpeed = 7.5;
 
-        private penguinAnimator: createjs.Sprite;
         private spawn: math.Vec2;
         private direction: math.Vec2;
         
         private aggressiveRange: number;
 
         private playerRef: Player;
-        private playScene: scenes.PlayScene;
         
         private isAggressive = false;
         private setSlideAnimation = false;
-        private isDes = false;
 
-        constructor(spawn: math.Vec2=null, startAggressive=false) {
-            super("penguinSheet");
-
-            this.isAggressive = startAggressive;
-            this.aggressiveRange = Math.floor(math.randRange(350, 450));
-
-            this.spawn = spawn?spawn:new math.Vec2(
-                math.randRange(1, 600),
-                -math.randRange(25, 125)
-            );
-
-
-
-            let sheet = new createjs.SpriteSheet({
-                images: [objects.Game.assetManager.getResult("penguinSheet")],
+        constructor() {
+            super(new createjs.SpriteSheet({
+                images: [objects.Game.getAsset('penguinSheet')],
                 frames: { width: 48, height: 48, count: 24 },
                 animations: {
-                    idle_down: 1, slide_down: 13,
-                    idle_left: 4, slide_left: 16,
-                    idle_right: 7, slide_right: 19,
-                    idle_up: 10, slide_up: 22,
+                    idle_Down: 1, slide_Down: 13,
+                    idle_Left: 4, slide_Left: 16,
+                    idle_Right: 7, slide_Right: 19,
+                    idle_Up: 10, slide_Up: 22,
                 }
-            });
+            }));
 
-            this.playScene = <scenes.PlayScene>objects.Game.currentScene;
             this.playerRef = this.playScene.player || <Player>{position:math.Vec2.Zero};
 
-
-            let arr = ["down", "left", "right"];
-            let da = Math.round(math.randRange(0, 2));
-
-            this.penguinAnimator = new createjs.Sprite(sheet, "idle_"+arr[da]);
-
-            this.width = 48;
-            this.height = 48;
+            // this.width = 48;
+            // this.height = 48;
             this.Init();
 
+            this.Reset();
+        }
+
+        public Reset() {
+            // let posArr = ['down', 'left', 'right']; // posArr[math.randInt(2)]
+            this.animator.gotoAndPlay('idle_' + config.Direction[math.randInt(2, 4)]);
+            this.aggressiveRange = math.randInt(350, 450);
+            this.spawn = Penguin.randomSpawnPosition();
+            this.isAggressive = false;
+            this.setSlideAnimation = false;
         }
 
         public Start() {
-            this.removeChild(this.sprite);
-            this.addChild(this.penguinAnimator);
-
             this.position = this.spawn;
-
-            setTimeout(() => {
-                if (!this.isDes) {
-                    this.Destroy();
-                }
-            }, 8_000);
         }
 
         public Update() {
             if (this.isAggressive) {
                 if (!this.setSlideAnimation) {
-                    let slide, diff = math.Vec2.Difference(this.playerRef.position, this.position).Normalized;
+                    let slide: config.Direction, diff = math.Vec2.Difference(this.playerRef.position, this.position).Normalized;
                     if (Math.abs(diff.x) > Math.abs(diff.y)) {
-                        slide = diff.x > 0 ? "slide_right" : "slide_left";
+                        slide = diff.x > 0 ? config.Direction.Right : config.Direction.Left;
                     } else {
-                        slide = diff.y > 0 ? "slide_down" : "slide_up";
+                        slide = diff.y > 0 ? config.Direction.Down : config.Direction.Up;
                     }
-                    this.penguinAnimator.gotoAndPlay(slide);
+                    this.animator.gotoAndPlay('slide_' + config.Direction[slide]);
                     this.direction = diff.ScaleEq(Penguin.moveSpeed);
                     this.setSlideAnimation = true;
                 }
@@ -88,16 +67,16 @@ module objects {
                 this.position = this.position.Add(new math.Vec2(0, this.playScene.background.Speed));
             }
 
-
-            if (this.x < -100 || this.x > 700 ||
-            this.y < -200 || this.y > (objects.Game.canvas.height + 100)) {
+            if (
+                this.x < -100 || this.x > 700 || this.y < -200 ||
+                this.y > (objects.Game.canvas.height + 100)
+            ) {
                 this.Destroy();
             }
         }
 
-        public Destroy() {
-            super.Destroy();
-            this.isDes = true;
+        private static randomSpawnPosition() {
+            return math.randVec2([1, 600], [-125, -25]);
         }
     }
 }

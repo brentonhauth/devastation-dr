@@ -18,11 +18,10 @@ var math;
         // Variables
         // Constructor
         function Vec2(x, y) {
-            if (x === void 0) { x = 0; }
-            if (y === void 0) { y = 0; }
-            return _super.call(this, x, y) || this;
+            return _super.call(this, x || 0, y || 0) || this;
         }
         Object.defineProperty(Vec2.prototype, "Magnitude", {
+            // Properties
             get: function () {
                 return Math.sqrt((this.x * this.x) + (this.y * this.y));
             },
@@ -32,7 +31,7 @@ var math;
         Object.defineProperty(Vec2.prototype, "Normalized", {
             get: function () {
                 var mag = this.Magnitude;
-                if (mag != 0) {
+                if (mag) {
                     return new Vec2(this.x / mag, this.y / mag);
                 }
                 else {
@@ -42,6 +41,7 @@ var math;
             enumerable: true,
             configurable: true
         });
+        // Methods
         /**
          * Returns a new scaled Vector
          * @param {Number} s
@@ -54,16 +54,39 @@ var math;
          * @param {Number} s
          */
         Vec2.prototype.ScaleEq = function (s) {
-            this.x *= s;
-            this.y *= s;
-            return this;
+            // this.x *= s;
+            // this.y *= s;
+            return this.setValues(this.x * s, this.y * s);
         };
+        /**
+         * Returns the sum of two Vectors
+         * @example
+         * // Use
+         * vecA.Add(vecB);
+         *
+         * // instead of
+         * vecA = math.Vec2.Sum(vecA, vecB);
+         *
+         * @param {Vec2} v
+         */
         Vec2.prototype.Add = function (v) {
-            return Vec2.Sum(this, v);
+            return this.setValues(this.x + v.x, this.y + v.y);
         };
         // Static Methods
         Vec2.Sum = function (a, b) {
             return new Vec2(a.x + b.x, a.y + b.y);
+        };
+        Vec2.SumMany = function () {
+            var vecs = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                vecs[_i] = arguments[_i];
+            }
+            var sum = new math.Vec2(0, 0);
+            vecs.forEach(function (v) {
+                sum.x += v.x;
+                sum.y += v.y;
+            });
+            return sum;
         };
         Vec2.Distance = function (a, b) {
             var x = a.x - b.x;
@@ -78,7 +101,7 @@ var math;
          * Vec2.Distance(a, b) <= range
          * @param {Vec2} a
          * @param {Vec2} b
-         * @param {number} range
+         * @param {Number} range
          */
         Vec2.WithinRange = function (a, b, range) {
             var x = a.x - b.x, y = a.y - b.y;
@@ -88,6 +111,26 @@ var math;
         };
         Vec2.Difference = function (a, b) {
             return new math.Vec2(a.x - b.x, a.y - b.y);
+        };
+        /**
+         * Returns the Normalized Difference of 2 Vectors
+         * @example
+         * // Use
+         * var dir = math.Vec2.Direction(a, b);
+         *
+         * // instead of
+         * var dir = math.Vec2.Difference(a, b).Normalized;
+         * @param {Vec2} a
+         * @param {Vec2} b
+         */
+        Vec2.Direction = function (a, b) {
+            var x = a.x - b.x;
+            var y = a.y - b.y;
+            if (!x && !y) {
+                return math.Vec2.Zero;
+            }
+            var mag = Math.sqrt((x * x) + (y * y));
+            return new Vec2(x / mag, y / mag);
         };
         Object.defineProperty(Vec2, "Zero", {
             get: function () {

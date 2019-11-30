@@ -5,6 +5,8 @@ module managers {
         private static sfxVol = 1.0;
         private static masterVol = 1.0;
 
+        private static sfxMap = {};
+
         private static playingMusic = false;
 
         private static backgroundMusic: createjs.AbstractSoundInstance;
@@ -74,8 +76,15 @@ module managers {
         }
 
         public static sfx(id: string) {
-            let sfx = createjs.Sound.play(id);//, 0, 0, 0, 0, this.sfxVol * this.masterVol);
-            sfx.volume = this.sfxVol * this.masterVol;
+            let sfx: createjs.AbstractSoundInstance,
+            vol = Sound.sfxVol * Sound.masterVol;
+            if (Sound.sfxMap[id]) {
+                (<createjs.AbstractSoundInstance>Sound.sfxMap[id]).volume = vol;
+                sfx = (<createjs.AbstractSoundInstance>Sound.sfxMap[id]).play();
+            } else {
+                Sound.sfxMap[id] = sfx = createjs.Sound.play(id);
+                sfx.volume = vol;
+            }
             return sfx;
         }
     }

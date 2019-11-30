@@ -3,6 +3,11 @@ module handlers {
     type DialogArg = [string, number, Function?];
     type Dialog = { text: string, delay: number, cb?: Function };
 
+    /**
+     * TODO:
+     * - create 'Time' manager for delayed callbacks instead of using setTimeout()
+     *  - Useful in pausing is ever implemented.
+     */
     export class DialogHandler {
 
         public playScene: scenes.Scene;

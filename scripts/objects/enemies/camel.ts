@@ -17,13 +17,9 @@ module objects {
 
     export class Camel extends Enemy {
 
-        private camalAnimator: createjs.Sprite;
-
         private currentAttack: CamelAttack;
 
         private state: CamelState;
-
-        private playScene: scenes.PlayScene;
 
         private oscillateCountUp = true;
 
@@ -36,48 +32,42 @@ module objects {
 
 
         constructor() {
-            super('camelSheet');
-
-
-            this.playScene = <scenes.PlayScene>objects.Game.currentScene;
-
-            this.state = CamelState.SettingUp;
-
-
-            let speed = .1;
-            let sheet = new createjs.SpriteSheet({
+            super(new createjs.SpriteSheet({
                 images: [objects.Game.getAsset('camelSheet')],
                 frames: { width: 72, height: 72, count: 12 },
                 animations: {
-                    idle_down: 1, walk_down: { speed, frames: [0, 1, 2] },
-                    idle_left: 4, walk_left: { speed, frames: [3, 4, 5] },
-                    idle_right: 7, walk_right: { speed, frames: [6, 7, 8] },
-                    idle_up: 10, walk_up: { speed, frames: [9, 10, 11] },
-                    walk_backwards: { speed, frames: [2, 1, 0] },
+                    idle_down: 1, walk_down: { speed: .1, frames: [0, 1, 2] },
+                    idle_left: 4, walk_left: { speed: .1, frames: [3, 4, 5] },
+                    idle_right: 7, walk_right: { speed: .1, frames: [6, 7, 8] },
+                    idle_up: 10, walk_up: { speed: .1, frames: [9, 10, 11] },
+                    walk_backwards: { speed: .1, frames: [2, 1, 0] },
                     oscillate: { speed: .05, frames: [4, 7] }
                 }
-            });
+            }));
 
-            this.startingPos = Camel.randomStartingPosition();
 
-            this.camalAnimator = new createjs.Sprite(sheet, 'idle_down');
-            this.width = 72;
-            this.height = 72;
+
+            // this.width = 72;
+            // this.height = 72;
             this.Init();
+            this.Reset();
         }
 
         public Start() {
-            this.camalAnimator.gotoAndPlay('walk_down');
+            this.animator.gotoAndPlay('walk_down');
             managers.Sound.music(false);
-            this.removeChild(this.sprite);
-            this.addChild(this.camalAnimator);
             this.currentAttack = Camel.randomAttack();
             this.position = new math.Vec2(
                 this.startingPos.x,
                 this.startingPos.y - 300
             );
+            this.dirToNextPost = math.Vec2.Down; // math.Vec2.Direction(this.startingPos, this.position);
+        }
 
-            this.dirToNextPost = math.Vec2.Difference(this.startingPos, this.position).Normalized;
+        public Reset() {
+            this.state = CamelState.SettingUp;
+            this.health = 30;
+            this.startingPos = Camel.randomStartingPosition();
         }
 
         public Update() {
@@ -146,9 +136,9 @@ module objects {
                     managers.Sound.music(true);
                 }
                 if (this.currentAttack === CamelAttack.Oscillate) {
-                    this.camalAnimator.gotoAndPlay('oscillate');
+                    this.animator.gotoAndPlay('oscillate');
                 } else {
-                    this.camalAnimator.gotoAndPlay('walk_backwards');
+                    this.animator.gotoAndPlay('walk_backwards');
                 }
                 setTimeout(() => {
                     this.state = CamelState.Pending;
@@ -184,17 +174,17 @@ module objects {
             // }
             this.startingPos = Camel.randomStartingPosition();
             this.state = CamelState.SettingUp;
-            this.dirToNextPost = math.Vec2.Difference(this.startingPos, this.position).Normalized;
-            this.dirToNextPost = this.dirToNextPost.Scale(3);
+            this.dirToNextPost = math.Vec2.Direction(this.startingPos, this.position).ScaleEq(3);
         }
 
         private static randomAttack(): CamelAttack {
-            let rnd = Math.floor(math.randRange(1, 5));
-            switch (rnd) {
+            switch (math.randInt(1, 4)) {
                 case 1: return CamelAttack.Direct;
                 case 2: return CamelAttack.Oscillate;
                 case 3: return CamelAttack.Spiral;
                 case 4: return CamelAttack.ReverseSpiral;
+
+                // prevents unexpected failure
                 default: return CamelAttack.Direct;
             }
         }
@@ -203,11 +193,8 @@ module objects {
             return (this.currentAttack & attack) !== 0;
         }
 
-        private static randomStartingPosition() {
-            return new math.Vec2(
-                math.randRange(50, 400),
-                math.randRange(50, 250)
-            );
+        private static randomStartingPosition(): math.Vec2 {
+            return math.randVec2([50, 400], [50, 250]);
         }
 
         public Destroy() {
