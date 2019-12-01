@@ -25,7 +25,7 @@ var scenes;
             _this.playerBulletHandler = new handlers.PlayerBulletHandler(_this);
             _this.flamethrowerBulletHandler = new handlers.FlamethrowerBulletHandler(_this);
             _this.enemyBulletHandler = new handlers.EnemyBulletHandler(_this);
-            _this.enemyHandler = new handlers.EnemyHandler(_this);
+            // this.enemyHandler = new handlers.EnemyHandler(this);
             _this.dialogHandler = new handlers.DialogHandler(_this);
             _this.waveHandler = new handlers.WaveHandler(_this);
             _this.enemyItemHandler = new handlers.EnemyItemHandler(_this);

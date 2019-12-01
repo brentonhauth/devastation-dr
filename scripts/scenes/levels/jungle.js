@@ -52,7 +52,7 @@ var scenes;
         };
         JungleScene.prototype.Main = function () {
             _super.prototype.Main.call(this);
-            this.waveHandler.Add(new objects.Wave(new objects.Lizard()), 
+            this.waveHandler.Add(new objects.Wave(new objects.Spider()), new objects.Wave(new objects.Lizard()), new objects.Wave([objects.Spider, 3], [objects.Lizard, 1]), 
             // This wave has 25 spiders,
             // and they all act different
             new objects.Wave([objects.Spider, 25]).Behavior(objects.Spider, function (x, y, index) {

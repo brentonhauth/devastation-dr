@@ -56,17 +56,19 @@ var scenes;
             var _this = this;
             if (this.initialTrigger) {
                 this.initialTriggerCount += 1;
-                var y = math.randRange(-1, 1);
-                var x = math.randRange(-1, 1);
-                this.storeBg.x += x;
-                this.storeBg.y += y;
+                if (!(this.initialTriggerCount % 2)) {
+                    var y = math.randRange(-1, 1);
+                    var x = math.randRange(-1, 1);
+                    this.storeBg.x += x;
+                    this.storeBg.y += y;
+                }
                 if (this.initialTriggerCount < 100) {
                     this.playerAnimator.alpha =
-                        this.storeBg.alpha = (100 - this.initialTriggerCount) / 100;
+                        this.storeBg.alpha = (100 - this.initialTriggerCount) * .01;
                 }
                 else if (this.initialTriggerCount < 200) {
                     this.playerAnimator.alpha =
-                        this.storeBg.alpha = (this.initialTriggerCount - 100) / 100;
+                        this.storeBg.alpha = (this.initialTriggerCount - 100) * .01;
                 }
                 else {
                     this.storeBg.x = 100;

@@ -17,53 +17,62 @@ var objects;
         __extends(Lizard, _super);
         function Lizard(enemyHandler) {
             if (enemyHandler === void 0) { enemyHandler = null; }
-            var _this = _super.call(this, enemyHandler) || this;
+            var _this = _super.call(this, new createjs.SpriteSheet({
+                images: [objects.Game.getAsset('lizardSheet')],
+                frames: { width: 96, height: 96, count: 12 },
+                animations: {
+                    move: { speed: .1, frames: [0, 1, 2] }
+                }
+            })) || this;
             _this.scaleX = 1.5;
             _this.scaleY = 1.5;
-            var sheet = new createjs.SpriteSheet({
-                images: [objects.Game.assetManager.getResult('lizardSheet')],
-                frames: {
-                    width: 1152 / 12,
-                    height: 768 / 8,
-                    count: 96
-                },
-                animations: {
-                    move: {
-                        frames: [0, 1, 2],
-                        speed: .1
-                    }
-                }
-            });
-            _this.lizardAnimator = new createjs.Sprite(sheet, "move");
-            var bounds = _this.sprite.getBounds();
-            _this.width = bounds.width;
-            _this.height = bounds.height;
-            _this.removeChild(_this.sprite);
-            _this.addChild(_this.lizardAnimator);
+            // let bounds = this.sprite.getBounds();
+            // this.width = bounds.width;
+            // this.height = bounds.height;
+            // this.removeChild(this.sprite);
+            // this.addChild(this.lizardAnimator);
             _this.Init();
-            _this.lastPlayerPos = new math.Vec2();
+            // this.lastPlayerPos = new math.Vec2();
             _this.enemyBullets = new Array(0);
+            _this.Reset();
             return _this;
         }
+        Lizard.prototype.Start = function () {
+            this.animator.gotoAndPlay('move');
+        };
+        Lizard.prototype.Reset = function () {
+            this.yCenterAxis = math.randInt(250, 350);
+            this.cosWave = math.cosWaveFunction(math.randInt(20, 50), math.randInt(50, 250));
+            var y = math.randInt(-500, -100);
+            this.position = new math.Vec2(this.yCenterAxis, y);
+        };
         /*
         public setLastPlayerPos(x: number, y: number) {
             this.lastPlayerPos = new math.Vec2(x, y);
         }
         */
         Lizard.prototype.Update = function () {
-            _super.prototype.Update.call(this);
-            this.SpawnBullet();
-        };
-        Lizard.prototype.SpawnBullet = function () {
-            var r = math.randRange(1, 30);
-            if (Math.round(r) == 5) {
-                var cs = objects.Game.currentScene;
-                // this.enemyHandler.
-                cs.AddEnemyBullet(this);
+            this.Move();
+            if (createjs.Ticker.getTicks() % 2) {
+                this.SpawnBullet();
             }
         };
+        Lizard.prototype.Move = function () {
+            var y = this.y + 1;
+            if (y > Lizard.yBounds) {
+                return this.Reset();
+            }
+            var x = this.cosWave(y) + this.yCenterAxis;
+            this.position = new math.Vec2(x, y);
+        };
+        Lizard.prototype.SpawnBullet = function () {
+            if (math.oneIn(15)) {
+                this.playScene.AddEnemyBullet(this);
+            }
+        };
+        Lizard.yBounds = 970; // canvas.height + 400
         return Lizard;
-    }(objects.Spider));
+    }(objects.Enemy));
     objects.Lizard = Lizard;
 })(objects || (objects = {}));
 //# sourceMappingURL=lizard.js.map

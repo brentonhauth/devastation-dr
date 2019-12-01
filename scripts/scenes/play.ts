@@ -11,7 +11,7 @@ module scenes {
         public flamethrowerBulletHandler: handlers.FlamethrowerBulletHandler;
 
         public enemyBulletHandler: handlers.EnemyBulletHandler;
-        public enemyHandler: handlers.EnemyHandler;
+        // public enemyHandler: handlers.EnemyHandler;
         public dialogHandler: handlers.DialogHandler;
         public waveHandler: handlers.WaveHandler;
         public enemyItemHandler: handlers.EnemyItemHandler;
@@ -28,7 +28,7 @@ module scenes {
             this.playerBulletHandler = new handlers.PlayerBulletHandler(this);
             this.flamethrowerBulletHandler = new handlers.FlamethrowerBulletHandler(this);
             this.enemyBulletHandler = new handlers.EnemyBulletHandler(this);
-            this.enemyHandler = new handlers.EnemyHandler(this);
+            // this.enemyHandler = new handlers.EnemyHandler(this);
             this.dialogHandler = new handlers.DialogHandler(this);
             this.waveHandler = new handlers.WaveHandler(this);
             this.enemyItemHandler = new handlers.EnemyItemHandler(this);

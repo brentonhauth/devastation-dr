@@ -2,18 +2,17 @@ module math {
 
     const PI_OVER_180 = Math.PI / 180;
 
+    const ZERO_FN = () => 0;
+
     export function cosWaveFunction(stretch: number, depth: number): (val:number)=>number {
+        if (stretch === 0) {
+            return ZERO_FN;
+        }
+
         let o: any = { stretch, depth };
-        o.fn = (val: number): number => {
-
-            if (o.stretch === 0) {
-                return o.depth;
-            }
-
+        return o.fn = (val: number): number => {
             return Math.cos(val / o.stretch) * o.depth;
         };
-
-        return o.fn;
     }
 
 
@@ -33,12 +32,10 @@ module math {
             max = min;
             min = 0;
         } else if (min % 1) {
-            min = Math.round(min);
+            min >>= 0;
         }
 
-        if (max % 1) {
-            max = Math.round(max);
-        }
+        if (max % 1) { max >>= 0; }
 
         let rnd = Math.random() * (max - min);
 
@@ -72,8 +69,8 @@ module math {
      * math.oneIn(1.5) // ~66.7% chance to return true
      * @param {Number} bias
      */
-    export function oneIn(bias=2) {
-        return Math.random() <= (1 / Math.abs(bias));
+    export function oneIn(bias?: number) {
+        return Math.random() <= (1 / Math.abs(bias || 2));
     }
 
     export function pointOnCircle(center: math.Vec2, degree: number) {

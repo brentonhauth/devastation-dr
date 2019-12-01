@@ -1,15 +1,15 @@
 var math;
 (function (math) {
     var PI_OVER_180 = Math.PI / 180;
+    var ZERO_FN = function () { return 0; };
     function cosWaveFunction(stretch, depth) {
+        if (stretch === 0) {
+            return ZERO_FN;
+        }
         var o = { stretch: stretch, depth: depth };
-        o.fn = function (val) {
-            if (o.stretch === 0) {
-                return o.depth;
-            }
+        return o.fn = function (val) {
             return Math.cos(val / o.stretch) * o.depth;
         };
-        return o.fn;
     }
     math.cosWaveFunction = cosWaveFunction;
     function randRange(min, max) {
@@ -27,10 +27,10 @@ var math;
             min = 0;
         }
         else if (min % 1) {
-            min = Math.round(min);
+            min >>= 0;
         }
         if (max % 1) {
-            max = Math.round(max);
+            max >>= 0;
         }
         var rnd = Math.random() * (max - min);
         return min + Math.round(rnd);
@@ -61,8 +61,7 @@ var math;
      * @param {Number} bias
      */
     function oneIn(bias) {
-        if (bias === void 0) { bias = 2; }
-        return Math.random() <= (1 / Math.abs(bias));
+        return Math.random() <= (1 / Math.abs(bias || 2));
     }
     math.oneIn = oneIn;
     function pointOnCircle(center, degree) {

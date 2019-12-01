@@ -39,8 +39,7 @@ var scenes;
             this.addChildAt(this.logo, 2);
             this.addChild(this.infoLabel);
             this.startButton.on("click", function () {
-                objects.Game.currentState = config.Scene.DESERT;
-                // objects.Game.currentState = config.Scene.ARCTIC;
+                objects.Game.currentState = config.Scene.PROLOGUE;
             });
             // this.exitButton.on("click", () => {
             //     window.close();
