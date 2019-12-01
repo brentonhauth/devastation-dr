@@ -111,6 +111,9 @@ var objects;
             this.weapon.Shoot();
         };
         Player.prototype.ChangeWeapon = function (weaponType) {
+            if (this.playScene.flamethrowerBulletHandler.isActive) {
+                this.playScene.flamethrowerBulletHandler.StopFlame();
+            }
             if (weaponType == config.Weapon.MACHINEGUN) {
                 this.weapon = new objects.MachineGun(this.playScene);
             }
