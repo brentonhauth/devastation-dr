@@ -27,7 +27,6 @@ var objects;
                 }
             })) || this;
             _this.reachedSpot = false;
-            _this.playerRef = _this.playScene.player || { position: math.Vec2.Zero };
             // this.width = 72;
             // this.height = 72;
             _this.Init();
@@ -66,14 +65,14 @@ var objects;
             }
         };
         PolarBear.prototype.facePlayer = function () {
-            var diff = math.Vec2.Difference(this.position, this.playerRef.position), face = diff.LiteralDirection;
+            var diff = math.Vec2.Difference(this.position, this.playScene.player.position), face = diff.LiteralDirection;
             if (this.lastFacing !== face) {
                 this.animator.gotoAndPlay('idle_' + config.Direction[face]);
                 this.lastFacing = face;
             }
         };
         PolarBear.prototype.throwFish = function () {
-            var fish = new objects.Fish(this, this.playerRef);
+            var fish = new objects.Fish(this, this.playScene.player);
             this.playScene.enemyBulletHandler.AddExistingBullet(fish);
         };
         return PolarBear;

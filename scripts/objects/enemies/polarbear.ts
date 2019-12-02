@@ -2,7 +2,6 @@ module objects {
     export class PolarBear extends Enemy {
 
         private startingPosition: math.Vec2;
-        private playerRef: Player;
 
         private lastFacing: config.Direction;
 
@@ -21,7 +20,6 @@ module objects {
                 }
             }));
 
-            this.playerRef = this.playScene.player || <Player>{position:math.Vec2.Zero};
 
             // this.width = 72;
             // this.height = 72;
@@ -73,7 +71,7 @@ module objects {
         }
 
         private facePlayer() {
-            let diff = math.Vec2.Difference(this.position, this.playerRef.position),
+            let diff = math.Vec2.Difference(this.position, this.playScene.player.position),
             face = diff.LiteralDirection;
 
             if (this.lastFacing !== face) {
@@ -83,7 +81,7 @@ module objects {
         }
 
         private throwFish() {
-            let fish = new Fish(this, this.playerRef);
+            let fish = new Fish(this, this.playScene.player);
             this.playScene.enemyBulletHandler.AddExistingBullet(fish);
         }
     }
