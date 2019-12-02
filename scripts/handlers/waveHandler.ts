@@ -1,5 +1,8 @@
 module handlers {
 
+    type VoidCallback = () => void;
+    type NextWaveCallback = (waveID: number) => void;
+
     /**
      * TODO:
      * - loop through waves and create a pool of all the required enemies
@@ -12,6 +15,10 @@ module handlers {
         private waves: objects.Wave[];
         private playScene: scenes.PlayScene;
         private hasStarted = false;
+        private hasFinished = false;
+        private m_onCompleteCb: VoidCallback;
+        private m_onStartCb: VoidCallback;
+        private m_onNextWaveCb: NextWaveCallback;
 
         public get CompletedAllWaves(): boolean {
             return this.currentWave &&
@@ -34,10 +41,15 @@ module handlers {
          */
         public Start() {
             this.hasStarted = true;
+            this.NextWave();
+
+            if (typeof this.m_onStartCb === 'function') {
+                this.m_onStartCb();
+            }
         }
 
         public Update() {
-            if (!this.hasStarted) { return; }
+            if (!this.hasStarted || this.hasFinished) { return; }
 
             if (!this.currentWave || this.currentWave.IsDone) {
                 this.NextWave();
@@ -56,6 +68,32 @@ module handlers {
             this.currentWave = this.waves.shift();
             if (this.currentWave) {
                 this.currentWave.Start();
+
+                if (typeof this.m_onNextWaveCb === 'function') {
+                    this.m_onNextWaveCb(3);
+                }
+
+            } else if (this.waves.length === 0 && !this.hasFinished) { // is finished
+                this.hasFinished = true;
+
+                if (typeof this.m_onCompleteCb === 'function') {
+                    this.m_onCompleteCb();
+                }
+
+            }
+        }
+
+        public on(event: 'start'|'complete'|'next', callback: VoidCallback|NextWaveCallback) {
+            switch (event) {
+                case 'start':
+                    this.m_onStartCb = <VoidCallback>callback;
+                    break;
+                case 'complete':
+                    this.m_onCompleteCb = <VoidCallback>callback;
+                    break;
+                case 'next':
+                    this.m_onNextWaveCb = <NextWaveCallback>callback;
+                    break;
             }
         }
 

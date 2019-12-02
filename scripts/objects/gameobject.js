@@ -38,6 +38,24 @@ var objects;
             enumerable: true,
             configurable: true
         });
+        /**
+         * Use this method if you are wraping new co-ord's in a Vector
+         * @example
+         * obj.SetPosition(newX, newY);
+         *
+         * // instead of
+         * obj.position = new math.Vec2(newX, newY);
+         *
+         * // unless you're mutating the position
+         * obj.position = obj.position.Add(new math.Vec2(2, 3));
+         * @param {number} x
+         * @param {number} y
+         */
+        GameObject.prototype.SetPosition = function (x, y) {
+            this.boxCollider.SetPosition(x, y);
+            this.x = x;
+            this.y = y;
+        };
         Object.defineProperty(GameObject.prototype, "width", {
             get: function () {
                 return this.m_width;

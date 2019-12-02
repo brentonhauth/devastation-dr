@@ -39,7 +39,7 @@ var objects;
             this.yCenterAxis = math.randInt(150, 600);
             this.cosWave = math.cosWaveFunction(math.randInt(20, 50), math.randInt(50, 250));
             var y = math.randInt(-500, -50);
-            this.position = new math.Vec2(this.yCenterAxis, y);
+            this.SetPosition(this.yCenterAxis, y);
         };
         Spider.prototype.Move = function () {
             var y = this.y + 1;
@@ -47,7 +47,8 @@ var objects;
                 this.Reset();
             }
             var x = this.cosWave(y) + this.yCenterAxis;
-            this.position = new math.Vec2(x, y);
+            this.SetPosition(x, y);
+            // this.position = new math.Vec2(x, y);
         };
         Spider.yBounds = 870; // canvas.height + 400
         return Spider;

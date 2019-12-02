@@ -37,6 +37,25 @@ module objects {
             this.y = pos.y;
         }
 
+        /**
+         * Use this method if you are wraping new co-ord's in a Vector
+         * @example
+         * obj.SetPosition(newX, newY);
+         * 
+         * // instead of
+         * obj.position = new math.Vec2(newX, newY);
+         *
+         * // unless you're mutating the position
+         * obj.position = obj.position.Add(new math.Vec2(2, 3));
+         * @param {number} x
+         * @param {number} y
+         */
+        public SetPosition(x: number, y: number) {
+            this.boxCollider.SetPosition(x, y);
+            this.x = x;
+            this.y = y;
+        }
+
         public get width(): number {
             return this.m_width;
         }

@@ -10,6 +10,7 @@ var handlers;
     var WaveHandler = /** @class */ (function () {
         function WaveHandler(playScene) {
             this.hasStarted = false;
+            this.hasFinished = false;
             this.playScene = playScene;
             this.waves = new Array();
         }
@@ -35,9 +36,13 @@ var handlers;
          */
         WaveHandler.prototype.Start = function () {
             this.hasStarted = true;
+            this.NextWave();
+            if (typeof this.m_onStartCb === 'function') {
+                this.m_onStartCb();
+            }
         };
         WaveHandler.prototype.Update = function () {
-            if (!this.hasStarted) {
+            if (!this.hasStarted || this.hasFinished) {
                 return;
             }
             if (!this.currentWave || this.currentWave.IsDone) {
@@ -56,6 +61,28 @@ var handlers;
             this.currentWave = this.waves.shift();
             if (this.currentWave) {
                 this.currentWave.Start();
+                if (typeof this.m_onNextWaveCb === 'function') {
+                    this.m_onNextWaveCb(3);
+                }
+            }
+            else if (this.waves.length === 0 && !this.hasFinished) { // is finished
+                this.hasFinished = true;
+                if (typeof this.m_onCompleteCb === 'function') {
+                    this.m_onCompleteCb();
+                }
+            }
+        };
+        WaveHandler.prototype.on = function (event, callback) {
+            switch (event) {
+                case 'start':
+                    this.m_onStartCb = callback;
+                    break;
+                case 'complete':
+                    this.m_onCompleteCb = callback;
+                    break;
+                case 'next':
+                    this.m_onNextWaveCb = callback;
+                    break;
             }
         };
         WaveHandler.prototype.Add = function () {

@@ -1,7 +1,6 @@
 module scenes {
     export class ArcticScene extends PlayScene {
 
-        private finishedCheck = false;
         private ending = false;
 
         constructor() {
@@ -25,25 +24,6 @@ module scenes {
 
         public Update() {
             super.Update();
-
-            if (!this.finishedCheck && this.waveHandler.CompletedAllWaves) {
-                managers.Keyboard.disable();
-                this.player.intangible = true;
-                this.player.canLeaveBounds = true;
-                this.dialogHandler.TriggerMany(
-                    ["Hopefully that's the last of 'em.", 2], ["", 1],
-                    ["Wait what's that in the distance?!", 3],
-                    ["Whatever it is, it\ndoesn't look normal...", 3, ()=>this.ending=true],
-                    ["", 2.5],
-                    ["[  to be continued...  ]", 3, () => {
-                        objects.Game.currentState = config.Scene.START;
-                        managers.Keyboard.enable();
-                        managers.Sound.music(false);
-                    }]
-                );
-
-                this.finishedCheck = true;
-            }
 
             if (this.ending) {
                 this.player.position = this.player.position.Add(new math.Vec2(0, -8));
@@ -89,6 +69,26 @@ module scenes {
                     [objects.PolarBear, 5]
                 )
             );
+
+
+            this.waveHandler.on('complete', () => {
+                managers.Keyboard.disable();
+
+                this.player.intangible = true;
+                this.player.canLeaveBounds = true;
+
+                this.dialogHandler.TriggerMany(
+                    ["Hopefully that's the last of 'em.", 2], ["", 1],
+                    ["Wait what's that in the distance?!", 3],
+                    ["Whatever it is, it\ndoesn't look normal...", 3, ()=>this.ending=true],
+                    ["", 2.5],
+                    ["[  to be continued...  ]", 3, () => {
+                        objects.Game.currentState = config.Scene.START;
+                        managers.Keyboard.enable();
+                        managers.Sound.music(false);
+                    }]
+                );
+            });
         }
     }
 }

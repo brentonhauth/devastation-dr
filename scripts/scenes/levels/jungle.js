@@ -17,7 +17,6 @@ var scenes;
         __extends(JungleScene, _super);
         function JungleScene() {
             var _this = _super.call(this) || this;
-            _this.finishedCheck = false;
             _this.ending = false;
             return _this;
         }
@@ -32,25 +31,13 @@ var scenes;
                 function () { return _this.waveHandler.Start(); }]);
         };
         JungleScene.prototype.Update = function () {
-            var _this = this;
             _super.prototype.Update.call(this);
-            if (this.waveHandler.CompletedAllWaves && !this.finishedCheck) {
-                this.player.intangible = true;
-                managers.Keyboard.disable();
-                this.dialogHandler.TriggerMany(["It looks like that's the last of 'em!", 2.5], ["The drive home feels a lot\nlonger than normal...", 3], ["", 1], ["I have to keep a clear head!", 3], ["I'll reach the end eventually!", 3, function () {
-                        _this.ending = true;
-                        _this.player.canLeaveBounds = true;
-                    }], ["", 2.5, function () {
-                        objects.Game.currentState = config.Scene.DESERT;
-                        managers.Keyboard.enable();
-                    }]);
-                this.finishedCheck = true;
-            }
             if (this.ending) {
                 this.player.position = this.player.position.Add(new math.Vec2(0, -8));
             }
         };
         JungleScene.prototype.Main = function () {
+            var _this = this;
             _super.prototype.Main.call(this);
             this.waveHandler.Add(new objects.Wave(new objects.Spider()), new objects.Wave(new objects.Lizard()), new objects.Wave([objects.Spider, 3], [objects.Lizard, 1]), 
             // This wave has 25 spiders,
@@ -66,6 +53,17 @@ var scenes;
             new objects.Wave([objects.Spider, 5], [objects.Lizard, 2]), 
             // this wave has 5 lizards
             new objects.Wave([objects.Lizard, 5]));
+            this.waveHandler.on('complete', function () {
+                _this.player.intangible = true;
+                managers.Keyboard.disable();
+                _this.dialogHandler.TriggerMany(["It looks like that's the last of 'em!", 2.5], ["The drive home feels a lot\nlonger than normal...", 3], ["", 1], ["I have to keep a clear head!", 3], ["I'll reach the end eventually!", 3, function () {
+                        _this.ending = true;
+                        _this.player.canLeaveBounds = true;
+                    }], ["", 2.5, function () {
+                        objects.Game.currentState = config.Scene.DESERT;
+                        managers.Keyboard.enable();
+                    }]);
+            });
         };
         return JungleScene;
     }(scenes.PlayScene));

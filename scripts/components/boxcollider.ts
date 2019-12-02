@@ -14,22 +14,19 @@ module components {
             // let dx = pos.x - this.center.x,
             //     dy = pos.y - this.center.y;
 
+            this.SetPosition(pos.x, pos.y);
+        }
+
+        public SetPosition(x: number, y: number) {
             let m = {
-                x: pos.x - this.center.x,
-                y: pos.y - this.center.y
+                x: x - this.center.x,
+                y: y - this.center.y
             };
 
             this.aabb.min.Add(<math.Vec2>m);
-            // this.aabb.min.x += dx; // m.x;
-            // this.aabb.min.y += dy; // m.y;
-
             this.aabb.max.Add(<math.Vec2>m);
-            // this.aabb.max.x += dx; // m.x;
-            // this.aabb.max.y += dy; // m.y;
 
-            this.center.setValues(pos.x, pos.y);
-            // this.center.x = pos.x;
-            // this.center.y = pos.y;
+            this.center.setValues(x, y);
 
             if (this.drawMode) {
                 this.draw()

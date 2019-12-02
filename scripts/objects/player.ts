@@ -22,7 +22,7 @@ module objects {
             super();
             this.hMoveSpeed = this.vMoveSpeed * .75;
             this.playScene = playScene;
-            this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("hummer"));
+            this.sprite = new createjs.Bitmap(objects.Game.getAsset("hummer"));
             let bounds = this.sprite.getBounds();
             this.width = bounds.width;
             this.height = bounds.height;
@@ -34,7 +34,7 @@ module objects {
         // Methods
         public Start(): void {
             // Set the initial position
-            this.position = new math.Vec2(320, 500);
+            this.SetPosition(320, 500);
             this.lives = 3;
             this.moved = new math.Vec2();
 
@@ -43,9 +43,10 @@ module objects {
         }
         public Update(): void {
             this.Move();
-            // this.CheckBound(); // <-- Check collisions
-            this.Blink();
 
+            if (this.blink) {
+                this.Blink();
+            }
         }
         public Reset(): void {}
         public Move(): void {
@@ -82,7 +83,7 @@ module objects {
         }
 
         private Blink() {
-            if (this.blink && !(createjs.Ticker.getTicks() % 3)) {
+            if (!(createjs.Ticker.getTicks() % 3)) {
                 this.visible = !this.visible;
             }
         }
@@ -115,7 +116,7 @@ module objects {
             }
 
             if (setX || setY) {
-                this.position = new math.Vec2(setX || this.x, setY || this.y);
+                this.SetPosition(setX || this.x, setY || this.y);
             }
         }
 
