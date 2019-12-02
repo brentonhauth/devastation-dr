@@ -28,7 +28,6 @@ var objects;
             })) || this;
             _this.isAggressive = false;
             _this.setSlideAnimation = false;
-            _this.playerRef = _this.playScene.player || { position: math.Vec2.Zero };
             // this.width = 48;
             // this.height = 48;
             _this.Init();
@@ -48,21 +47,16 @@ var objects;
         };
         Penguin.prototype.Update = function () {
             if (this.isAggressive) {
+                var pos = this.position;
                 if (!this.setSlideAnimation) {
-                    var slide = void 0, diff = math.Vec2.Difference(this.playerRef.position, this.position).Normalized;
-                    if (Math.abs(diff.x) > Math.abs(diff.y)) {
-                        slide = diff.x > 0 ? config.Direction.Right : config.Direction.Left;
-                    }
-                    else {
-                        slide = diff.y > 0 ? config.Direction.Down : config.Direction.Up;
-                    }
-                    this.animator.gotoAndPlay('slide_' + config.Direction[slide]);
+                    var diff = math.Vec2.Direction(this.playScene.player.position, pos), dir = diff.LiteralDirection;
+                    this.animator.gotoAndPlay('slide_' + config.Direction[dir]);
                     this.direction = diff.ScaleEq(Penguin.moveSpeed);
                     this.setSlideAnimation = true;
                 }
-                this.position = this.position.Add(this.direction);
+                this.position = pos.Add(this.direction);
             }
-            else if (math.Vec2.WithinRange(this.playerRef.position, this.position, this.aggressiveRange)) {
+            else if (math.Vec2.WithinRange(this.playScene.player.position, this.position, this.aggressiveRange)) {
                 this.isAggressive = true;
             }
             else {

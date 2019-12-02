@@ -51,9 +51,14 @@ module objects {
                     this.position = this.position.Add(new math.Vec2(0, 6));
                 }
             } else {
-                this.facePlayer();
 
-                if (!(createjs.Ticker.getTicks() % 20)) {
+                let tick = createjs.Ticker.getTicks();
+
+                if (!(tick % 2)) {
+                    this.facePlayer();
+                }
+
+                if (!(tick % 20)) {
                     this.throwFish();
                 }
 
@@ -68,13 +73,8 @@ module objects {
         }
 
         private facePlayer() {
-            let face: config.Direction, diff = math.Vec2.Difference(this.position, this.playerRef.position);
-
-            if (Math.abs(diff.x) > Math.abs(diff.y)) {
-                face = diff.x < 0 ? config.Direction.Right : config.Direction.Left;
-            } else {
-                face = diff.y > 0 ? config.Direction.Up : config.Direction.Down;
-            }
+            let diff = math.Vec2.Difference(this.position, this.playerRef.position),
+            face = diff.LiteralDirection;
 
             if (this.lastFacing !== face) {
                 this.animator.gotoAndPlay('idle_' + config.Direction[face]);

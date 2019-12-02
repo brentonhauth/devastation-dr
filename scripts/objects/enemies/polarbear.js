@@ -52,8 +52,11 @@ var objects;
                 }
             }
             else {
-                this.facePlayer();
-                if (!(createjs.Ticker.getTicks() % 20)) {
+                var tick = createjs.Ticker.getTicks();
+                if (!(tick % 2)) {
+                    this.facePlayer();
+                }
+                if (!(tick % 20)) {
                     this.throwFish();
                 }
                 this.position = this.position.Add(new math.Vec2(0, this.playScene.background.Speed));
@@ -63,13 +66,7 @@ var objects;
             }
         };
         PolarBear.prototype.facePlayer = function () {
-            var face, diff = math.Vec2.Difference(this.position, this.playerRef.position);
-            if (Math.abs(diff.x) > Math.abs(diff.y)) {
-                face = diff.x < 0 ? config.Direction.Right : config.Direction.Left;
-            }
-            else {
-                face = diff.y > 0 ? config.Direction.Up : config.Direction.Down;
-            }
+            var diff = math.Vec2.Difference(this.position, this.playerRef.position), face = diff.LiteralDirection;
             if (this.lastFacing !== face) {
                 this.animator.gotoAndPlay('idle_' + config.Direction[face]);
                 this.lastFacing = face;
