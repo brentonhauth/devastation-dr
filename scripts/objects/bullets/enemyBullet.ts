@@ -15,11 +15,15 @@ module objects {
             // this.x = pos.x;
             // this.y = pos.y;
 
-            this.dir = math.Vec2.Difference(target, pos).Normalized;
+            this.dir = math.Vec2.Direction(target, pos).ScaleEq(this.speed);
         }
 
+        // NOTE: potential error here,
+        // I encountered it but wasn't able
+        // to find the exact cause.
+        // happened right after I added Wave Pooling.
         public Update() {
-            this.position = this.position.Add(this.dir.Scale(this.speed));
+            this.position = this.position.Add(this.dir);
             this.CheckBound();
         }
 

@@ -8,8 +8,6 @@ module objects {
         
         private aggressiveRange: number;
 
-        private playerRef: Player;
-        
         private isAggressive = false;
         private setSlideAnimation = false;
 
@@ -24,8 +22,6 @@ module objects {
                     idle_Up: 10, slide_Up: 22,
                 }
             }));
-
-            this.playerRef = this.playScene.player || <Player>{position:math.Vec2.Zero};
 
             // this.width = 48;
             // this.height = 48;
@@ -49,19 +45,16 @@ module objects {
 
         public Update() {
             if (this.isAggressive) {
+                let pos = this.position;
                 if (!this.setSlideAnimation) {
-                    let slide: config.Direction, diff = math.Vec2.Difference(this.playerRef.position, this.position).Normalized;
-                    if (Math.abs(diff.x) > Math.abs(diff.y)) {
-                        slide = diff.x > 0 ? config.Direction.Right : config.Direction.Left;
-                    } else {
-                        slide = diff.y > 0 ? config.Direction.Down : config.Direction.Up;
-                    }
-                    this.animator.gotoAndPlay('slide_' + config.Direction[slide]);
+                    let diff = math.Vec2.Direction(this.playScene.player.position, pos),
+                    dir = diff.LiteralDirection;
+                    this.animator.gotoAndPlay('slide_' + config.Direction[dir]);
                     this.direction = diff.ScaleEq(Penguin.moveSpeed);
                     this.setSlideAnimation = true;
                 }
-                this.position = this.position.Add(this.direction);
-            } else if (math.Vec2.WithinRange(this.playerRef.position, this.position, this.aggressiveRange)) {
+                this.position = pos.Add(this.direction);
+            } else if (math.Vec2.WithinRange(this.playScene.player.position, this.position, this.aggressiveRange)) {
                 this.isAggressive = true;
             } else {
                 this.position = this.position.Add(new math.Vec2(0, this.playScene.background.Speed));

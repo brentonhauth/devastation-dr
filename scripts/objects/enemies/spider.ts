@@ -37,14 +37,15 @@ module objects {
 
             let y = math.randInt(-500, -50);
 
-            this.position = new math.Vec2(this.yCenterAxis, y);
+            this.SetPosition(this.yCenterAxis, y);
         }
 
         public Move():void {
             let y = this.y + 1;
             if (y > Spider.yBounds) { this.Reset(); }
             let x = this.cosWave(y) + this.yCenterAxis;
-            this.position = new math.Vec2(x, y);
+            this.SetPosition(x, y);
+            // this.position = new math.Vec2(x, y);
         }
     }
 }

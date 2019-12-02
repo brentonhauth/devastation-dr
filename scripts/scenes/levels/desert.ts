@@ -1,7 +1,6 @@
 module scenes {
     export class DesertScene extends PlayScene {
 
-        private finishedCheck = false;
         private ending = false;
 
         constructor() {
@@ -17,38 +16,13 @@ module scenes {
 
             this.dialogHandler.TriggerMany(
                 ["Man, when did it get so hot?", 2.5,
-                () => {
-                    this.waveHandler.Start();
-                }]
+                () => this.waveHandler.Start()]
             );
-
         }
 
         public Update() {
             super.Update();
 
-            if (this.waveHandler.CompletedAllWaves && !this.finishedCheck) {
-
-                this.player.intangible = true;
-                managers.Keyboard.disable();
-
-                this.dialogHandler.TriggerMany(
-                    ["I think that's it for now...", 2],
-                    ["We're pretty far north, but it's\n"+
-                    "really hot for some reason...", 3,
-                    () => {
-                        this.ending = true;
-                        this.player.canLeaveBounds = true;
-                    }],
-                    ["", 2.5, () => {
-                        managers.Keyboard.enable();
-                        objects.Game.currentState = config.Scene.ARCTIC;
-                    }]
-                );
-
-
-                this.finishedCheck = true;
-            }
 
             if (this.ending) {
                 this.player.position = this.player.position.Add(new math.Vec2(0, -8));
@@ -63,11 +37,11 @@ module scenes {
                 ),
 
                 new objects.Wave(
-                    new objects.Lizard()
+                    [objects.Lizard, 1]
                 ),
 
                 new objects.Wave(
-                    new objects.Turtle()
+                    [objects.Turtle, 1]
                 ),
 
                 new objects.Wave(
@@ -84,9 +58,30 @@ module scenes {
                     [objects.Lizard, 2]
                 ),
 
-                new objects.Wave(new objects.Camel()),
+                new objects.Wave(
+                    [objects.Camel, 1]
+                ),
 
             );
+
+            this.waveHandler.on('complete', () => {
+                this.player.intangible = true;
+                managers.Keyboard.disable();
+
+                this.dialogHandler.TriggerMany(
+                    ["I think that's it for now...", 2],
+                    ["We're pretty far north, but it's\n"+
+                    "really hot for some reason...", 3,
+                    () => {
+                        this.ending = true;
+                        this.player.canLeaveBounds = true;
+                    }],
+                    ["", 2.5, () => {
+                        managers.Keyboard.enable();
+                        objects.Game.currentState = config.Scene.ARCTIC;
+                    }]
+                );
+            });
         }
     }
 }

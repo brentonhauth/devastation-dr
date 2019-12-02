@@ -15,11 +15,35 @@ module math {
         }
 
         public get Normalized(): Vec2 {
-            let mag = this.Magnitude;
-            if (mag) {
+
+            if (!this.x && !this.y) {
+                return math.Vec2.Zero;
+            }
+
+            let magSq = (this.x * this.x) + (this.y * this.y);
+
+            if (magSq === 1) {
+                return new math.Vec2(this.x, this.y);
+            } else if (magSq) {
+                let mag = Math.sqrt(magSq);
                 return new Vec2(this.x / mag, this.y / mag);
             } else {
                 return Vec2.Zero;
+            }
+        }
+
+        public get LiteralDirection(): config.Direction {
+
+            if (!this.x && !this.y) {
+                return config.Direction.None;
+            }
+
+            let norm = this.Normalized;
+
+            if (Math.abs(norm.x) > Math.abs(norm.y)) {
+                return norm.x > 0 ? config.Direction.Right : config.Direction.Left;
+            } else {
+                return norm.y > 0 ? config.Direction.Down : config.Direction.Up;
             }
         }
 

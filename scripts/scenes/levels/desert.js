@@ -17,7 +17,6 @@ var scenes;
         __extends(DesertScene, _super);
         function DesertScene() {
             var _this = _super.call(this) || this;
-            _this.finishedCheck = false;
             _this.ending = false;
             return _this;
         }
@@ -28,17 +27,21 @@ var scenes;
                 managers.Sound.music("cyberpunker");
             }
             this.dialogHandler.TriggerMany(["Man, when did it get so hot?", 2.5,
-                function () {
-                    _this.waveHandler.Start();
-                }]);
+                function () { return _this.waveHandler.Start(); }]);
         };
         DesertScene.prototype.Update = function () {
-            var _this = this;
             _super.prototype.Update.call(this);
-            if (this.waveHandler.CompletedAllWaves && !this.finishedCheck) {
-                this.player.intangible = true;
+            if (this.ending) {
+                this.player.position = this.player.position.Add(new math.Vec2(0, -8));
+            }
+        };
+        DesertScene.prototype.Main = function () {
+            var _this = this;
+            this.waveHandler.Add(new objects.Wave([objects.Jackal, 3]), new objects.Wave([objects.Lizard, 1]), new objects.Wave([objects.Turtle, 1]), new objects.Wave([objects.Turtle, 2]), new objects.Wave([objects.Lizard, 2], [objects.Turtle, 1]), new objects.Wave([objects.Turtle, 2], [objects.Lizard, 2]), new objects.Wave([objects.Camel, 1]));
+            this.waveHandler.on('complete', function () {
+                _this.player.intangible = true;
                 managers.Keyboard.disable();
-                this.dialogHandler.TriggerMany(["I think that's it for now...", 2], ["We're pretty far north, but it's\n" +
+                _this.dialogHandler.TriggerMany(["I think that's it for now...", 2], ["We're pretty far north, but it's\n" +
                         "really hot for some reason...", 3,
                     function () {
                         _this.ending = true;
@@ -47,14 +50,7 @@ var scenes;
                         managers.Keyboard.enable();
                         objects.Game.currentState = config.Scene.ARCTIC;
                     }]);
-                this.finishedCheck = true;
-            }
-            if (this.ending) {
-                this.player.position = this.player.position.Add(new math.Vec2(0, -8));
-            }
-        };
-        DesertScene.prototype.Main = function () {
-            this.waveHandler.Add(new objects.Wave([objects.Jackal, 3]), new objects.Wave(new objects.Lizard()), new objects.Wave(new objects.Turtle()), new objects.Wave([objects.Turtle, 2]), new objects.Wave([objects.Lizard, 2], [objects.Turtle, 1]), new objects.Wave([objects.Turtle, 2], [objects.Lizard, 2]), new objects.Wave(new objects.Camel()));
+            });
         };
         return DesertScene;
     }(scenes.PlayScene));

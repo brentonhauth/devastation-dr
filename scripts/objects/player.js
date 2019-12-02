@@ -25,7 +25,7 @@ var objects;
             _this.hasShield = false;
             _this.hMoveSpeed = _this.vMoveSpeed * .75;
             _this.playScene = playScene;
-            _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("hummer"));
+            _this.sprite = new createjs.Bitmap(objects.Game.getAsset("hummer"));
             var bounds = _this.sprite.getBounds();
             _this.width = bounds.width;
             _this.height = bounds.height;
@@ -38,7 +38,7 @@ var objects;
         // Methods
         Player.prototype.Start = function () {
             // Set the initial position
-            this.position = new math.Vec2(320, 500);
+            this.SetPosition(320, 500);
             this.lives = 3;
             this.moved = new math.Vec2();
             //this.scaleX = 0.25;
@@ -46,8 +46,9 @@ var objects;
         };
         Player.prototype.Update = function () {
             this.Move();
-            // this.CheckBound(); // <-- Check collisions
-            this.Blink();
+            if (this.blink) {
+                this.Blink();
+            }
         };
         Player.prototype.Reset = function () { };
         Player.prototype.Move = function () {
@@ -75,7 +76,7 @@ var objects;
             }
         };
         Player.prototype.Blink = function () {
-            if (this.blink && !(createjs.Ticker.getTicks() % 3)) {
+            if (!(createjs.Ticker.getTicks() % 3)) {
                 this.visible = !this.visible;
             }
         };
@@ -104,7 +105,7 @@ var objects;
                 setY = this.halfH;
             }
             if (setX || setY) {
-                this.position = new math.Vec2(setX || this.x, setY || this.y);
+                this.SetPosition(setX || this.x, setY || this.y);
             }
         };
         Player.prototype.ShootWeapon = function () {

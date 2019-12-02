@@ -16,26 +16,23 @@ var components;
                 // let m = math.Vec2.Difference(pos, this.center);
                 // let dx = pos.x - this.center.x,
                 //     dy = pos.y - this.center.y;
-                var m = {
-                    x: pos.x - this.center.x,
-                    y: pos.y - this.center.y
-                };
-                this.aabb.min.Add(m);
-                // this.aabb.min.x += dx; // m.x;
-                // this.aabb.min.y += dy; // m.y;
-                this.aabb.max.Add(m);
-                // this.aabb.max.x += dx; // m.x;
-                // this.aabb.max.y += dy; // m.y;
-                this.center.setValues(pos.x, pos.y);
-                // this.center.x = pos.x;
-                // this.center.y = pos.y;
-                if (this.drawMode) {
-                    this.draw();
-                }
+                this.SetPosition(pos.x, pos.y);
             },
             enumerable: true,
             configurable: true
         });
+        BoxCollider.prototype.SetPosition = function (x, y) {
+            var m = {
+                x: x - this.center.x,
+                y: y - this.center.y
+            };
+            this.aabb.min.Add(m);
+            this.aabb.max.Add(m);
+            this.center.setValues(x, y);
+            if (this.drawMode) {
+                this.draw();
+            }
+        };
         Object.defineProperty(BoxCollider.prototype, "width", {
             get: function () {
                 if (this.aabb) {
