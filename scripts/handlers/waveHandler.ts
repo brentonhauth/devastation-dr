@@ -2,23 +2,26 @@ module handlers {
 
     type VoidCallback = () => void;
     type NextWaveCallback = (waveID: number) => void;
+    type EnemyPool = { type: any, amount: number, enemies: math.Queue<objects.Enemy> };
 
     /**
      * TODO:
-     * - loop through waves and create a pool of all the required enemies
-     * - instantiate only the required amount per wave
-     * - use gameObject.Reset() to reset an enemy
-     * - On gameObject.Destroy(), remove object from scene, and store object in pool.
+     * - test...
+     * - Turn math.Queue into a better 'EnemyPool' system
      */
     export class WaveHandler {
+
         public currentWave: objects.Wave;
         private waves: objects.Wave[];
         private playScene: scenes.PlayScene;
         private hasStarted = false;
         private hasFinished = false;
+
         private m_onCompleteCb: VoidCallback;
         private m_onStartCb: VoidCallback;
         private m_onNextWaveCb: NextWaveCallback;
+
+        private enemyPools: Array<EnemyPool>;
 
         public get CompletedAllWaves(): boolean {
             return this.currentWave &&
@@ -34,6 +37,7 @@ module handlers {
         constructor(playScene: scenes.PlayScene) {
             this.playScene = playScene;
             this.waves = new Array<objects.Wave>();
+            this.enemyPools = new Array<EnemyPool>();
         }
         
         /**
@@ -64,13 +68,23 @@ module handlers {
             }
         }
 
+        public UpdateAndCheckCollision(against:objects.GameObject|objects.GameObject[]) {
+            if (!this.hasStarted || this.hasFinished) { return; }
+
+            if (!this.currentWave || this.currentWave.IsDone) {
+                this.NextWave();
+            } else {
+                this.currentWave.UpdateAndCheckCollision(against);
+            }
+        }
+
         private NextWave() {
             this.currentWave = this.waves.shift();
             if (this.currentWave) {
                 this.currentWave.Start();
 
                 if (typeof this.m_onNextWaveCb === 'function') {
-                    this.m_onNextWaveCb(3);
+                    this.m_onNextWaveCb(this.currentWave.id);
                 }
 
             } else if (this.waves.length === 0 && !this.hasFinished) { // is finished
@@ -97,10 +111,59 @@ module handlers {
             }
         }
 
-        public Add(...ws: objects.Wave[]) {
-            ws.forEach(w => {
-                w.playScene = this.playScene;
-                this.waves.push(w);
+        public Add(...waves: objects.Wave[]) {
+            waves.forEach(wave => {
+                wave.playScene = this.playScene;
+                this.waves.push(wave);
+            });
+        }
+
+        public TallyAmount(enemyAmount: objects.EnemyAmount) {
+            let foundPool = false;
+            this.enemyPools.forEach(pool => {
+                if (!foundPool && pool.type === enemyAmount.type) {
+                    if (pool.amount < enemyAmount.amount) {
+                        pool.amount = enemyAmount.amount;
+                    }
+                    foundPool = true;
+                }
+            });
+
+            if (!foundPool) {
+                this.enemyPools.push({
+                    type: enemyAmount.type,
+                    amount: enemyAmount.amount,
+                    enemies: new math.Queue<typeof enemyAmount.type>()
+                });
+            }
+        }
+
+        public AcquireFromPool(enemyAmount: objects.EnemyAmount): objects.Enemy[] {
+            let enemies: Array<objects.Enemy>;
+            for (let pool of this.enemyPools) {
+                if (pool.type === enemyAmount.type) {
+                    enemies = pool.enemies.pop(enemyAmount.amount);
+
+                    enemies.forEach(e => e.Reset());
+                    if (enemies.length < enemyAmount.amount) {
+                        let missing = enemyAmount.amount - enemies.length;
+                        for (let j = 0; j < missing; j++) {
+                            enemies.push(new pool.type());
+                        }
+                    }
+
+                    return enemies;
+                }
+            }
+            return [];
+        }
+
+        public Pool(enemy: objects.Enemy) {
+            let foundPool = false;
+            this.enemyPools.forEach(pool => {
+                if (!foundPool && enemy instanceof pool.type) {
+                    pool.enemies.push(enemy);
+                }
             });
         }
     }

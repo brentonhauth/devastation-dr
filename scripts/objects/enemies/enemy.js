@@ -72,9 +72,12 @@ var objects;
             }
         };
         Enemy.prototype.Destroy = function () {
-            var cw, scene = objects.Game.currentScene;
-            if (cw = scene.waveHandler.currentWave) {
-                cw.Remove(this);
+            var curWave, scene = objects.Game.currentScene;
+            if (curWave = scene.waveHandler.currentWave) {
+                if (this.animator) {
+                    this.animator.stop();
+                }
+                curWave.Remove(this);
             }
         };
         Enemy.prototype.Pool = function () { };

@@ -71,7 +71,7 @@ module objects {
         }
 
         private facePlayer() {
-            let diff = math.Vec2.Difference(this.position, this.playScene.player.position),
+            let diff = math.Vec2.Difference(this.playScene.player.position, this.position),
             face = diff.LiteralDirection;
 
             if (this.lastFacing !== face) {

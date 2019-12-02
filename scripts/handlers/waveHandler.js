@@ -2,10 +2,8 @@ var handlers;
 (function (handlers) {
     /**
      * TODO:
-     * - loop through waves and create a pool of all the required enemies
-     * - instantiate only the required amount per wave
-     * - use gameObject.Reset() to reset an enemy
-     * - On gameObject.Destroy(), remove object from scene, and store object in pool.
+     * - test...
+     * - Turn math.Queue into a better 'EnemyPool' system
      */
     var WaveHandler = /** @class */ (function () {
         function WaveHandler(playScene) {
@@ -13,6 +11,7 @@ var handlers;
             this.hasFinished = false;
             this.playScene = playScene;
             this.waves = new Array();
+            this.enemyPools = new Array();
         }
         Object.defineProperty(WaveHandler.prototype, "CompletedAllWaves", {
             get: function () {
@@ -57,12 +56,23 @@ var handlers;
                 this.currentWave.CheckCollision(against);
             }
         };
+        WaveHandler.prototype.UpdateAndCheckCollision = function (against) {
+            if (!this.hasStarted || this.hasFinished) {
+                return;
+            }
+            if (!this.currentWave || this.currentWave.IsDone) {
+                this.NextWave();
+            }
+            else {
+                this.currentWave.UpdateAndCheckCollision(against);
+            }
+        };
         WaveHandler.prototype.NextWave = function () {
             this.currentWave = this.waves.shift();
             if (this.currentWave) {
                 this.currentWave.Start();
                 if (typeof this.m_onNextWaveCb === 'function') {
-                    this.m_onNextWaveCb(3);
+                    this.m_onNextWaveCb(this.currentWave.id);
                 }
             }
             else if (this.waves.length === 0 && !this.hasFinished) { // is finished
@@ -87,13 +97,57 @@ var handlers;
         };
         WaveHandler.prototype.Add = function () {
             var _this = this;
-            var ws = [];
+            var waves = [];
             for (var _i = 0; _i < arguments.length; _i++) {
-                ws[_i] = arguments[_i];
+                waves[_i] = arguments[_i];
             }
-            ws.forEach(function (w) {
-                w.playScene = _this.playScene;
-                _this.waves.push(w);
+            waves.forEach(function (wave) {
+                wave.playScene = _this.playScene;
+                _this.waves.push(wave);
+            });
+        };
+        WaveHandler.prototype.TallyAmount = function (enemyAmount) {
+            var foundPool = false;
+            this.enemyPools.forEach(function (pool) {
+                if (!foundPool && pool.type === enemyAmount.type) {
+                    if (pool.amount < enemyAmount.amount) {
+                        pool.amount = enemyAmount.amount;
+                    }
+                    foundPool = true;
+                }
+            });
+            if (!foundPool) {
+                this.enemyPools.push({
+                    type: enemyAmount.type,
+                    amount: enemyAmount.amount,
+                    enemies: new math.Queue()
+                });
+            }
+        };
+        WaveHandler.prototype.AcquireFromPool = function (enemyAmount) {
+            var enemies;
+            for (var _i = 0, _a = this.enemyPools; _i < _a.length; _i++) {
+                var pool = _a[_i];
+                if (pool.type === enemyAmount.type) {
+                    enemies = pool.enemies.pop(enemyAmount.amount);
+                    enemies.forEach(function (e) { return e.Reset(); });
+                    if (enemies.length < enemyAmount.amount) {
+                        var missing = enemyAmount.amount - enemies.length;
+                        for (var j = 0; j < missing; j++) {
+                            enemies.push(new pool.type());
+                        }
+                    }
+                    return enemies;
+                }
+            }
+            return [];
+        };
+        WaveHandler.prototype.Pool = function (enemy) {
+            var foundPool = false;
+            this.enemyPools.forEach(function (pool) {
+                if (!foundPool && enemy instanceof pool.type) {
+                    pool.enemies.push(enemy);
+                }
             });
         };
         return WaveHandler;

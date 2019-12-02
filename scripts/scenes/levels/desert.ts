@@ -37,11 +37,11 @@ module scenes {
                 ),
 
                 new objects.Wave(
-                    new objects.Lizard()
+                    [objects.Lizard, 1]
                 ),
 
                 new objects.Wave(
-                    new objects.Turtle()
+                    [objects.Turtle, 1]
                 ),
 
                 new objects.Wave(
@@ -58,7 +58,9 @@ module scenes {
                     [objects.Lizard, 2]
                 ),
 
-                new objects.Wave(new objects.Camel()),
+                new objects.Wave(
+                    [objects.Camel, 1]
+                ),
 
             );
 

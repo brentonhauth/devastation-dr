@@ -23,7 +23,7 @@ module math {
             let magSq = (this.x * this.x) + (this.y * this.y);
 
             if (magSq === 1) {
-                return <Vec2>this.clone();
+                return new math.Vec2(this.x, this.y);
             } else if (magSq) {
                 let mag = Math.sqrt(magSq);
                 return new Vec2(this.x / mag, this.y / mag);

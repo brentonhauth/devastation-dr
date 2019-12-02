@@ -43,8 +43,9 @@ var scenes;
         PlayScene.prototype.Update = function () {
             this.background.Update();
             this.player.Update();
-            this.waveHandler.Update();
-            this.waveHandler.CheckCollision(this.player);
+            // this.waveHandler.Update();
+            // this.waveHandler.CheckCollision(this.player);
+            this.waveHandler.UpdateAndCheckCollision(this.player);
             this.enemyBulletHandler.UpdateAndCheckCollision(this.player);
             this.playerBulletHandler.UpdateAndCheckCollision(this.waveHandler.ActiveEnemies);
             this.enemyItemHandler.Update();

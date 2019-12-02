@@ -38,7 +38,7 @@ var scenes;
         ArcticScene.prototype.Main = function () {
             var _this = this;
             _super.prototype.Main.call(this);
-            this.waveHandler.Add(new objects.Wave([objects.Penguin, 2]), new objects.Wave([objects.Penguin, 3]), new objects.Wave([objects.Penguin, 5]), new objects.Wave([objects.Wolf, 5], [objects.Penguin, 3]), new objects.Wave(new objects.PolarBear()), new objects.Wave(new objects.PolarBear(), [objects.Penguin, 2]), new objects.Wave([objects.PolarBear, 3]), new objects.Wave([objects.Penguin, 4], [objects.Wolf, 5]), new objects.Wave([objects.Wolf, 5], [objects.Penguin, 4], [objects.PolarBear, 3]), new objects.Wave([objects.Wolf, 10], [objects.Penguin, 4], [objects.PolarBear, 5]));
+            this.waveHandler.Add(new objects.Wave([objects.Penguin, 2]), new objects.Wave([objects.Penguin, 3]), new objects.Wave([objects.Penguin, 5]), new objects.Wave([objects.Wolf, 5], [objects.Penguin, 3]), new objects.Wave([objects.PolarBear, 1]), new objects.Wave([objects.PolarBear, 1], [objects.Penguin, 2]), new objects.Wave([objects.PolarBear, 3]), new objects.Wave([objects.Penguin, 4], [objects.Wolf, 5]), new objects.Wave([objects.Wolf, 5], [objects.Penguin, 4], [objects.PolarBear, 3]), new objects.Wave([objects.Wolf, 10], [objects.Penguin, 4], [objects.PolarBear, 5]));
             this.waveHandler.on('complete', function () {
                 managers.Keyboard.disable();
                 _this.player.intangible = true;

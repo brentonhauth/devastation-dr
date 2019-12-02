@@ -36,9 +36,13 @@ module scenes {
 
             this.waveHandler.Add(
 
-                new objects.Wave(new objects.Spider()),
+                new objects.Wave(
+                    [objects.Spider, 1]
+                ),
 
-                new objects.Wave(new objects.Lizard()),
+                new objects.Wave(
+                    [objects.Lizard, 1]
+                ),
 
                 new objects.Wave(
                     [objects.Spider, 3],

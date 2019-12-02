@@ -65,7 +65,7 @@ var objects;
             }
         };
         PolarBear.prototype.facePlayer = function () {
-            var diff = math.Vec2.Difference(this.position, this.playScene.player.position), face = diff.LiteralDirection;
+            var diff = math.Vec2.Difference(this.playScene.player.position, this.position), face = diff.LiteralDirection;
             if (this.lastFacing !== face) {
                 this.animator.gotoAndPlay('idle_' + config.Direction[face]);
                 this.lastFacing = face;

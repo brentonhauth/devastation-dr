@@ -43,10 +43,12 @@ module scenes {
                     [objects.Penguin, 3]
                 ),
 
-                new objects.Wave(new objects.PolarBear()),
+                new objects.Wave(
+                    [objects.PolarBear, 1]
+                ),
 
                 new objects.Wave(
-                    new objects.PolarBear(),
+                    [objects.PolarBear, 1],
                     [objects.Penguin, 2]
                 ),
 

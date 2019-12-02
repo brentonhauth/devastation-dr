@@ -37,7 +37,7 @@ var scenes;
         };
         DesertScene.prototype.Main = function () {
             var _this = this;
-            this.waveHandler.Add(new objects.Wave([objects.Jackal, 3]), new objects.Wave(new objects.Lizard()), new objects.Wave(new objects.Turtle()), new objects.Wave([objects.Turtle, 2]), new objects.Wave([objects.Lizard, 2], [objects.Turtle, 1]), new objects.Wave([objects.Turtle, 2], [objects.Lizard, 2]), new objects.Wave(new objects.Camel()));
+            this.waveHandler.Add(new objects.Wave([objects.Jackal, 3]), new objects.Wave([objects.Lizard, 1]), new objects.Wave([objects.Turtle, 1]), new objects.Wave([objects.Turtle, 2]), new objects.Wave([objects.Lizard, 2], [objects.Turtle, 1]), new objects.Wave([objects.Turtle, 2], [objects.Lizard, 2]), new objects.Wave([objects.Camel, 1]));
             this.waveHandler.on('complete', function () {
                 _this.player.intangible = true;
                 managers.Keyboard.disable();

@@ -25,11 +25,15 @@ var objects;
             // this.position = pos;
             // this.x = pos.x;
             // this.y = pos.y;
-            _this.dir = math.Vec2.Difference(target, pos).Normalized;
+            _this.dir = math.Vec2.Direction(target, pos).ScaleEq(_this.speed);
             return _this;
         }
+        // NOTE: potential error here,
+        // I encountered it but wasn't able
+        // to find the exact cause.
+        // happened right after I added Wave Pooling.
         EnemyBullet.prototype.Update = function () {
-            this.position = this.position.Add(this.dir.Scale(this.speed));
+            this.position = this.position.Add(this.dir);
             this.CheckBound();
         };
         EnemyBullet.prototype.CheckBound = function () {

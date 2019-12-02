@@ -35,7 +35,7 @@ var math;
                 }
                 var magSq = (this.x * this.x) + (this.y * this.y);
                 if (magSq === 1) {
-                    return this.clone();
+                    return new math.Vec2(this.x, this.y);
                 }
                 else if (magSq) {
                     var mag = Math.sqrt(magSq);

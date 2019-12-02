@@ -1,22 +1,19 @@
-var __spreadArrays = (this && this.__spreadArrays) || function () {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
-};
 var objects;
 (function (objects) {
+    var WaveID = 0;
     var Wave = /** @class */ (function () {
         function Wave() {
             var enemies = [];
             for (var _i = 0; _i < arguments.length; _i++) {
                 enemies[_i] = arguments[_i];
             }
+            this.id = ++WaveID;
             this.enemies = new Array();
             this.behaviors = new Array();
-            this.Add.apply(this, enemies);
+            this.enemyAmounts = new Array();
             this.playScene = objects.Game.currentScene;
+            this.waveHandler = this.playScene.waveHandler;
+            this.Add.apply(this, enemies);
         }
         Object.defineProperty(Wave.prototype, "IsDone", {
             get: function () {
@@ -27,6 +24,11 @@ var objects;
         });
         Wave.prototype.Start = function () {
             var _this = this;
+            this.enemyAmounts.forEach(function (ea) {
+                var _a;
+                var fromPool = _this.waveHandler.AcquireFromPool(ea);
+                (_a = _this.enemies).push.apply(_a, fromPool);
+            });
             this.enemies.forEach(function (e) {
                 _this.playScene.addChild(e);
                 e.Start();
@@ -60,6 +62,37 @@ var objects;
             }
             this.enemies.forEach(check);
         };
+        Wave.prototype.UpdateAndCheckCollision = function (against) {
+            var _this = this;
+            var check;
+            if (Array.isArray(against)) {
+                check = function (e, index) {
+                    var pos = e.position;
+                    e.Update();
+                    _this.behaviors.forEach(function (behavior) {
+                        if (e instanceof behavior.type) {
+                            e.position = behavior.cb(pos.x, pos.y, index);
+                        }
+                    });
+                    against.forEach(function (obj) {
+                        managers.Collision.Check(obj, e);
+                    });
+                };
+            }
+            else {
+                check = function (e, index) {
+                    var pos = e.position;
+                    e.Update();
+                    _this.behaviors.forEach(function (behavior) {
+                        if (e instanceof behavior.type) {
+                            e.position = behavior.cb(pos.x, pos.y, index);
+                        }
+                    });
+                    managers.Collision.Check(against, e);
+                };
+            }
+            this.enemies.forEach(check);
+        };
         Wave.prototype.Add = function () {
             var _this = this;
             var enemies = [];
@@ -67,28 +100,41 @@ var objects;
                 enemies[_i] = arguments[_i];
             }
             enemies.forEach(function (e) {
-                if (Array.isArray(e)) {
-                    _this.AddAmount(e[0], e[1], e[2] || []);
-                }
-                else if (e instanceof objects.Enemy) {
-                    _this.enemies.push(e);
-                }
+                // if (Array.isArray(e)) {
+                _this.AddAmount(e[0], e[1], e[2] || []);
+                // } else if (e instanceof Enemy) {
+                //     this.enemies.push(e);
+                // }
             });
             return this;
         };
         Wave.prototype.AddAmount = function (type, amount, params) {
             if (params === void 0) { params = []; }
-            for (var i = 0; i < amount; i++) {
-                try {
-                    var e = new (type.bind.apply(type, __spreadArrays([void 0], params)))();
-                    if (e instanceof objects.Enemy) {
-                        this.enemies.push(e);
-                    }
-                }
-                catch (err) {
-                    console.log(err);
-                }
+            var existing = null;
+            if (amount <= 0) {
+                return;
             }
+            this.enemyAmounts.forEach(function (r) {
+                if (r.type == type) {
+                    r.amount += amount;
+                    existing = r;
+                }
+            });
+            if (!existing) {
+                existing = { type: type, amount: amount };
+                this.enemyAmounts.push(existing);
+            }
+            this.waveHandler.TallyAmount(existing);
+            // for (let i = 0; i < amount; i++) {
+            //     try {
+            //         let e = new type(...params);
+            //         if (e instanceof Enemy) {
+            //             this.enemies.push(e);
+            //         }
+            //     } catch (err) {
+            //         console.log(err);
+            //     }
+            // }
             return this;
         };
         Wave.prototype.Behavior = function (type, cb) {
