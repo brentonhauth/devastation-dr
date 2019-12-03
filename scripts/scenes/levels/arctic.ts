@@ -82,12 +82,15 @@ module scenes {
                     ["Hopefully that's the last of 'em.", 2], ["", 1],
                     ["Wait what's that in the distance?!", 3],
                     ["Whatever it is, it\ndoesn't look normal...", 3, ()=>this.ending=true],
-                    ["", 2.5],
-                    ["[  to be continued...  ]", 3, () => {
-                        objects.Game.currentState = config.Scene.START;
+                    ["", 3, () => {
+                        objects.Game.currentState = config.Scene.RETROWAVE;
                         managers.Keyboard.enable();
-                        managers.Sound.music(false);
-                    }]
+                    }],
+                    // ["[  to be continued...  ]", 3, () => {
+                    //     objects.Game.currentState = config.Scene.START;
+                    //     managers.Keyboard.enable();
+                    //     managers.Sound.music(false);
+                    // }]
                 );
             });
         }

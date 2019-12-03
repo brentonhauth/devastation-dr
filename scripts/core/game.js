@@ -87,6 +87,9 @@
             case config.Scene.ARCTIC:
                 currentScene = new scenes.ArcticScene();
                 break;
+            case config.Scene.RETROWAVE:
+                currentScene = new scenes.Retrowave();
+                break;
             // CUTSCENES
             case config.Scene.PROLOGUE:
                 currentScene = new scenes.Prologue();

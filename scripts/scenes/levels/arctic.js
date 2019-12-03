@@ -43,10 +43,9 @@ var scenes;
                 managers.Keyboard.disable();
                 _this.player.intangible = true;
                 _this.player.canLeaveBounds = true;
-                _this.dialogHandler.TriggerMany(["Hopefully that's the last of 'em.", 2], ["", 1], ["Wait what's that in the distance?!", 3], ["Whatever it is, it\ndoesn't look normal...", 3, function () { return _this.ending = true; }], ["", 2.5], ["[  to be continued...  ]", 3, function () {
-                        objects.Game.currentState = config.Scene.START;
+                _this.dialogHandler.TriggerMany(["Hopefully that's the last of 'em.", 2], ["", 1], ["Wait what's that in the distance?!", 3], ["Whatever it is, it\ndoesn't look normal...", 3, function () { return _this.ending = true; }], ["", 3, function () {
+                        objects.Game.currentState = config.Scene.RETROWAVE;
                         managers.Keyboard.enable();
-                        managers.Sound.music(false);
                     }]);
             });
         };

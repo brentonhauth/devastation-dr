@@ -24,6 +24,10 @@ module components {
                     walk_up: {
                         frames: [12, 13, 14, 15],
                         speed: .1
+                    },
+                    oscillate: {
+                        frames: [7, 8],
+                        speed: .025
                     }
                 }
             }));

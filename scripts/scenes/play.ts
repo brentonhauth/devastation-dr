@@ -18,7 +18,6 @@ module scenes {
 
         constructor() {
             super();
-            this.background = new objects.Background();
             this.player = new objects.Player(this);
 
             this.lifeCounter = new hud.LifeCounter();
@@ -32,6 +31,12 @@ module scenes {
             this.dialogHandler = new handlers.DialogHandler(this);
             this.waveHandler = new handlers.WaveHandler(this);
             this.enemyItemHandler = new handlers.EnemyItemHandler(this);
+
+            if (objects.Game.currentState === config.Scene.RETROWAVE) {
+                this.background = new objects.WaveBackground();
+            } else {
+                this.background = new objects.Background();
+            }
         }
 
         public Start(): void {

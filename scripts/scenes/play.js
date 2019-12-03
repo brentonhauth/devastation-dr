@@ -17,7 +17,6 @@ var scenes;
         __extends(PlayScene, _super);
         function PlayScene() {
             var _this = _super.call(this) || this;
-            _this.background = new objects.Background();
             _this.player = new objects.Player(_this);
             _this.lifeCounter = new hud.LifeCounter();
             _this.score = new hud.Score();
@@ -29,6 +28,12 @@ var scenes;
             _this.dialogHandler = new handlers.DialogHandler(_this);
             _this.waveHandler = new handlers.WaveHandler(_this);
             _this.enemyItemHandler = new handlers.EnemyItemHandler(_this);
+            if (objects.Game.currentState === config.Scene.RETROWAVE) {
+                _this.background = new objects.WaveBackground();
+            }
+            else {
+                _this.background = new objects.Background();
+            }
             return _this;
         }
         PlayScene.prototype.Start = function () {

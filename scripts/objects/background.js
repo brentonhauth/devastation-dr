@@ -26,7 +26,11 @@ var objects;
             _this.canvasH = objects.Game.canvas.height;
             _this.canvasW = objects.Game.canvas.width;
             var imgString = Background.getImageFromState(objects.Game.currentState);
-            _this.images.push(new createjs.Bitmap(objects.Game.getAsset(imgString)), new createjs.Bitmap(objects.Game.getAsset(imgString)));
+            var img = objects.Game.getAsset(imgString);
+            _this.images.push(new createjs.Bitmap(img), new createjs.Bitmap(img));
+            if (imgString === 'retrowave') {
+                _this.images.forEach(function (i) { return i.alpha = .7; });
+            }
             return _this;
         }
         Object.defineProperty(Background.prototype, "Speed", {
@@ -72,10 +76,12 @@ var objects;
                 img.y += _this.speedY;
                 if (img.y >= _this.canvasH) {
                     var img2 = _this.images[!!i ? 0 : 1];
-                    _this.removeChild(img, img2);
-                    _this.addChildAt(img, 0);
-                    _this.addChildAt(img2, 1);
-                    img.y = img2.y - _this.imageHeight + _this.overlap;
+                    // this.removeChild(img, img2);
+                    // this.addChildAt(img, 0);
+                    // this.addChildAt(img2, 1);
+                    // this.addChildAt(img, img2, 1);
+                    img.y = img2.y;
+                    img2.y = img.y - _this.imageHeight + _this.overlap;
                 }
             });
             // this.Move();

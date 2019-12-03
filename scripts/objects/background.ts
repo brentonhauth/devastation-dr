@@ -3,8 +3,8 @@ module objects {
         // Variables
         private speedY: number;  // Speed of background scrolling on Y-axis
         private images: createjs.Bitmap[];
-        private canvasW: number;
-        private canvasH: number;
+        protected canvasW: number;
+        protected canvasH: number;
         private imageHeight: number;
         private overlap: number = 0;
         private hasStarted: boolean = false;
@@ -34,10 +34,15 @@ module objects {
             this.canvasW = objects.Game.canvas.width;
 
             let imgString = Background.getImageFromState(objects.Game.currentState);
+            let img = objects.Game.getAsset(imgString);
             this.images.push(
-                new createjs.Bitmap(objects.Game.getAsset(imgString)),
-                new createjs.Bitmap(objects.Game.getAsset(imgString))
+                new createjs.Bitmap(img),
+                new createjs.Bitmap(img)
             );
+
+            if (imgString === 'retrowave') {
+                this.images.forEach(i => i.alpha = .7);
+            }
         }
         // Functions 
         // Initializing our variables with default values
@@ -67,10 +72,12 @@ module objects {
                 img.y += this.speedY;
                 if (img.y >= this.canvasH) {
                     let img2 = this.images[!!i?0:1];
-                    this.removeChild(img, img2);
-                    this.addChildAt(img, 0);
-                    this.addChildAt(img2, 1);
-                    img.y = img2.y - this.imageHeight + this.overlap;
+                    // this.removeChild(img, img2);
+                    // this.addChildAt(img, 0);
+                    // this.addChildAt(img2, 1);
+                    // this.addChildAt(img, img2, 1);
+                    img.y = img2.y;
+                    img2.y = img.y - this.imageHeight + this.overlap;
                 }
             });
 

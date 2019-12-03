@@ -16,6 +16,8 @@ var config;
             { id: "arctic", src: "./assets/images/backgrounds/winter2.png" },
             { id: "jungle", src: "./assets/images/backgrounds/Jungle-3.jpg" },
             { id: "retrowave", src: "./assets/images/backgrounds/grid2.png" },
+            { id: "abyss", src: "./assets/images/backgrounds/abyss.jpg" },
+            { id: "abyss2", src: "./assets/images/backgrounds/abyss2.jpg" },
             { id: "player", src: "./assets/images/car.png" },
             // { id: "enemy", src: "./assets/images/ship.png" },
             // { id: "basicEnemy", src: "./assets/images/enemy.png" },
@@ -54,6 +56,7 @@ var config;
             { id: "reload", src: "./assets/sounds/reload.mp3" },
             { id: "spitVenom", src: "./assets/sounds/spitVenom.mp3" },
             { id: "camelSpit", src: "./assets/sounds/camelSpit.mp3" },
+            { id: "monsterGrowl", src: "./assets/sounds/monsterGrowl.mp3" },
         ];
     }
     config.getManifest = getManifest;
