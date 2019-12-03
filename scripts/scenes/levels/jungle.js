@@ -18,12 +18,12 @@ var scenes;
         function JungleScene() {
             var _this = _super.call(this) || this;
             _this.ending = false;
+            _this.background.Overlap = 10;
             return _this;
         }
         JungleScene.prototype.Start = function () {
             var _this = this;
             _super.prototype.Start.call(this);
-            this.background.Overlap = 10;
             if (!managers.Sound.isPlayingMusic) {
                 managers.Sound.music("cyberpunker");
             }

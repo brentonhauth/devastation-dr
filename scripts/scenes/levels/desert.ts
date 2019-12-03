@@ -5,6 +5,7 @@ module scenes {
 
         constructor() {
             super();
+            this.background.Overlap = 20;
         }
 
         public Start() {

@@ -5,9 +5,9 @@ module objects {
         private images: createjs.Bitmap[];
         private canvasW: number;
         private canvasH: number;
-        private imageWidth: number;
         private imageHeight: number;
-        private overlap: number;
+        private overlap: number = 0;
+        private hasStarted: boolean = false;
 
 
         public set Speed(value: number) {
@@ -20,18 +20,19 @@ module objects {
 
         public set Overlap(value: number) {
             this.overlap = value;
-            // this.Reset();
+            if (this.hasStarted) {
+                this.Reset();
+            }
         }
 
         // Constructor
-        constructor(overlap=0, speed=1.5) {
+        constructor(speed=1.5) {
             super();
             this.images = new Array<createjs.Bitmap>();
             this.speedY = speed;
             this.canvasH = objects.Game.canvas.height;
             this.canvasW = objects.Game.canvas.width;
 
-            this.overlap = Background.getOverlapFromState(objects.Game.currentState);
             let imgString = Background.getImageFromState(objects.Game.currentState);
             this.images.push(
                 new createjs.Bitmap(objects.Game.getAsset(imgString)),
@@ -41,6 +42,9 @@ module objects {
         // Functions 
         // Initializing our variables with default values
         public Start(): void {
+
+            this.hasStarted = true;
+
             let bounds = this.images[0].getBounds();
             let scale = this.canvasW / (bounds.width || 1);
 
@@ -52,7 +56,6 @@ module objects {
                 this.addChild(img);
             });
 
-            this.imageWidth = bounds.width * scale;
             this.imageHeight = bounds.height * scale;
 
             this.Reset();
@@ -87,17 +90,17 @@ module objects {
             }
         }
 
-        // Temporary Method
-        private static getOverlapFromState(state: config.Scene) {
-            switch (state) {
-                case config.Scene.JUNGLE:
-                    return 10;
-                case config.Scene.DESERT:
-                    return 20;
-                case config.Scene.ARCTIC:
-                    return 104;
-            }
-        }
+        // // Temporary Method
+        // private static getOverlapFromState(state: config.Scene) {
+        //     switch (state) {
+        //         case config.Scene.JUNGLE:
+        //             return 10;
+        //         case config.Scene.DESERT:
+        //             return 20;
+        //         case config.Scene.ARCTIC:
+        //             return 104;
+        //     }
+        // }
 
         private static getImageFromState(state: config.Scene) {
             switch (state) {
@@ -107,6 +110,8 @@ module objects {
                     return 'desert';
                 case config.Scene.ARCTIC:
                     return 'arctic';
+                case config.Scene.RETROWAVE:
+                    return 'retrowave';
             }
         }
     }

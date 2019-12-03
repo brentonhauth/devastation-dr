@@ -5,12 +5,11 @@ module scenes {
 
         constructor() {
             super();
+            this.background.Overlap = 10;
         }
 
         public Start() {
             super.Start();
-
-            this.background.Overlap = 10;
 
             if (!managers.Sound.isPlayingMusic) {
                 managers.Sound.music("cyberpunker");

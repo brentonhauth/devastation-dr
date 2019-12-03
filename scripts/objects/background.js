@@ -16,15 +16,15 @@ var objects;
     var Background = /** @class */ (function (_super) {
         __extends(Background, _super);
         // Constructor
-        function Background(overlap, speed) {
-            if (overlap === void 0) { overlap = 0; }
+        function Background(speed) {
             if (speed === void 0) { speed = 1.5; }
             var _this = _super.call(this) || this;
+            _this.overlap = 0;
+            _this.hasStarted = false;
             _this.images = new Array();
             _this.speedY = speed;
             _this.canvasH = objects.Game.canvas.height;
             _this.canvasW = objects.Game.canvas.width;
-            _this.overlap = Background.getOverlapFromState(objects.Game.currentState);
             var imgString = Background.getImageFromState(objects.Game.currentState);
             _this.images.push(new createjs.Bitmap(objects.Game.getAsset(imgString)), new createjs.Bitmap(objects.Game.getAsset(imgString)));
             return _this;
@@ -42,7 +42,9 @@ var objects;
         Object.defineProperty(Background.prototype, "Overlap", {
             set: function (value) {
                 this.overlap = value;
-                // this.Reset();
+                if (this.hasStarted) {
+                    this.Reset();
+                }
             },
             enumerable: true,
             configurable: true
@@ -51,6 +53,7 @@ var objects;
         // Initializing our variables with default values
         Background.prototype.Start = function () {
             var _this = this;
+            this.hasStarted = true;
             var bounds = this.images[0].getBounds();
             var scale = this.canvasW / (bounds.width || 1);
             scale = Number(scale.toFixed(3));
@@ -59,7 +62,6 @@ var objects;
                 img.scaleX = img.scaleY = scale;
                 _this.addChild(img);
             });
-            this.imageWidth = bounds.width * scale;
             this.imageHeight = bounds.height * scale;
             this.Reset();
         };
@@ -90,17 +92,17 @@ var objects;
                 this.Reset();
             }
         };
-        // Temporary Method
-        Background.getOverlapFromState = function (state) {
-            switch (state) {
-                case config.Scene.JUNGLE:
-                    return 10;
-                case config.Scene.DESERT:
-                    return 20;
-                case config.Scene.ARCTIC:
-                    return 104;
-            }
-        };
+        // // Temporary Method
+        // private static getOverlapFromState(state: config.Scene) {
+        //     switch (state) {
+        //         case config.Scene.JUNGLE:
+        //             return 10;
+        //         case config.Scene.DESERT:
+        //             return 20;
+        //         case config.Scene.ARCTIC:
+        //             return 104;
+        //     }
+        // }
         Background.getImageFromState = function (state) {
             switch (state) {
                 case config.Scene.JUNGLE:
@@ -109,6 +111,8 @@ var objects;
                     return 'desert';
                 case config.Scene.ARCTIC:
                     return 'arctic';
+                case config.Scene.RETROWAVE:
+                    return 'retrowave';
             }
         };
         return Background;

@@ -18,6 +18,7 @@ var scenes;
         function DesertScene() {
             var _this = _super.call(this) || this;
             _this.ending = false;
+            _this.background.Overlap = 20;
             return _this;
         }
         DesertScene.prototype.Start = function () {

@@ -18,12 +18,12 @@ var scenes;
         function ArcticScene() {
             var _this = _super.call(this) || this;
             _this.ending = false;
+            _this.background.Overlap = 104;
             return _this;
         }
         ArcticScene.prototype.Start = function () {
             var _this = this;
             _super.prototype.Start.call(this);
-            this.background.Overlap = 104;
             if (!managers.Sound.isPlayingMusic) {
                 managers.Sound.music("cyberpunker");
             }
