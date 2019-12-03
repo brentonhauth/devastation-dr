@@ -29,7 +29,6 @@ module objects {
             this.weapon = new objects.Pistol(playScene);
             this.Init();
             this.addChild(this.sprite);
-            this.Start();
         }
         // Methods
         public Start(): void {

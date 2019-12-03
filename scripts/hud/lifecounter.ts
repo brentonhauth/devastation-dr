@@ -6,7 +6,7 @@ module hud {
 
         constructor() {
             super();
-            this.counterText = new ui.Label("Lives: 3", "20px", "Consolas", "#FFFFFF", 80, 30, true);
+            this.counterText = new ui.Label("", "20px", "Consolas", "#FFFFFF", 80, 30, true);
             this.addChild(this.counterText);
             //this.counterImage = new createjs.Bitmap();
         }

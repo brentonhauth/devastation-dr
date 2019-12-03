@@ -6,14 +6,14 @@ var handlers;
      *  - Useful in pausing is ever implemented.
      */
     var DialogHandler = /** @class */ (function () {
+        // private outline: createjs.Shape;
         function DialogHandler(playScene) {
             this.playScene = playScene;
             this.queue = new Array();
-            this.dialogBox = new ui.Label("", "24px", "Arial", "#1d1d1d", 300, 500);
+            this.dialogBox = new ui.Label("", "24px", "Arial", "#1d1d1d", objects.Game.canvas.width * .5, objects.Game.canvas.height * .9, true);
             this.dialogBox.visible = false;
         }
         DialogHandler.prototype.Trigger = function (text, delay, cb) {
-            if (cb === void 0) { cb = undefined; }
             this.queue.push({ text: text, delay: delay, cb: cb });
             if (!this.dialogBox.visible) {
                 this.ShowNext();
@@ -26,9 +26,7 @@ var handlers;
                 dialog[_i] = arguments[_i];
             }
             dialog.forEach(function (d) {
-                if (Array.isArray(d)) {
-                    _this.Trigger(d[0], d[1], d[2]);
-                }
+                _this.Trigger(d[0], d[1], d[2]);
             });
         };
         DialogHandler.prototype.ShowNext = function () {
@@ -36,16 +34,15 @@ var handlers;
             var current = this.queue.shift();
             this.dialogBox.visible = true;
             this.dialogBox.text = current.text;
+            this.dialogBox.Center();
             setTimeout(function () {
                 if (_this.queue.length > 0) {
                     requestAnimationFrame(_this.ShowNext.bind(_this));
-                    // this.ShowNext();
                 }
                 else {
                     requestAnimationFrame(_this.Clear.bind(_this));
-                    // this.Clear();
                 }
-                if (typeof current.cb === "function") {
+                if (current.cb) {
                     current.cb();
                 }
             }, current.delay * 1000);

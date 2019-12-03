@@ -1,9 +1,9 @@
 var handlers;
 (function (handlers) {
+    // type EnemyPool = { type: any, amount: number, enemies: math.Queue<objects.Enemy> };
     /**
      * TODO:
      * - test...
-     * - Turn math.Queue into a better 'EnemyPool' system
      */
     var WaveHandler = /** @class */ (function () {
         function WaveHandler(playScene) {
@@ -36,7 +36,7 @@ var handlers;
         WaveHandler.prototype.Start = function () {
             this.hasStarted = true;
             this.NextWave();
-            if (typeof this.m_onStartCb === 'function') {
+            if (this.m_onStartCb) {
                 this.m_onStartCb();
             }
         };
@@ -71,13 +71,13 @@ var handlers;
             this.currentWave = this.waves.shift();
             if (this.currentWave) {
                 this.currentWave.Start();
-                if (typeof this.m_onNextWaveCb === 'function') {
+                if (this.m_onNextWaveCb) {
                     this.m_onNextWaveCb(this.currentWave.id);
                 }
             }
             else if (this.waves.length === 0 && !this.hasFinished) { // is finished
                 this.hasFinished = true;
-                if (typeof this.m_onCompleteCb === 'function') {
+                if (this.m_onCompleteCb) {
                     this.m_onCompleteCb();
                 }
             }
@@ -110,18 +110,14 @@ var handlers;
             var foundPool = false;
             this.enemyPools.forEach(function (pool) {
                 if (!foundPool && pool.type === enemyAmount.type) {
-                    if (pool.amount < enemyAmount.amount) {
-                        pool.amount = enemyAmount.amount;
+                    if (pool.limit < enemyAmount.amount) {
+                        pool.limit = enemyAmount.amount;
                     }
                     foundPool = true;
                 }
             });
             if (!foundPool) {
-                this.enemyPools.push({
-                    type: enemyAmount.type,
-                    amount: enemyAmount.amount,
-                    enemies: new math.Queue()
-                });
+                this.enemyPools.push(new math.Pool(enemyAmount.type, enemyAmount.amount));
             }
         };
         WaveHandler.prototype.AcquireFromPool = function (enemyAmount) {
@@ -129,13 +125,12 @@ var handlers;
             for (var _i = 0, _a = this.enemyPools; _i < _a.length; _i++) {
                 var pool = _a[_i];
                 if (pool.type === enemyAmount.type) {
-                    enemies = pool.enemies.pop(enemyAmount.amount);
+                    enemies = pool.pop(enemyAmount.amount);
                     enemies.forEach(function (e) { return e.Reset(); });
                     if (enemies.length < enemyAmount.amount) {
-                        var missing = enemyAmount.amount - enemies.length;
-                        for (var j = 0; j < missing; j++) {
-                            enemies.push(new pool.type());
-                        }
+                        var missingAmount = enemyAmount.amount - enemies.length;
+                        var missing = pool.More(missingAmount);
+                        enemies.push.apply(enemies, missing);
                     }
                     return enemies;
                 }
@@ -146,7 +141,7 @@ var handlers;
             var foundPool = false;
             this.enemyPools.forEach(function (pool) {
                 if (!foundPool && enemy instanceof pool.type) {
-                    pool.enemies.push(enemy);
+                    pool.push(enemy);
                 }
             });
         };

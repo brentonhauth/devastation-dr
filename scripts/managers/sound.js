@@ -75,7 +75,10 @@ var managers;
             var sfx, vol = Sound.sfxVol * Sound.masterVol;
             if (Sound.sfxMap[id]) {
                 Sound.sfxMap[id].volume = vol;
-                sfx = Sound.sfxMap[id].play();
+                sfx = Sound.sfxMap[id];
+                if (sfx.playState === 'playFinished') {
+                    sfx.play();
+                }
             }
             else {
                 Sound.sfxMap[id] = sfx = createjs.Sound.play(id);

@@ -53,7 +53,7 @@ var objects;
         */
         Lizard.prototype.Update = function () {
             this.Move();
-            if (createjs.Ticker.getTicks() % 2) {
+            if (this.y >= 0 && this.y <= objects.Game.canvas.height) {
                 this.SpawnBullet();
             }
         };
@@ -66,7 +66,11 @@ var objects;
             this.position = new math.Vec2(x, y);
         };
         Lizard.prototype.SpawnBullet = function () {
-            if (math.oneIn(15)) {
+            if (createjs.Ticker.getTicks() % 3) {
+                return;
+            }
+            if (math.oneIn(10)) {
+                managers.Sound.sfx('spitVenom');
                 this.playScene.AddEnemyBullet(this);
             }
         };

@@ -41,13 +41,6 @@ module objects {
 
             this.direction = diff.ScaleEq(Wolf.moveSpeed);
 
-            // let anim = "move_down";
-            // if (Math.abs(diff.x) > Math.abs(diff.y)) {
-            //     anim = diff.x > 0 ? "move_right" : "move_left";
-            // } else {
-            //     anim = diff.y > 0 ? "move_down" : "move_up";
-            // }
-
             this.animator.gotoAndPlay('move_Down');
         }
 

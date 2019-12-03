@@ -15,8 +15,8 @@ module config {
             { id: "arctic", src: "./assets/images/winter2.png" },
             { id: "jungle", src: "./assets/images/Jungle-3.jpg" }, // "./assets/images/background.png"
             { id: "player", src: "./assets/images/car.png" },
-            { id: "enemy", src: "./assets/images/ship.png" },
-            { id: "basicEnemy", src: "./assets/images/enemy.png" },
+            // { id: "enemy", src: "./assets/images/ship.png" },
+            // { id: "basicEnemy", src: "./assets/images/enemy.png" },
             { id: "spider", src: "./assets/images/spider1.png" },
             { id: "playerSheet", src: "./assets/images/sheets/player_sheet112x146.png" },
             { id: "hummer", src: "./assets/images/hummer.png" },
@@ -58,7 +58,9 @@ module config {
             // Sounds
             { id: "explosion", src: "./assets/sounds/explosion.wav" },
             { id: "cyberpunker", src: "./assets/sounds/cyberpunker.ogg" },
-            { id: "reload", src: "./assets/sounds/reload.mp3" }
+            { id: "reload", src: "./assets/sounds/reload.mp3" },
+            { id: "spitVenom", src: "./assets/sounds/spitVenom.mp3" },
+            { id: "camelSpit", src: "./assets/sounds/camelSpit.mp3" },
         ];
     }
 }

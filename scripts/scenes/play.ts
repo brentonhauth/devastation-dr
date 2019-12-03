@@ -41,8 +41,13 @@ module scenes {
             this.addChild(this.lifeCounter);
             this.addChild(this.score);
             this.addChild(this.weaponHUD);
-            
+
             this.dialogHandler.AppendDialogBox();
+
+            this.background.Start();
+            this.player.Start();
+
+            this.lifeCounter.text(this.player.lives);
 
             this.Main();
         }

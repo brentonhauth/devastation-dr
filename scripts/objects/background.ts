@@ -34,12 +34,9 @@ module objects {
             this.overlap = Background.getOverlapFromState(objects.Game.currentState);
             let imgString = Background.getImageFromState(objects.Game.currentState);
             this.images.push(
-                new createjs.Bitmap(objects.Game.assetManager.getResult(imgString)),
-                new createjs.Bitmap(objects.Game.assetManager.getResult(imgString))
+                new createjs.Bitmap(objects.Game.getAsset(imgString)),
+                new createjs.Bitmap(objects.Game.getAsset(imgString))
             );
-
-
-            this.Start();
         }
         // Functions 
         // Initializing our variables with default values

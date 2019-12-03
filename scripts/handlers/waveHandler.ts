@@ -2,12 +2,11 @@ module handlers {
 
     type VoidCallback = () => void;
     type NextWaveCallback = (waveID: number) => void;
-    type EnemyPool = { type: any, amount: number, enemies: math.Queue<objects.Enemy> };
+    // type EnemyPool = { type: any, amount: number, enemies: math.Queue<objects.Enemy> };
 
     /**
      * TODO:
      * - test...
-     * - Turn math.Queue into a better 'EnemyPool' system
      */
     export class WaveHandler {
 
@@ -21,7 +20,7 @@ module handlers {
         private m_onStartCb: VoidCallback;
         private m_onNextWaveCb: NextWaveCallback;
 
-        private enemyPools: Array<EnemyPool>;
+        private enemyPools: Array<math.Pool<objects.Enemy>>;
 
         public get CompletedAllWaves(): boolean {
             return this.currentWave &&
@@ -37,7 +36,7 @@ module handlers {
         constructor(playScene: scenes.PlayScene) {
             this.playScene = playScene;
             this.waves = new Array<objects.Wave>();
-            this.enemyPools = new Array<EnemyPool>();
+            this.enemyPools = new Array<math.Pool<objects.Enemy>>();
         }
         
         /**
@@ -47,7 +46,7 @@ module handlers {
             this.hasStarted = true;
             this.NextWave();
 
-            if (typeof this.m_onStartCb === 'function') {
+            if (this.m_onStartCb) {
                 this.m_onStartCb();
             }
         }
@@ -83,14 +82,14 @@ module handlers {
             if (this.currentWave) {
                 this.currentWave.Start();
 
-                if (typeof this.m_onNextWaveCb === 'function') {
+                if (this.m_onNextWaveCb) {
                     this.m_onNextWaveCb(this.currentWave.id);
                 }
 
             } else if (this.waves.length === 0 && !this.hasFinished) { // is finished
                 this.hasFinished = true;
 
-                if (typeof this.m_onCompleteCb === 'function') {
+                if (this.m_onCompleteCb) {
                     this.m_onCompleteCb();
                 }
 
@@ -122,19 +121,15 @@ module handlers {
             let foundPool = false;
             this.enemyPools.forEach(pool => {
                 if (!foundPool && pool.type === enemyAmount.type) {
-                    if (pool.amount < enemyAmount.amount) {
-                        pool.amount = enemyAmount.amount;
+                    if (pool.limit < enemyAmount.amount) {
+                        pool.limit = enemyAmount.amount;
                     }
                     foundPool = true;
                 }
             });
 
             if (!foundPool) {
-                this.enemyPools.push({
-                    type: enemyAmount.type,
-                    amount: enemyAmount.amount,
-                    enemies: new math.Queue<typeof enemyAmount.type>()
-                });
+                this.enemyPools.push(new math.Pool(enemyAmount.type, enemyAmount.amount));
             }
         }
 
@@ -142,14 +137,14 @@ module handlers {
             let enemies: Array<objects.Enemy>;
             for (let pool of this.enemyPools) {
                 if (pool.type === enemyAmount.type) {
-                    enemies = pool.enemies.pop(enemyAmount.amount);
+                    enemies = pool.pop(enemyAmount.amount);
 
                     enemies.forEach(e => e.Reset());
+
                     if (enemies.length < enemyAmount.amount) {
-                        let missing = enemyAmount.amount - enemies.length;
-                        for (let j = 0; j < missing; j++) {
-                            enemies.push(new pool.type());
-                        }
+                        let missingAmount = enemyAmount.amount - enemies.length;
+                        let missing = pool.More(missingAmount);
+                        enemies.push(...missing);
                     }
 
                     return enemies;
@@ -162,7 +157,7 @@ module handlers {
             let foundPool = false;
             this.enemyPools.forEach(pool => {
                 if (!foundPool && enemy instanceof pool.type) {
-                    pool.enemies.push(enemy);
+                    pool.push(enemy);
                 }
             });
         }

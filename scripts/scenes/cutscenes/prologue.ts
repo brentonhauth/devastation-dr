@@ -27,7 +27,7 @@ module scenes {
 
             this.counterPoint = new math.Vec2(56, 65).ScaleEq(this.storeScale).Add(this.storePos);
             this.doorPoint = new math.Vec2(74, 119).ScaleEq(this.storeScale).Add(this.storePos);
-            console.log('Counter Point', this.counterPoint, '\nDoor', this.doorPoint)
+            // console.log('Counter Point', this.counterPoint, '\nDoor', this.doorPoint)
             this.dir = math.Vec2.Direction(this.doorPoint, this.counterPoint).ScaleEq(5);
 
 

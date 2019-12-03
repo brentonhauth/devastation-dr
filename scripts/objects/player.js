@@ -32,7 +32,6 @@ var objects;
             _this.weapon = new objects.Pistol(playScene);
             _this.Init();
             _this.addChild(_this.sprite);
-            _this.Start();
             return _this;
         }
         // Methods

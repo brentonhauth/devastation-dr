@@ -6,6 +6,7 @@ module config {
         JUNGLE,
         DESERT,
         ARCTIC,
+        RETROWAVE,
         PROLOGUE
     }
 }

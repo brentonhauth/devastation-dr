@@ -26,8 +26,7 @@ var objects;
             _this.canvasW = objects.Game.canvas.width;
             _this.overlap = Background.getOverlapFromState(objects.Game.currentState);
             var imgString = Background.getImageFromState(objects.Game.currentState);
-            _this.images.push(new createjs.Bitmap(objects.Game.assetManager.getResult(imgString)), new createjs.Bitmap(objects.Game.assetManager.getResult(imgString)));
-            _this.Start();
+            _this.images.push(new createjs.Bitmap(objects.Game.getAsset(imgString)), new createjs.Bitmap(objects.Game.getAsset(imgString)));
             return _this;
         }
         Object.defineProperty(Background.prototype, "Speed", {

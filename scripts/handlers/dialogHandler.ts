@@ -1,7 +1,7 @@
 module handlers {
 
-    type DialogArg = [string, number, Function?];
-    type Dialog = { text: string, delay: number, cb?: Function };
+    type DialogArg = [string, number, (()=>void)?];
+    type Dialog = { text: string, delay: number, cb?: ()=>void };
 
     /**
      * TODO:
@@ -14,15 +14,20 @@ module handlers {
 
         private queue: Dialog[];
         private dialogBox: ui.Label;
+        // private outline: createjs.Shape;
 
         constructor(playScene: scenes.Scene) {
             this.playScene = playScene;
             this.queue = new Array<Dialog>();
-            this.dialogBox = new ui.Label("", "24px", "Arial", "#1d1d1d", 300, 500);
+            this.dialogBox = new ui.Label(
+                "", "24px", "Arial", "#1d1d1d",
+                objects.Game.canvas.width * .5,
+                objects.Game.canvas.height * .9, true
+            );
             this.dialogBox.visible = false;
         }
 
-        public Trigger(text: string, delay: number, cb:Function=undefined) {
+        public Trigger(text: string, delay: number, cb?:()=>void) {
 
             this.queue.push({ text, delay, cb });
 
@@ -33,9 +38,7 @@ module handlers {
 
         public TriggerMany(...dialog: DialogArg[]) {
             dialog.forEach(d => {
-                if (Array.isArray(d)) {
-                    this.Trigger(d[0], d[1], d[2]);
-                }
+                this.Trigger(d[0], d[1], d[2]);
             });
         }
 
@@ -46,16 +49,16 @@ module handlers {
 
             this.dialogBox.text = current.text;
 
+            this.dialogBox.Center();
+
             setTimeout(() => {
                 if (this.queue.length > 0) {
                     requestAnimationFrame(this.ShowNext.bind(this));
-                    // this.ShowNext();
                 } else {
                     requestAnimationFrame(this.Clear.bind(this));
-                    // this.Clear();
                 }
 
-                if (typeof current.cb === "function") {
+                if (current.cb) {
                     current.cb();
                 }
             }, current.delay * 1000);

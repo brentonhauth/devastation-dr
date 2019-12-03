@@ -24,7 +24,7 @@ var scenes;
             _this.storePos = new math.Vec2(100, 100);
             _this.counterPoint = new math.Vec2(56, 65).ScaleEq(_this.storeScale).Add(_this.storePos);
             _this.doorPoint = new math.Vec2(74, 119).ScaleEq(_this.storeScale).Add(_this.storePos);
-            console.log('Counter Point', _this.counterPoint, '\nDoor', _this.doorPoint);
+            // console.log('Counter Point', this.counterPoint, '\nDoor', this.doorPoint)
             _this.dir = math.Vec2.Direction(_this.doorPoint, _this.counterPoint).ScaleEq(5);
             _this.dialogHandler = new handlers.DialogHandler(_this);
             _this.playerAnimator = new components.PlayerAnimator();

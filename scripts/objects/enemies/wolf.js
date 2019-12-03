@@ -40,12 +40,6 @@ var objects;
             var moveTo = new math.Vec2(this.spawn.x, 700);
             var diff = math.Vec2.Direction(moveTo, this.spawn);
             this.direction = diff.ScaleEq(Wolf.moveSpeed);
-            // let anim = "move_down";
-            // if (Math.abs(diff.x) > Math.abs(diff.y)) {
-            //     anim = diff.x > 0 ? "move_right" : "move_left";
-            // } else {
-            //     anim = diff.y > 0 ? "move_down" : "move_up";
-            // }
             this.animator.gotoAndPlay('move_Down');
         };
         Wolf.prototype.Update = function () {

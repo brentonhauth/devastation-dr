@@ -135,6 +135,7 @@ module objects {
                     this.playScene.dialogHandler.Trigger('What is that?!', 2.5);
                     managers.Sound.music(true);
                 }
+                managers.Sound.sfx('camelSpit');
                 if (this.currentAttack === CamelAttack.Oscillate) {
                     this.animator.gotoAndPlay('oscillate');
                 } else {

@@ -80,7 +80,10 @@ module managers {
             vol = Sound.sfxVol * Sound.masterVol;
             if (Sound.sfxMap[id]) {
                 (<createjs.AbstractSoundInstance>Sound.sfxMap[id]).volume = vol;
-                sfx = (<createjs.AbstractSoundInstance>Sound.sfxMap[id]).play();
+                sfx = <createjs.AbstractSoundInstance>Sound.sfxMap[id];
+                if (sfx.playState === 'playFinished') {
+                    sfx.play();
+                }
             } else {
                 Sound.sfxMap[id] = sfx = createjs.Sound.play(id);
                 sfx.volume = vol;

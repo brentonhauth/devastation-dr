@@ -11,22 +11,17 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var hud;
-(function (hud) {
-    var LifeCounter = /** @class */ (function (_super) {
-        __extends(LifeCounter, _super);
-        function LifeCounter() {
+var scenes;
+(function (scenes) {
+    var Cutscene1 = /** @class */ (function (_super) {
+        __extends(Cutscene1, _super);
+        function Cutscene1() {
             var _this = _super.call(this) || this;
-            _this.counterText = new ui.Label("", "20px", "Consolas", "#FFFFFF", 80, 30, true);
-            _this.addChild(_this.counterText);
+            _this.playerAnimator = new components.PlayerAnimator();
             return _this;
-            //this.counterImage = new createjs.Bitmap();
         }
-        LifeCounter.prototype.text = function (t) {
-            this.counterText.text = "lives: " + t;
-        };
-        return LifeCounter;
-    }(createjs.Container));
-    hud.LifeCounter = LifeCounter;
-})(hud || (hud = {}));
-//# sourceMappingURL=lifecounter.js.map
+        return Cutscene1;
+    }(scenes.Scene));
+    scenes.Cutscene1 = Cutscene1;
+})(scenes || (scenes = {}));
+//# sourceMappingURL=cutscene1.js.map
