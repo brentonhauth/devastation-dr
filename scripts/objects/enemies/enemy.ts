@@ -68,8 +68,8 @@ module objects {
         }
 
         public Destroy() {
-            let curWave:objects.Wave, scene = <scenes.PlayScene>objects.Game.currentScene;
-            if (curWave=scene.waveHandler.currentWave) {
+            let curWave:objects.Wave;
+            if (curWave=this.playScene.waveHandler.currentWave) {
 
                 if (this.animator) {
                     this.animator.stop();

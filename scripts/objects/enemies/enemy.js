@@ -72,8 +72,8 @@ var objects;
             }
         };
         Enemy.prototype.Destroy = function () {
-            var curWave, scene = objects.Game.currentScene;
-            if (curWave = scene.waveHandler.currentWave) {
+            var curWave;
+            if (curWave = this.playScene.waveHandler.currentWave) {
                 if (this.animator) {
                     this.animator.stop();
                 }

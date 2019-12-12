@@ -145,6 +145,7 @@ var objects;
             var index = this.enemies.map(function (e) { return e.id; }).indexOf(enemy.id);
             if (index !== -1) {
                 this.enemies.splice(index, 1);
+                this.waveHandler.Pool(enemy);
                 return this.playScene.removeChild(enemy);
             }
             return false;
