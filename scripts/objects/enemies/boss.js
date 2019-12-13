@@ -179,7 +179,8 @@ var objects;
                     }, math.randRange(3, 6) * 1000);
                 }
                 if (this.initialSetup) {
-                    managers.Sound.sfx('monsterGrowl');
+                    this.playScene.dialogHandler.TriggerMany(["", 1.5], ["You wouldn't happen to be the" +
+                            "one responsible for all this?", 2.5]);
                     this.initialSetup = false;
                 }
             }
