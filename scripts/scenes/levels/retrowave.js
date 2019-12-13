@@ -71,6 +71,8 @@ var scenes;
             this.waveHandler.Add(new objects.Wave([objects.Boss, 1]));
             this.waveHandler.on('complete', function () {
                 _this.ending = true;
+                _this.weaponHUD.visible = false;
+                _this.player.intangible = true;
                 managers.Keyboard.disable();
                 managers.Sound.music(false);
                 // this.dialogHandler.TriggerMany(

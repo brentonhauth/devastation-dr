@@ -80,6 +80,8 @@ module scenes {
 
             this.waveHandler.on('complete', () => {
                 this.ending = true;
+                this.weaponHUD.visible = false;
+                this.player.intangible = true;
                 managers.Keyboard.disable();
                 managers.Sound.music(false);
                 // this.dialogHandler.TriggerMany(
