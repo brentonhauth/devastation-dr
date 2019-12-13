@@ -3,7 +3,7 @@ var components;
     var BoxCollider = /** @class */ (function () {
         function BoxCollider(x, y, width, height) {
             this.ignore = [];
-            this.drawMode = false;
+            this.drawMode = true;
             var hw = width / 2;
             var hh = height / 2;
             this.center = new math.Vec2(x, y);

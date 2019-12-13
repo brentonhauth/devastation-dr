@@ -15,8 +15,9 @@ var objects;
 (function (objects) {
     var PlayerBullet = /** @class */ (function (_super) {
         __extends(PlayerBullet, _super);
-        function PlayerBullet(x, y, bulletType, bulletHandler) {
-            var _this = _super.call(this, x, y, bulletType) || this;
+        function PlayerBullet(x, y, bulletType, bulletHandler, flameFix) {
+            if (flameFix === void 0) { flameFix = 0; }
+            var _this = _super.call(this, x, y, bulletType, flameFix) || this;
             _this.position = new math.Vec2(x, y);
             _this.bulletHandler = bulletHandler;
             _this.Start();

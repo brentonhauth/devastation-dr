@@ -3,8 +3,8 @@ module objects {
 
         public bulletHandler:handlers.PlayerBulletHandler;
 
-        constructor(x:number, y:number, bulletType:config.BulletType, bulletHandler: handlers.PlayerBulletHandler) {
-            super(x, y, bulletType);
+        constructor(x:number, y:number, bulletType:config.BulletType, bulletHandler: handlers.PlayerBulletHandler, flameFix = 0) {
+            super(x, y, bulletType, flameFix);
             this.position = new math.Vec2(x, y);
             this.bulletHandler = bulletHandler;
 

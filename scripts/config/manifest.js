@@ -45,6 +45,8 @@ var config;
             { id: "machineGunBullet", src: "./assets/images/machineGunBullet.png" },
             { id: "laserBullet", src: "./assets/images/laserBullet.png" },
             { id: "flamethrowerBullet", src: "./assets/images/flame.png" },
+            { id: "flamethrowerBulletEast", src: "./assets/images/flameEast.png" },
+            { id: "flamethrowerBulletWest", src: "./assets/images/flameWest.png" },
             { id: "flameStartSheet", src: "./assets/images/sheets/flame1.png" },
             { id: "flameSheetEast", src: "./assets/images/sheets/flameEast.png" },
             { id: "flameSheetWest", src: "./assets/images/sheets/flameWest.png" },

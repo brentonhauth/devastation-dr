@@ -6,7 +6,7 @@ module components {
         
         public ignore: any[] = [];
 
-        public drawMode = false;
+        public drawMode = true;
 
 
         public set position(pos: math.Vec2) {

@@ -15,8 +15,9 @@ var objects;
 (function (objects) {
     var FlamethrowerBullet = /** @class */ (function (_super) {
         __extends(FlamethrowerBullet, _super);
-        function FlamethrowerBullet(x, y, bulletDirection, bulletHandler) {
-            var _this = _super.call(this, x, y, config.BulletType.FLAMETHROWER, bulletHandler) || this;
+        function FlamethrowerBullet(x, y, bulletDirection, bulletHandler, flameFix) {
+            if (flameFix === void 0) { flameFix = 0; }
+            var _this = _super.call(this, x, y, config.BulletType.FLAMETHROWER, bulletHandler, flameFix) || this;
             _this.position = new math.Vec2(x, y);
             _this.bulletHandler = bulletHandler;
             _this.bulletDirection = bulletDirection;
@@ -47,9 +48,10 @@ var objects;
                         flameStart: [0, 8, "flameIdle", 0.5]
                     }
                 });
-                _this.flameAnimator = new createjs.Sprite(sheet, "flameStart");
+                _this.flameAnimatorEast = new createjs.Sprite(sheet, "flameStart");
                 _this.removeChild(_this.sprite);
-                _this.addChild(_this.flameAnimator);
+                _this.addChild(_this.flameAnimatorEast);
+                _this.Init();
             }
             else if (bulletDirection == config.BulletDirection.WEST) {
                 var sheet = new createjs.SpriteSheet({
@@ -60,9 +62,10 @@ var objects;
                         flameStart: [0, 8, "flameIdle", 0.5]
                     }
                 });
-                _this.flameAnimator = new createjs.Sprite(sheet, "flameStart");
+                _this.flameAnimatorWest = new createjs.Sprite(sheet, "flameStart");
                 _this.removeChild(_this.sprite);
-                _this.addChild(_this.flameAnimator);
+                _this.addChild(_this.flameAnimatorWest);
+                _this.Init();
             }
             return _this;
             //console.log(this.flameAnimator);
@@ -94,7 +97,7 @@ var objects;
                 y = player.y - player.height;
             }
             else if (this.bulletDirection == config.BulletDirection.EAST) {
-                x = player.x;
+                x = player.x + 50;
                 y = player.y + (player.height / 2);
             }
             else if (this.bulletDirection == config.BulletDirection.WEST) {

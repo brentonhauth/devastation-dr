@@ -33,7 +33,7 @@ var handlers;
             }
             if (bulletDirection == config.BulletDirection.EAST) {
                 if (!this.isActiveEast) {
-                    bullet = new objects.FlamethrowerBullet(position.x, position.y, bulletDirection, this);
+                    bullet = new objects.FlamethrowerBullet(position.x, position.y, bulletDirection, this, 1);
                     this.bullets[bullet.id] = bullet;
                     this.activeFlameEast = bullet;
                     this.isActiveEast = true;
@@ -44,7 +44,7 @@ var handlers;
             }
             if (bulletDirection == config.BulletDirection.WEST) {
                 if (!this.isActiveWest) {
-                    bullet = new objects.FlamethrowerBullet(position.x, position.y, bulletDirection, this);
+                    bullet = new objects.FlamethrowerBullet(position.x, position.y, bulletDirection, this, 2);
                     this.bullets[bullet.id] = bullet;
                     this.activeFlameWest = bullet;
                     this.isActiveWest = true;
