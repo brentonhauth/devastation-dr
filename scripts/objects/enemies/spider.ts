@@ -36,7 +36,7 @@ module objects {
             );
 
             let y = math.randInt(-500, -50);
-
+            this.health = 1;
             this.SetPosition(this.yCenterAxis, y);
         }
 

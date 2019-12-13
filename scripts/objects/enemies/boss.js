@@ -43,7 +43,6 @@ var objects;
                     blue: { speed: .1, frames: [9, 10, 11] },
                 }
             })) || this;
-            _this.health = 35;
             _this.intangible = false;
             _this.shadowGotClose = false;
             _this.initialSetup = true;
@@ -80,6 +79,7 @@ var objects;
             // this.position = Boss.aboveCenter;
         };
         Boss.prototype.Reset = function () {
+            this.health = 35;
             this.initialSetup = true;
             this.state = BossState.Pending;
             this.resetToAboveCenter();
@@ -100,7 +100,7 @@ var objects;
                     bullet = new objects.EnemyBullet(this.position, point, this, this.playScene.enemyBulletHandler);
                     this.playScene.enemyBulletHandler.AddExistingBullet(bullet);
                 }
-                if (this.hasAttack(BossAttack.Direct) && !(tick % 16)) {
+                if (this.hasAttack(BossAttack.Direct) && !(tick % 20)) {
                     bullet = new objects.EnemyBullet(this.position, this.playScene.player.position, this, this.playScene.enemyBulletHandler);
                     this.playScene.enemyBulletHandler.AddExistingBullet(bullet);
                 }
@@ -131,7 +131,7 @@ var objects;
                         if (this.frameDifference >= 160) {
                             this.state = BossState.Pending;
                         }
-                        else if (this.frameDifference === 120) {
+                        else if (this.frameDifference === 110) {
                             this.bossShadow.visible = false;
                             this.position = shadowPos; //new math.Vec2(this.bossShadow.x, this.bossShadow.y);
                         }
@@ -150,7 +150,7 @@ var objects;
                         if (this.frameDifference >= 160) {
                             this.state = BossState.Pending;
                         }
-                        else if (this.frameDifference === 120) {
+                        else if (this.frameDifference === 110) {
                             this.bossShadow.visible = false;
                             this.position = shadowPos; //new math.Vec2(this.bossShadow.x, this.bossShadow.y);
                         }
@@ -260,6 +260,7 @@ var objects;
             this.health--;
             if (this.health === 0) {
                 _super.prototype.Destroy.call(this);
+                managers.Sound.sfx('monsterGrowl');
             }
         };
         Boss.prototype.setShadowPos = function (x, y) {

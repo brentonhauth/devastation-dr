@@ -24,7 +24,6 @@ module objects {
         private oscillateCountUp = true;
 
         private oscillateCounter = 60;
-        private health = 30;
 
         private startingPos: math.Vec2;
 

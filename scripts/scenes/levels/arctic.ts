@@ -83,7 +83,7 @@ module scenes {
                     ["Wait what's that in the distance?!", 3],
                     ["Whatever it is, it\ndoesn't look normal...", 3, ()=>this.ending=true],
                     ["", 3, () => {
-                        objects.Game.currentState = config.Scene.RETROWAVE;
+                        objects.Game.currentState = config.Scene.CUTSCENE_1;
                         managers.Keyboard.enable();
                     }],
                     // ["[  to be continued...  ]", 3, () => {

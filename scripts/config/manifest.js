@@ -28,6 +28,7 @@ var config;
             { id: "retrowave", src: "./assets/images/backgrounds/grid2.png" },
             { id: "abyss", src: "./assets/images/backgrounds/abyss.jpg" },
             { id: "abyss2", src: "./assets/images/backgrounds/abyss2.jpg" },
+            { id: "arcticMerge", src: "./assets/images/backgrounds/winterMerge.png" },
             { id: "player", src: "./assets/images/car.png" },
             // { id: "enemy", src: "./assets/images/ship.png" },
             // { id: "basicEnemy", src: "./assets/images/enemy.png" },

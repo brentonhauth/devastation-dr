@@ -39,6 +39,7 @@ var objects;
             this.yCenterAxis = math.randInt(150, 600);
             this.cosWave = math.cosWaveFunction(math.randInt(20, 50), math.randInt(50, 250));
             var y = math.randInt(-500, -50);
+            this.health = 1;
             this.SetPosition(this.yCenterAxis, y);
         };
         Spider.prototype.Move = function () {

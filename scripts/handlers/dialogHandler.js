@@ -7,8 +7,8 @@ var handlers;
      */
     var DialogHandler = /** @class */ (function () {
         // private outline: createjs.Shape;
-        function DialogHandler(playScene) {
-            this.playScene = playScene;
+        function DialogHandler(scene) {
+            this.scene = scene;
             this.queue = new Array();
             this.dialogBox = new ui.Label("", "24px", "Arial", "#1d1d1d", objects.Game.canvas.width * .5, objects.Game.canvas.height * .9, true);
             this.dialogBox.visible = false;
@@ -52,7 +52,7 @@ var handlers;
             this.dialogBox.visible = false;
         };
         DialogHandler.prototype.AppendDialogBox = function () {
-            this.playScene.addChild(this.dialogBox);
+            this.scene.addChild(this.dialogBox);
         };
         return DialogHandler;
     }());

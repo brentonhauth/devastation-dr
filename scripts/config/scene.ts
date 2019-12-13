@@ -7,6 +7,7 @@ module config {
         DESERT,
         ARCTIC,
         RETROWAVE,
-        PROLOGUE
+        PROLOGUE,
+        CUTSCENE_1
     }
 }

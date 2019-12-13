@@ -20,9 +20,6 @@ module objects {
 
     export class Boss extends Enemy {
 
-
-        private health = 35;
-
         
         private static centerPosition: math.Vec2;
         private static aboveCenter: math.Vec2;
@@ -93,6 +90,7 @@ module objects {
         }
 
         public Reset() {
+            this.health = 35;
             this.initialSetup = true;
             this.state = BossState.Pending;
             this.resetToAboveCenter();
@@ -115,7 +113,7 @@ module objects {
                     this.playScene.enemyBulletHandler.AddExistingBullet(bullet);
                 }
 
-                if (this.hasAttack(BossAttack.Direct) && !(tick % 16)) {
+                if (this.hasAttack(BossAttack.Direct) && !(tick % 20)) {
                     bullet = new EnemyBullet(
                         this.position,
                         this.playScene.player.position, this,
@@ -156,7 +154,7 @@ module objects {
                     if (!this.shadowGotClose) {
                         if (this.frameDifference >= 160) {
                             this.state = BossState.Pending;
-                        } else if (this.frameDifference === 120) {
+                        } else if (this.frameDifference === 110) {
                             this.bossShadow.visible = false;
                             this.position = shadowPos;//new math.Vec2(this.bossShadow.x, this.bossShadow.y);
                         } else if (this.frameDifference <= 100) {
@@ -172,7 +170,7 @@ module objects {
                     } else {
                         if (this.frameDifference >= 160) {
                             this.state = BossState.Pending;
-                        } else if (this.frameDifference === 120) {
+                        } else if (this.frameDifference === 110) {
                             this.bossShadow.visible = false;
                             this.position = shadowPos;//new math.Vec2(this.bossShadow.x, this.bossShadow.y);
                         } else if (this.frameDifference <= 100) {
@@ -294,6 +292,7 @@ module objects {
             this.health--;
             if (this.health === 0) {
                 super.Destroy();
+                managers.Sound.sfx('monsterGrowl');
             }
         }
 

@@ -41,6 +41,7 @@ var objects;
             this.spawn = Penguin.randomSpawnPosition();
             this.isAggressive = false;
             this.setSlideAnimation = false;
+            this.health = 1;
         };
         Penguin.prototype.Start = function () {
             this.position = this.spawn;

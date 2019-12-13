@@ -45,7 +45,6 @@ var objects;
             })) || this;
             _this.oscillateCountUp = true;
             _this.oscillateCounter = 60;
-            _this.health = 30;
             // this.width = 72;
             // this.height = 72;
             _this.Init();

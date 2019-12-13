@@ -5,6 +5,7 @@ module objects {
         protected sprite: createjs.Bitmap;
         protected animator: createjs.Sprite;
         protected playScene: scenes.PlayScene;
+        public health = 1;
         // Constructor
         constructor(sprite?: createjs.Bitmap|createjs.Sprite|createjs.SpriteSheet|string) {
             super();
@@ -64,6 +65,13 @@ module objects {
         public CheckBounds():void {
             if(this.y >= 900 + this.halfH + 5) {
                 this.Reset();
+            }
+        }
+
+        public Hit() {
+            this.health--;
+            if (this.health <= 0) {
+                this.Destroy();
             }
         }
 

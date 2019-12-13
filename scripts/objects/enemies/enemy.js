@@ -18,6 +18,7 @@ var objects;
         // Constructor
         function Enemy(sprite) {
             var _this = _super.call(this) || this;
+            _this.health = 1;
             _this.playScene = objects.Game.currentScene;
             if (sprite) {
                 var isStr = void 0, isSheet = void 0, isSprite = true;
@@ -69,6 +70,12 @@ var objects;
         Enemy.prototype.CheckBounds = function () {
             if (this.y >= 900 + this.halfH + 5) {
                 this.Reset();
+            }
+        };
+        Enemy.prototype.Hit = function () {
+            this.health--;
+            if (this.health <= 0) {
+                this.Destroy();
             }
         };
         Enemy.prototype.Destroy = function () {

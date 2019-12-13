@@ -10,14 +10,14 @@ module handlers {
      */
     export class DialogHandler {
 
-        public playScene: scenes.Scene;
+        public scene: scenes.Scene;
 
         private queue: Dialog[];
         private dialogBox: ui.Label;
         // private outline: createjs.Shape;
 
-        constructor(playScene: scenes.Scene) {
-            this.playScene = playScene;
+        constructor(scene: scenes.Scene) {
+            this.scene = scene;
             this.queue = new Array<Dialog>();
             this.dialogBox = new ui.Label(
                 "", "24px", "Arial", "#1d1d1d",
@@ -71,7 +71,7 @@ module handlers {
         }
 
         public AppendDialogBox() {
-            this.playScene.addChild(this.dialogBox);
+            this.scene.addChild(this.dialogBox);
         }
     }
 }

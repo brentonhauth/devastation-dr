@@ -94,6 +94,9 @@
             case config.Scene.PROLOGUE:
                 currentScene = new scenes.Prologue();
                 break;
+            case config.Scene.CUTSCENE_1:
+                currentScene = new scenes.Cutscene1();
+                break;
         }
         stage.removeAllChildren();
         objects.Game.currentScene = currentScene;

@@ -10,6 +10,7 @@ var config;
         Scene[Scene["ARCTIC"] = 5] = "ARCTIC";
         Scene[Scene["RETROWAVE"] = 6] = "RETROWAVE";
         Scene[Scene["PROLOGUE"] = 7] = "PROLOGUE";
+        Scene[Scene["CUTSCENE_1"] = 8] = "CUTSCENE_1";
     })(Scene = config.Scene || (config.Scene = {}));
 })(config || (config = {}));
 //# sourceMappingURL=scene.js.map
