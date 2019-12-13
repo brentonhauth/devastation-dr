@@ -6,7 +6,7 @@ module handlers {
         }
 
         public SpawnBullet(enemy:objects.Enemy):objects.EnemyBullet {
-            let bullet = new objects.EnemyBullet(enemy.position, this.playScene.player.position, enemy, this);
+            let bullet = new objects.EnemyBullet(enemy.position, this.playScene.player.position, enemy, this, config.BulletType.ENEMYBULLET);
             this.bullets[bullet.id] = bullet;
 
             return bullet;
@@ -31,6 +31,13 @@ module handlers {
         public DestroyBullet(bullet:objects.EnemyBullet) {
             delete this.bullets[bullet.id];
             this.playScene.removeChild(bullet);
+        }
+
+        public AddExistingBullet(bullet: objects.EnemyBullet) {
+            if (!this.bullets[bullet.id]) {
+                this.bullets[bullet.id] = bullet;
+                this.playScene.addChild(bullet);
+            }
         }
     }
 }

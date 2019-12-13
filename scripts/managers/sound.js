@@ -72,11 +72,24 @@ var managers;
             }
         };
         Sound.sfx = function (id) {
-            createjs.Sound.play(id); //, 0, 0, 0, 0, this.sfxVol * this.masterVol);
+            var sfx, vol = Sound.sfxVol * Sound.masterVol;
+            if (Sound.sfxMap[id]) {
+                Sound.sfxMap[id].volume = vol;
+                sfx = Sound.sfxMap[id];
+                if (sfx.playState === 'playFinished') {
+                    sfx.play();
+                }
+            }
+            else {
+                Sound.sfxMap[id] = sfx = createjs.Sound.play(id);
+                sfx.volume = vol;
+            }
+            return sfx;
         };
         Sound.musicVol = 1.0;
         Sound.sfxVol = 1.0;
         Sound.masterVol = 1.0;
+        Sound.sfxMap = {};
         Sound.playingMusic = false;
         return Sound;
     }());

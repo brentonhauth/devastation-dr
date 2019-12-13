@@ -5,15 +5,16 @@ module objects {
 
         constructor(playScene: scenes.PlayScene) {
             super(config.Weapon.PISTOL);
-            this.playScene = playScene;
-
-            
+            this.playScene = playScene;  
         }
 
         public Shoot(): void {
             let player = this.playScene.player;
+            let bulletType = config.BulletType.PISTOL;
             let position = new math.Vec2(player.x, player.y);
-            let bullet = this.playScene.playerBulletHandler.SpawnBullet(position);
+            player.position;
+            
+            let bullet = this.playScene.playerBulletHandler.SpawnBullet(position, bulletType);
             this.playScene.addChild(bullet);
         }
     }

@@ -24,36 +24,33 @@ var objects;
             _this.width = bounds.width;
             _this.height = bounds.height;
             _this.Init();
-            _this.Start();
+            _this.Reset();
             return _this;
         }
         Spider.prototype.Start = function () {
             // this.x = 320;
             // this.y = -50;
-            this.Reset();
         };
         Spider.prototype.Update = function () {
             this.Move();
             this.CheckBounds();
         };
         Spider.prototype.Reset = function () {
-            this.movementSeed = Math.random();
-            this.yCenterAxis = math.randRange(250, 350);
-            this.cosWave = math.cosWaveFunction(math.randRange(20, 50), math.randRange(50, 250));
-            var x = Math.floor(Math.random() * 550) + 50;
-            var y = Math.floor(Math.random() * -800) - 50;
-            this.position = new math.Vec2(x, y);
+            this.yCenterAxis = math.randInt(150, 600);
+            this.cosWave = math.cosWaveFunction(math.randInt(20, 50), math.randInt(50, 250));
+            var y = math.randInt(-500, -50);
+            this.SetPosition(this.yCenterAxis, y);
         };
         Spider.prototype.Move = function () {
             var y = this.y + 1;
-            var x = this.cosWave(y) + this.yCenterAxis;
-            this.position = new math.Vec2(x, y);
-        };
-        Spider.prototype.CheckBounds = function () {
-            if (this.y >= 900 + this.halfH + 5) {
+            if (y > Spider.yBounds) {
                 this.Reset();
             }
+            var x = this.cosWave(y) + this.yCenterAxis;
+            this.SetPosition(x, y);
+            // this.position = new math.Vec2(x, y);
         };
+        Spider.yBounds = 870; // canvas.height + 400
         return Spider;
     }(objects.Enemy));
     objects.Spider = Spider;

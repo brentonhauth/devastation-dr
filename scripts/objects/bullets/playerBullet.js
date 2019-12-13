@@ -15,19 +15,54 @@ var objects;
 (function (objects) {
     var PlayerBullet = /** @class */ (function (_super) {
         __extends(PlayerBullet, _super);
-        function PlayerBullet(x, y, bulletHandler) {
-            var _this = _super.call(this, x, y, "playerBullet") || this;
+        function PlayerBullet(x, y, bulletType, bulletHandler, flameFix) {
+            if (flameFix === void 0) { flameFix = 0; }
+            var _this = _super.call(this, x, y, bulletType, flameFix) || this;
             _this.position = new math.Vec2(x, y);
-            // this.x = x;
-            // this.y = y;
             _this.bulletHandler = bulletHandler;
             _this.Start();
             return _this;
         }
+        PlayerBullet.prototype.checkSpawnItem = function (obj) {
+            var spawnItem = false;
+            var playScene = this.bulletHandler.playScene;
+            if (obj instanceof objects.Jackal) {
+                // TODO: improve upon 'yoink' system with Jackals
+                if (obj.yoinked) {
+                    spawnItem = true;
+                }
+            }
+            else {
+                //let rr = Math.floor(math.randRange(1, 1));
+                var rr = Math.floor(math.randRange(1, 5));
+                if (rr == 1) {
+                    spawnItem = true;
+                }
+            }
+            if (spawnItem) {
+                playScene.AddEnemyItem(obj);
+            }
+        };
         PlayerBullet.prototype.OnCollision = function (obj) {
             var playScene = this.bulletHandler.playScene;
-            if (obj instanceof objects.Enemy || obj instanceof objects.Spider) {
-                playScene.AddEnemyItem(obj);
+            if (obj instanceof objects.Enemy) {
+                var spawnItem = false;
+                if (obj instanceof objects.Jackal) {
+                    // TODO: improve upon 'yoink' system with Jackals
+                    if (obj.yoinked) {
+                        spawnItem = true;
+                    }
+                }
+                else {
+                    var rr = Math.floor(math.randRange(1, 1));
+                    //let rr = Math.floor(math.randRange(1, 5));
+                    if (rr == 1) {
+                        spawnItem = true;
+                    }
+                }
+                if (spawnItem) {
+                    playScene.AddEnemyItem(obj);
+                }
                 obj.Destroy();
                 this.Destroy();
                 var points = obj instanceof objects.Lizard ? 300 : 100;

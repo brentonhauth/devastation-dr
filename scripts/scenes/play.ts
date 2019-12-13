@@ -1,24 +1,23 @@
 module scenes {
     export class PlayScene extends Scene {
 
-        private background: objects.Background;
+        public background: objects.Background;
         public player: objects.Player;
         public lifeCounter: hud.LifeCounter;
         public score: hud.Score;
         public weaponHUD: hud.WeaponHUD;
 
         public playerBulletHandler: handlers.PlayerBulletHandler;
+        public flamethrowerBulletHandler: handlers.FlamethrowerBulletHandler;
+
         public enemyBulletHandler: handlers.EnemyBulletHandler;
-        public enemyHandler: handlers.EnemyHandler;
+        // public enemyHandler: handlers.EnemyHandler;
         public dialogHandler: handlers.DialogHandler;
         public waveHandler: handlers.WaveHandler;
         public enemyItemHandler: handlers.EnemyItemHandler;
 
         constructor() {
             super();
-
-            let levelType = config.Scene[objects.Game.currentState];
-            this.background = new objects.Background(levelType.toLowerCase());
             this.player = new objects.Player(this);
 
             this.lifeCounter = new hud.LifeCounter();
@@ -26,11 +25,18 @@ module scenes {
             this.weaponHUD = new hud.WeaponHUD();
 
             this.playerBulletHandler = new handlers.PlayerBulletHandler(this);
+            this.flamethrowerBulletHandler = new handlers.FlamethrowerBulletHandler(this);
             this.enemyBulletHandler = new handlers.EnemyBulletHandler(this);
-            this.enemyHandler = new handlers.EnemyHandler(this);
+            // this.enemyHandler = new handlers.EnemyHandler(this);
             this.dialogHandler = new handlers.DialogHandler(this);
             this.waveHandler = new handlers.WaveHandler(this);
             this.enemyItemHandler = new handlers.EnemyItemHandler(this);
+
+            if (objects.Game.currentState === config.Scene.RETROWAVE) {
+                this.background = new objects.WaveBackground();
+            } else {
+                this.background = new objects.Background();
+            }
         }
 
         public Start(): void {
@@ -40,8 +46,13 @@ module scenes {
             this.addChild(this.lifeCounter);
             this.addChild(this.score);
             this.addChild(this.weaponHUD);
-            
+
             this.dialogHandler.AppendDialogBox();
+
+            this.background.Start();
+            this.player.Start();
+
+            this.lifeCounter.text(this.player.lives);
 
             this.Main();
         }
@@ -51,8 +62,10 @@ module scenes {
             this.background.Update();
             this.player.Update();
 
-            this.waveHandler.Update();
-            this.waveHandler.CheckCollision(this.player);
+            // this.waveHandler.Update();
+            // this.waveHandler.CheckCollision(this.player);
+
+            this.waveHandler.UpdateAndCheckCollision(this.player);
 
             this.enemyBulletHandler.UpdateAndCheckCollision(this.player);
             this.playerBulletHandler.UpdateAndCheckCollision(this.waveHandler.ActiveEnemies);
@@ -60,9 +73,28 @@ module scenes {
             this.enemyItemHandler.Update();
             this.enemyItemHandler.CheckCollision(this.player);
 
-            if (managers.Keyboard.down(config.Key.Space)) {
-                this.player.ShootWeapon();
+            if (this.player.weapon.weaponType == config.Weapon.FLAMETHROWER)
+            {
+                this.flamethrowerBulletHandler.UpdateAndCheckCollision(this.waveHandler.ActiveEnemies);
+
+                if (managers.Keyboard.pressed(config.Key.Space))
+                {
+                    this.player.ShootWeapon();
+                }
+                else
+                {
+                    (<objects.Flamethrower>this.player.weapon).stopShooting();
+                }
+                
             }
+            else  
+            {
+                if(managers.Keyboard.down(config.Key.Space))
+                {
+                    this.player.ShootWeapon();   
+                }
+            }
+
         }
 
         public AddEnemyBullet(enemy:objects.Enemy) {

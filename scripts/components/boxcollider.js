@@ -3,7 +3,7 @@ var components;
     var BoxCollider = /** @class */ (function () {
         function BoxCollider(x, y, width, height) {
             this.ignore = [];
-            this.drawMode = true;
+            this.drawMode = false;
             var hw = width / 2;
             var hh = height / 2;
             this.center = new math.Vec2(x, y);
@@ -13,25 +13,26 @@ var components;
         }
         Object.defineProperty(BoxCollider.prototype, "position", {
             set: function (pos) {
-                var m = math.Vec2.Difference(pos, this.center);
-                // let mx = v2.x - this.center.x;
-                // let my = v2.y - this.center.y;
-                this.aabb.min.x += m.x;
-                this.aabb.min.y += m.y;
-                this.aabb.max.x += m.x;
-                this.aabb.max.y += m.y;
-                this.center.x = pos.x;
-                this.center.y = pos.y;
-                if (this.drawMode) {
-                    this.draw();
-                }
-                // else {
-                //     objects.Game.stage.removeChild(this.shape);
-                // }
+                // let m = math.Vec2.Difference(pos, this.center);
+                // let dx = pos.x - this.center.x,
+                //     dy = pos.y - this.center.y;
+                this.SetPosition(pos.x, pos.y);
             },
             enumerable: true,
             configurable: true
         });
+        BoxCollider.prototype.SetPosition = function (x, y) {
+            var m = {
+                x: x - this.center.x,
+                y: y - this.center.y
+            };
+            this.aabb.min.Add(m);
+            this.aabb.max.Add(m);
+            this.center.setValues(x, y);
+            if (this.drawMode) {
+                this.draw();
+            }
+        };
         Object.defineProperty(BoxCollider.prototype, "width", {
             get: function () {
                 if (this.aabb) {

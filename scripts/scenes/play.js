@@ -17,18 +17,23 @@ var scenes;
         __extends(PlayScene, _super);
         function PlayScene() {
             var _this = _super.call(this) || this;
-            var levelType = config.Scene[objects.Game.currentState];
-            _this.background = new objects.Background(levelType.toLowerCase());
             _this.player = new objects.Player(_this);
             _this.lifeCounter = new hud.LifeCounter();
             _this.score = new hud.Score();
             _this.weaponHUD = new hud.WeaponHUD();
             _this.playerBulletHandler = new handlers.PlayerBulletHandler(_this);
+            _this.flamethrowerBulletHandler = new handlers.FlamethrowerBulletHandler(_this);
             _this.enemyBulletHandler = new handlers.EnemyBulletHandler(_this);
-            _this.enemyHandler = new handlers.EnemyHandler(_this);
+            // this.enemyHandler = new handlers.EnemyHandler(this);
             _this.dialogHandler = new handlers.DialogHandler(_this);
             _this.waveHandler = new handlers.WaveHandler(_this);
             _this.enemyItemHandler = new handlers.EnemyItemHandler(_this);
+            if (objects.Game.currentState === config.Scene.RETROWAVE) {
+                _this.background = new objects.WaveBackground();
+            }
+            else {
+                _this.background = new objects.Background();
+            }
             return _this;
         }
         PlayScene.prototype.Start = function () {
@@ -38,19 +43,34 @@ var scenes;
             this.addChild(this.score);
             this.addChild(this.weaponHUD);
             this.dialogHandler.AppendDialogBox();
+            this.background.Start();
+            this.player.Start();
+            this.lifeCounter.text(this.player.lives);
             this.Main();
         };
         PlayScene.prototype.Update = function () {
             this.background.Update();
             this.player.Update();
-            this.waveHandler.Update();
-            this.waveHandler.CheckCollision(this.player);
+            // this.waveHandler.Update();
+            // this.waveHandler.CheckCollision(this.player);
+            this.waveHandler.UpdateAndCheckCollision(this.player);
             this.enemyBulletHandler.UpdateAndCheckCollision(this.player);
             this.playerBulletHandler.UpdateAndCheckCollision(this.waveHandler.ActiveEnemies);
             this.enemyItemHandler.Update();
             this.enemyItemHandler.CheckCollision(this.player);
-            if (managers.Keyboard.down(config.Key.Space)) {
-                this.player.ShootWeapon();
+            if (this.player.weapon.weaponType == config.Weapon.FLAMETHROWER) {
+                this.flamethrowerBulletHandler.UpdateAndCheckCollision(this.waveHandler.ActiveEnemies);
+                if (managers.Keyboard.pressed(config.Key.Space)) {
+                    this.player.ShootWeapon();
+                }
+                else {
+                    this.player.weapon.stopShooting();
+                }
+            }
+            else {
+                if (managers.Keyboard.down(config.Key.Space)) {
+                    this.player.ShootWeapon();
+                }
             }
         };
         PlayScene.prototype.AddEnemyBullet = function (enemy) {

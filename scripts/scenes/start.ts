@@ -3,7 +3,7 @@ module scenes {
         // Variables
         private background: createjs.Bitmap;
         private infoLabel: ui.Label;
-        private helpLabels: ui.Label[];
+        private helpLabels: ui.Label[] = [];
         private logo: createjs.Bitmap;
         private startButton: ui.Button;
         private settingsButton: ui.Button;
@@ -22,10 +22,8 @@ module scenes {
         constructor() {
             super();
 
-            this.background = new createjs.Bitmap(objects.Game.assetManager.getResult("menu"));
-            this.logo = new createjs.Bitmap(objects.Game.assetManager.getResult("logo"));
-            this.helpLabels = [];
-
+            this.background = new createjs.Bitmap(objects.Game.getAsset("menu"));
+            this.logo = new createjs.Bitmap(objects.Game.getAsset("logo"));
             this.infoLabel = new ui.Label(
                 "(c) Rude Rhino", "18px", "Arial", "#e1e1f1", 320, 800, true);
 
@@ -85,7 +83,7 @@ module scenes {
 
             //Click event for start button
             this.startButton.on("click", () => {
-                objects.Game.currentState = config.Scene.JUNGLE;
+                objects.Game.currentState = config.Scene.PROLOGUE;
             });
 
             //Click event for settings button

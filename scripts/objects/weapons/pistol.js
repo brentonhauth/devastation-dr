@@ -22,8 +22,10 @@ var objects;
         }
         Pistol.prototype.Shoot = function () {
             var player = this.playScene.player;
+            var bulletType = config.BulletType.PISTOL;
             var position = new math.Vec2(player.x, player.y);
-            var bullet = this.playScene.playerBulletHandler.SpawnBullet(position);
+            player.position;
+            var bullet = this.playScene.playerBulletHandler.SpawnBullet(position, bulletType);
             this.playScene.addChild(bullet);
         };
         return Pistol;

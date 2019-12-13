@@ -1,5 +1,9 @@
 module config {
     export enum Item {
-        MACHINEGUN
+        machineGun,
+        laser,
+        flamethrower,
+        shield,
+        life
     }
 }

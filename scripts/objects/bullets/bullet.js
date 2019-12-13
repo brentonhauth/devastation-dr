@@ -15,10 +15,20 @@ var objects;
 (function (objects) {
     var Bullet = /** @class */ (function (_super) {
         __extends(Bullet, _super);
-        function Bullet(x, y, bulletType) {
+        function Bullet(x, y, bulletType, flameFix) {
+            if (flameFix === void 0) { flameFix = 0; }
             var _this = _super.call(this) || this;
             _this.isDestroyed = false;
-            _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("bullet"));
+            _this.bulletType = bulletType;
+            if (flameFix == 1) {
+                _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("flamethrowerBulletEast"));
+            }
+            else if (flameFix == 2) {
+                _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("flamethrowerBulletWest"));
+            }
+            else {
+                _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult(bulletType));
+            }
             _this.addChild(_this.sprite);
             var bounds = _this.sprite.getBounds();
             _this.width = bounds.width;

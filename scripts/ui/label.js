@@ -15,8 +15,6 @@ var ui;
 (function (ui) {
     var Label = /** @class */ (function (_super) {
         __extends(Label, _super);
-        // Variables
-        // Constructor
         function Label(labelString, fontSize, fontFamily, fontColor, x, y, isCentered) {
             if (x === void 0) { x = 0; }
             if (y === void 0) { y = 0; }
@@ -24,14 +22,33 @@ var ui;
             var _this = _super.call(this, labelString, fontSize + " " + fontFamily, fontColor) || this;
             // Set the registration point if true to be in the middle
             if (isCentered) {
-                _this.regX = _this.getMeasuredWidth() * 0.5;
-                _this.regY = _this.getMeasuredHeight() * 0.5;
+                _this.Center();
             }
             // Set initial position
-            _this.x = x;
-            _this.y = y;
+            _this.SetPosition(x, y);
             return _this;
         }
+        Object.defineProperty(Label.prototype, "position", {
+            // Variables
+            // Constructor
+            get: function () {
+                return new math.Vec2(this.x, this.y);
+            },
+            set: function (pos) {
+                this.SetPosition(pos.x, pos.y);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Label.prototype.SetPosition = function (x, y) {
+            this.x = x;
+            this.y = y;
+        };
+        Label.prototype.Center = function () {
+            this.regX = this.getMeasuredWidth() * 0.5;
+            this.regY = this.getMeasuredHeight() * 0.5;
+            this.SetPosition(this.x, this.y);
+        };
         return Label;
     }(createjs.Text));
     ui.Label = Label;

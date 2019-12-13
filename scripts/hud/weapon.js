@@ -17,13 +17,13 @@ var hud;
         __extends(WeaponHUD, _super);
         function WeaponHUD() {
             var _this = _super.call(this) || this;
-            _this.weaponText = new ui.Label("Weapon level: 0", "16px", "Consolas", "#FFFFFF", 540, 30, true);
+            _this.weaponText = new ui.Label("Weapon level: 1", "16px", "Consolas", "#FFFFFF", 540, 30, true);
             _this.weaponImage = new createjs.Bitmap(objects.Game.assetManager.getResult("pistol"));
             _this.tempMap = new Object;
             _this.tempMap[config.Weapon.MACHINEGUN] = "machineGun";
             _this.tempMap[config.Weapon.PISTOL] = "pistol";
-            _this.tempMap[config.Weapon.LAZER] = "machineGun";
-            _this.tempMap[config.Weapon.FLAMETHROWER] = "machineGun";
+            _this.tempMap[config.Weapon.LASER] = "laser";
+            _this.tempMap[config.Weapon.FLAMETHROWER] = "flamethrower";
             _this.weaponImage.x = 640;
             _this.weaponImage.y = 20;
             _this.weaponText.x = 640;

@@ -9,6 +9,11 @@ var objects;
             this.upgradeLevel++;
         };
         Weapon.prototype.Shoot = function () { };
+        Weapon.prototype.Downgrade = function () {
+            if (this.upgradeLevel > 1) {
+                this.upgradeLevel--;
+            }
+        };
         return Weapon;
     }());
     objects.Weapon = Weapon;

@@ -4,11 +4,24 @@ module objects {
 
         public isDestroyed: boolean = false;
         public bulletSpeed: number;
-        private sprite: createjs.Bitmap;
+        protected sprite: createjs.Bitmap;
+        public bulletType: config.BulletType;
 
-        constructor(x:number, y:number, bulletType:string) {
+        constructor(x:number, y:number, bulletType:config.BulletType, flameFix = 0) {
             super();
-            this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("bullet"));
+            this.bulletType = bulletType;
+            if (flameFix == 1)
+            {
+                this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("flamethrowerBulletEast"));
+            }
+            else if (flameFix == 2)
+            {
+                this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("flamethrowerBulletWest"));
+            }
+            else
+            {
+                this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult(bulletType));
+            }
             this.addChild(this.sprite);
             let bounds = this.sprite.getBounds();
             this.width = bounds.width;

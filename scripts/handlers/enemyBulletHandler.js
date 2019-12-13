@@ -19,7 +19,7 @@ var handlers;
             return _super.call(this, playScene) || this;
         }
         EnemyBulletHandler.prototype.SpawnBullet = function (enemy) {
-            var bullet = new objects.EnemyBullet(enemy.position, this.playScene.player.position, enemy, this);
+            var bullet = new objects.EnemyBullet(enemy.position, this.playScene.player.position, enemy, this, config.BulletType.ENEMYBULLET);
             this.bullets[bullet.id] = bullet;
             return bullet;
         };
@@ -38,6 +38,12 @@ var handlers;
         EnemyBulletHandler.prototype.DestroyBullet = function (bullet) {
             delete this.bullets[bullet.id];
             this.playScene.removeChild(bullet);
+        };
+        EnemyBulletHandler.prototype.AddExistingBullet = function (bullet) {
+            if (!this.bullets[bullet.id]) {
+                this.bullets[bullet.id] = bullet;
+                this.playScene.addChild(bullet);
+            }
         };
         return EnemyBulletHandler;
     }(handlers.BulletHandler));

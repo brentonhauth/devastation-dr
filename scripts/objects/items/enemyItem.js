@@ -19,21 +19,30 @@ var objects;
             var _this = _super.call(this) || this;
             _this.isDestroyed = false;
             _this.speed = 3;
-            _this.itemType = config.Item.MACHINEGUN;
+            _this.itemTypeMap = ["machineGun", "laser", "flamethrower", "shield", "life"];
             _this.itemID = String(EnemyItem.counter);
             EnemyItem.counter++;
             _this.itemHandler = itemHandler;
             _this.spawnedFrom = spawnedFrom;
-            _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("powerup"));
+            _this.itemType = _this.chooseItemType();
+            _this.itemTypeString = _this.itemTypeMap[_this.itemType];
+            //console.log(this.itemTypeString);
+            _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult("item_" + _this.itemTypeString));
             _this.addChild(_this.sprite);
             var bounds = _this.sprite.getBounds();
             _this.width = bounds.width;
             _this.height = bounds.height;
             _this.Init();
-            _this.position = new math.Vec2(spawnedFrom.x, spawnedFrom.y);
+            _this.position = new math.Vec2(spawnedFrom.x, spawnedFrom.boxCollider.aabb.max.y);
             _this.Start();
             return _this;
         }
+        EnemyItem.prototype.chooseItemType = function () {
+            var rr = Math.floor(math.randRange(0, 5));
+            var itemType = config.Item[this.itemTypeMap[rr]];
+            //let itemType = config.Item.flamethrower;
+            return itemType;
+        };
         EnemyItem.prototype.setInitialPosition = function () {
         };
         EnemyItem.prototype.Start = function () {

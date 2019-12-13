@@ -10,12 +10,16 @@ module objects {
         }
 
         public Upgrade(): void{
-            this.upgradeLevel ++;
+            this.upgradeLevel++;
         }
 
         public Shoot(): void {}
 
-
+        public Downgrade(): void {
+            if (this.upgradeLevel > 1) {
+                this.upgradeLevel--;
+            }
+        }
 
     }
 }

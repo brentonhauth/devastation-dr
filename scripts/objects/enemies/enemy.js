@@ -16,13 +16,35 @@ var objects;
     var Enemy = /** @class */ (function (_super) {
         __extends(Enemy, _super);
         // Constructor
-        function Enemy(enemyType) {
+        function Enemy(sprite) {
             var _this = _super.call(this) || this;
-            _this.sprite = new createjs.Bitmap(objects.Game.assetManager.getResult(enemyType));
-            _this.addChild(_this.sprite);
-            var bounds = _this.sprite.getBounds();
-            _this.width = bounds.width;
-            _this.height = bounds.height;
+            _this.playScene = objects.Game.currentScene;
+            if (sprite) {
+                var isStr = void 0, isSheet = void 0, isSprite = true;
+                if ((isStr = typeof sprite === 'string') || sprite instanceof createjs.Bitmap) {
+                    _this.sprite = sprite = !isStr ? sprite : new createjs.Bitmap(objects.Game.getAsset(sprite));
+                    _this.addChild(_this.sprite);
+                }
+                else if ((isSheet = sprite instanceof createjs.SpriteSheet) || sprite instanceof createjs.Sprite) {
+                    _this.animator = sprite = !isSheet ? sprite :
+                        new createjs.Sprite(sprite);
+                    _this.addChild(_this.animator);
+                    _this.animator.stop();
+                }
+                else {
+                    isSprite = false;
+                }
+                if (isSprite) {
+                    var bounds = sprite.getBounds();
+                    _this.width = bounds.width;
+                    _this.height = bounds.height;
+                }
+            }
+            // this.sprite = new createjs.Bitmap(objects.Game.getAsset(enemyType));
+            // this.addChild(this.sprite);
+            // let bounds = this.sprite.getBounds();
+            // this.width = bounds.width;
+            // this.height = bounds.height;
             _this.Init();
             return _this;
             //this.pointsWorth = pointsWorth;
@@ -50,11 +72,15 @@ var objects;
             }
         };
         Enemy.prototype.Destroy = function () {
-            var cw, scene = objects.Game.currentScene;
-            if (cw = scene.waveHandler.currentWave) {
-                cw.Remove(this);
+            var curWave;
+            if (curWave = this.playScene.waveHandler.currentWave) {
+                if (this.animator) {
+                    this.animator.stop();
+                }
+                curWave.Remove(this);
             }
         };
+        Enemy.prototype.Pool = function () { };
         return Enemy;
     }(objects.GameObject));
     objects.Enemy = Enemy;

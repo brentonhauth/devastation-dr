@@ -18,9 +18,9 @@ var scenes;
         // Constructor
         function StartScene() {
             var _this = _super.call(this) || this;
-            _this.background = new createjs.Bitmap(objects.Game.assetManager.getResult("menu"));
-            _this.logo = new createjs.Bitmap(objects.Game.assetManager.getResult("logo"));
             _this.helpLabels = [];
+            _this.background = new createjs.Bitmap(objects.Game.getAsset("menu"));
+            _this.logo = new createjs.Bitmap(objects.Game.getAsset("logo"));
             _this.infoLabel = new ui.Label("(c) Rude Rhino", "18px", "Arial", "#e1e1f1", 320, 800, true);
             _this.logo.scaleX *= .65;
             _this.logo.scaleY *= .65;
@@ -67,7 +67,7 @@ var scenes;
             this.addChild(this.infoLabel);
             //Click event for start button
             this.startButton.on("click", function () {
-                objects.Game.currentState = config.Scene.JUNGLE;
+                objects.Game.currentState = config.Scene.PROLOGUE;
             });
             //Click event for settings button
             this.settingsButton.on("click", function () {

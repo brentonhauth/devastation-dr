@@ -6,32 +6,31 @@ module components {
         
         public ignore: any[] = [];
 
-        public drawMode = true;
+        public drawMode = false;
 
 
         public set position(pos: math.Vec2) {
+            // let m = math.Vec2.Difference(pos, this.center);
+            // let dx = pos.x - this.center.x,
+            //     dy = pos.y - this.center.y;
 
+            this.SetPosition(pos.x, pos.y);
+        }
 
-            let m = math.Vec2.Difference(pos, this.center);
+        public SetPosition(x: number, y: number) {
+            let m = {
+                x: x - this.center.x,
+                y: y - this.center.y
+            };
 
-            // let mx = v2.x - this.center.x;
-            // let my = v2.y - this.center.y;
+            this.aabb.min.Add(<math.Vec2>m);
+            this.aabb.max.Add(<math.Vec2>m);
 
-            this.aabb.min.x += m.x;
-            this.aabb.min.y += m.y;
-
-            this.aabb.max.x += m.x;
-            this.aabb.max.y += m.y;
-
-            this.center.x = pos.x;
-            this.center.y = pos.y;
+            this.center.setValues(x, y);
 
             if (this.drawMode) {
                 this.draw()
             }
-            // else {
-            //     objects.Game.stage.removeChild(this.shape);
-            // }
         }
 
         public get width(): number {
