@@ -22,8 +22,8 @@ module objects {
                 let position1 = new math.Vec2(player.x - 15, player.y);
                 let position2 = new math.Vec2(player.x + 15, player.y);
 
-                let bullet1 = this.playScene.playerBulletHandler.SpawnBullet(position1, bulletType);
-                let bullet2 = this.playScene.playerBulletHandler.SpawnBullet(position2, bulletType);
+                let bullet1 = this.playScene.playerBulletHandler.SpawnBullet(position1, bulletType, config.BulletDirection.NORTHWEST);
+                let bullet2 = this.playScene.playerBulletHandler.SpawnBullet(position2, bulletType, config.BulletDirection.NORTHEAST);
 
                 this.playScene.addChild(bullet1);
                 this.playScene.addChild(bullet2);
@@ -34,8 +34,8 @@ module objects {
                 let position2 = new math.Vec2(player.x + 30, player.y);
                 let position3 = new math.Vec2(player.x, player.y);
 
-                let bullet1 = this.playScene.playerBulletHandler.SpawnBullet(position1, bulletType);
-                let bullet2 = this.playScene.playerBulletHandler.SpawnBullet(position2, bulletType);
+                let bullet1 = this.playScene.playerBulletHandler.SpawnBullet(position1, bulletType, config.BulletDirection.NORTHWEST);
+                let bullet2 = this.playScene.playerBulletHandler.SpawnBullet(position2, bulletType, config.BulletDirection.NORTHEAST);
                 let bullet3 = this.playScene.playerBulletHandler.SpawnBullet(position3, bulletType);
 
                 this.playScene.addChild(bullet1);

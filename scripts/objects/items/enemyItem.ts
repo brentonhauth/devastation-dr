@@ -41,7 +41,7 @@ module objects {
         private chooseItemType(): config.Item{
             let rr = Math.floor(math.randRange(0, 5));
             let itemType = config.Item[this.itemTypeMap[rr]];
-            //let itemType = config.Item.flamethrower;
+            //let itemType = config.Item.laser;
 
             return itemType;
         }

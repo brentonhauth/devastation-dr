@@ -40,7 +40,7 @@ var objects;
         EnemyItem.prototype.chooseItemType = function () {
             var rr = Math.floor(math.randRange(0, 5));
             var itemType = config.Item[this.itemTypeMap[rr]];
-            //let itemType = config.Item.flamethrower;
+            //let itemType = config.Item.laser;
             return itemType;
         };
         EnemyItem.prototype.setInitialPosition = function () {

@@ -13,6 +13,10 @@ module handlers {
             {
                 bullet = new objects.MachineGunBullet(position.x, position.y, bulletDirection, this);
             }
+            else if (bulletType == config.BulletType.LASER)
+            {
+                bullet = new objects.LaserBullet(position.x, position.y, bulletDirection, this);
+            }
             else
             {
                 bullet = new objects.PlayerBullet(position.x, position.y, bulletType, this);
