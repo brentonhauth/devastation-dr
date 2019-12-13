@@ -14,7 +14,7 @@ var config;
             { id: "helpButton", src: "./assets/images/help.png" },
             { id: "sliderContainer", src: "./assets/images/slider.png" },
             { id: "sliderKnob", src: "./assets/images/knob.png" },
-            { id: "background", src: "./assets/images/desert.png" },
+            // { id: "background", src: "./assets/images/desert.png" },
             // { id: "menu", src: "./assets/images/menu.png" },
             // { id: "desert", src: "./assets/images/desert.png" },
             // { id: "arctic", src: "./assets/images/desert.png" },
