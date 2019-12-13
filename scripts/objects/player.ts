@@ -187,7 +187,7 @@ module objects {
             {
                 if (this.weapon.weaponType == config.Weapon.MACHINEGUN)
                 {
-                    if (this.weapon.upgradeLevel >= 3)
+                    if (this.weapon.upgradeLevel >= 4)
                     {
                         this.playScene.score.addPoints(100);
                     }

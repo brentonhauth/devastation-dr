@@ -51,6 +51,8 @@ module config {
             { id: "flamethrowerBullet", src: "./assets/images/flame.png" },
 
             { id: "flameStartSheet", src: "./assets/images/sheets/flame1.png" },
+            { id: "flameSheetEast", src: "./assets/images/sheets/flameEast.png" },
+            { id: "flameSheetWest", src: "./assets/images/sheets/flameWest.png" },
 
 
             { id: "item_machineGun", src: "./assets/images/item_machineGun.png" },

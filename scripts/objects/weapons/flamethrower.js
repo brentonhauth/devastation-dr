@@ -23,11 +23,30 @@ var objects;
         Flamethrower.prototype.Shoot = function () {
             var player = this.playScene.player;
             var bulletType = config.BulletType.FLAMETHROWER;
-            var position1 = new math.Vec2(player.x, player.y - player.height);
-            //let bullet1 = this.playScene.playerBulletHandler.SpawnBullet(position1, bulletType);
-            var bullet1 = this.playScene.flamethrowerBulletHandler.SpawnBullet(position1, bulletType);
-            this.playScene.addChild(bullet1);
             if (this.upgradeLevel == 1) {
+                var position1 = new math.Vec2(player.x, player.y - player.height);
+                //let bullet1 = this.playScene.playerBulletHandler.SpawnBullet(position1, bulletType);
+                var bullet1 = this.playScene.flamethrowerBulletHandler.SpawnBullet(position1, bulletType, config.BulletDirection.NORTH);
+                this.playScene.addChild(bullet1);
+            }
+            else if (this.upgradeLevel == 2) {
+                var position1 = new math.Vec2(player.x, player.y - player.height);
+                var position2 = new math.Vec2(player.x, player.y - player.height);
+                var bullet1 = this.playScene.flamethrowerBulletHandler.SpawnBullet(position1, bulletType, config.BulletDirection.NORTH);
+                var bullet2 = this.playScene.flamethrowerBulletHandler.SpawnBullet(position2, bulletType, config.BulletDirection.EAST);
+                this.playScene.addChild(bullet1);
+                this.playScene.addChild(bullet2);
+            }
+            else if (this.upgradeLevel >= 3) {
+                var position1 = new math.Vec2(player.x, player.y - player.height);
+                var position2 = new math.Vec2(player.x, player.y - player.height);
+                var position3 = new math.Vec2(player.x, player.y - player.height);
+                var bullet1 = this.playScene.flamethrowerBulletHandler.SpawnBullet(position1, bulletType, config.BulletDirection.NORTH);
+                var bullet2 = this.playScene.flamethrowerBulletHandler.SpawnBullet(position2, bulletType, config.BulletDirection.EAST);
+                var bullet3 = this.playScene.flamethrowerBulletHandler.SpawnBullet(position3, bulletType, config.BulletDirection.WEST);
+                this.playScene.addChild(bullet1);
+                this.playScene.addChild(bullet2);
+                this.playScene.addChild(bullet3);
             }
             this.isShooting = true;
         };

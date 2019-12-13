@@ -25,27 +25,44 @@ var objects;
             var bulletType = config.BulletType.MACHINEGUN;
             if (this.upgradeLevel == 1) {
                 var position1 = new math.Vec2(player.x, player.y);
-                var bullet1 = this.playScene.playerBulletHandler.SpawnBullet(position1, bulletType);
+                var bullet1 = this.playScene.playerBulletHandler.SpawnBullet(position1, bulletType, config.BulletDirection.NORTH);
                 this.playScene.addChild(bullet1);
             }
             else if (this.upgradeLevel == 2) {
                 var position1 = new math.Vec2(player.x - 15, player.y);
                 var position2 = new math.Vec2(player.x + 15, player.y);
-                var bullet1 = this.playScene.playerBulletHandler.SpawnBullet(position1, bulletType);
-                var bullet2 = this.playScene.playerBulletHandler.SpawnBullet(position2, bulletType);
+                var bullet1 = this.playScene.playerBulletHandler.SpawnBullet(position1, bulletType, config.BulletDirection.NORTH);
+                var bullet2 = this.playScene.playerBulletHandler.SpawnBullet(position2, bulletType, config.BulletDirection.NORTH);
                 this.playScene.addChild(bullet1);
                 this.playScene.addChild(bullet2);
             }
-            else if (this.upgradeLevel >= 3) {
+            else if (this.upgradeLevel == 3) {
                 var position1 = new math.Vec2(player.x - 30, player.y);
                 var position2 = new math.Vec2(player.x + 30, player.y);
                 var position3 = new math.Vec2(player.x, player.y);
-                var bullet1 = this.playScene.playerBulletHandler.SpawnBullet(position1, bulletType);
-                var bullet2 = this.playScene.playerBulletHandler.SpawnBullet(position2, bulletType);
-                var bullet3 = this.playScene.playerBulletHandler.SpawnBullet(position3, bulletType);
+                var bullet1 = this.playScene.playerBulletHandler.SpawnBullet(position1, bulletType, config.BulletDirection.NORTH);
+                var bullet2 = this.playScene.playerBulletHandler.SpawnBullet(position2, bulletType, config.BulletDirection.NORTH);
+                var bullet3 = this.playScene.playerBulletHandler.SpawnBullet(position3, bulletType, config.BulletDirection.NORTH);
                 this.playScene.addChild(bullet1);
                 this.playScene.addChild(bullet2);
                 this.playScene.addChild(bullet3);
+            }
+            else if (this.upgradeLevel >= 4) {
+                var position1 = new math.Vec2(player.x - 30, player.y);
+                var position2 = new math.Vec2(player.x + 30, player.y);
+                var position3 = new math.Vec2(player.x, player.y);
+                var position4 = new math.Vec2(player.x - 30, player.y + 15);
+                var position5 = new math.Vec2(player.x + 30, player.y + 15);
+                var bullet1 = this.playScene.playerBulletHandler.SpawnBullet(position1, bulletType, config.BulletDirection.NORTH);
+                var bullet2 = this.playScene.playerBulletHandler.SpawnBullet(position2, bulletType, config.BulletDirection.NORTH);
+                var bullet3 = this.playScene.playerBulletHandler.SpawnBullet(position3, bulletType, config.BulletDirection.NORTH);
+                var bullet4 = this.playScene.playerBulletHandler.SpawnBullet(position4, bulletType, config.BulletDirection.NORTHWEST);
+                var bullet5 = this.playScene.playerBulletHandler.SpawnBullet(position5, bulletType, config.BulletDirection.NORTHEAST);
+                this.playScene.addChild(bullet1);
+                this.playScene.addChild(bullet2);
+                this.playScene.addChild(bullet3);
+                this.playScene.addChild(bullet4);
+                this.playScene.addChild(bullet5);
             }
         };
         return MachineGun;

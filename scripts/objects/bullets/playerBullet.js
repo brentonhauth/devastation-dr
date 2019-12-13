@@ -22,6 +22,26 @@ var objects;
             _this.Start();
             return _this;
         }
+        PlayerBullet.prototype.checkSpawnItem = function (obj) {
+            var spawnItem = false;
+            var playScene = this.bulletHandler.playScene;
+            if (obj instanceof objects.Jackal) {
+                // TODO: improve upon 'yoink' system with Jackals
+                if (obj.yoinked) {
+                    spawnItem = true;
+                }
+            }
+            else {
+                //let rr = Math.floor(math.randRange(1, 1));
+                var rr = Math.floor(math.randRange(1, 5));
+                if (rr == 1) {
+                    spawnItem = true;
+                }
+            }
+            if (spawnItem) {
+                playScene.AddEnemyItem(obj);
+            }
+        };
         PlayerBullet.prototype.OnCollision = function (obj) {
             var playScene = this.bulletHandler.playScene;
             if (obj instanceof objects.Enemy) {
@@ -33,8 +53,8 @@ var objects;
                     }
                 }
                 else {
-                    //let rr = Math.floor(math.randRange(1, 1));
-                    var rr = Math.floor(math.randRange(1, 5));
+                    var rr = Math.floor(math.randRange(1, 1));
+                    //let rr = Math.floor(math.randRange(1, 5));
                     if (rr == 1) {
                         spawnItem = true;
                     }

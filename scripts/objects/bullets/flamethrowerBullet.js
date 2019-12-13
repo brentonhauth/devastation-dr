@@ -15,51 +15,60 @@ var objects;
 (function (objects) {
     var FlamethrowerBullet = /** @class */ (function (_super) {
         __extends(FlamethrowerBullet, _super);
-        function FlamethrowerBullet(x, y, bulletType, bulletHandler) {
-            var _this = _super.call(this, x, y, bulletType) || this;
+        function FlamethrowerBullet(x, y, bulletDirection, bulletHandler) {
+            var _this = _super.call(this, x, y, config.BulletType.FLAMETHROWER, bulletHandler) || this;
             _this.position = new math.Vec2(x, y);
             _this.bulletHandler = bulletHandler;
+            _this.bulletDirection = bulletDirection;
             _this.Start();
-            var sheet = new createjs.SpriteSheet({
-                images: [objects.Game.getAsset('flameStartSheet')],
-                frames: { width: 40, height: 150, count: 9 },
-                animations: {
-                    //flameIdle: {speed:speed, frames: [8], next:"flameStart"},
-                    //flameStart: { speed: speed, frames: [0, 1, 2, 3, 4 , 5, 6, 7, 8], next: "flameIdle"}
-                    flameIdle: [7, 8, true, 0.4],
-                    flameStart: [0, 8, "flameIdle", 0.5]
-                }
-            });
-            //this.flameAnimator = new createjs.Sprite(sheet, "flameStart");
-            _this.flameAnimator = new createjs.Sprite(sheet, "flameStart");
-            //this.bulletHandler.playScene.addChild(this.flameAnimator);
-            _this.removeChild(_this.sprite);
-            _this.addChild(_this.flameAnimator);
+            if (bulletDirection == config.BulletDirection.NORTH) {
+                var sheet = new createjs.SpriteSheet({
+                    images: [objects.Game.getAsset('flameStartSheet')],
+                    frames: { width: 40, height: 150, count: 9 },
+                    animations: {
+                        //flameIdle: {speed:speed, frames: [8], next:"flameStart"},
+                        //flameStart: { speed: speed, frames: [0, 1, 2, 3, 4 , 5, 6, 7, 8], next: "flameIdle"}
+                        flameIdle: [7, 8, true, 0.4],
+                        flameStart: [0, 8, "flameIdle", 0.5]
+                    }
+                });
+                //this.flameAnimator = new createjs.Sprite(sheet, "flameStart");
+                _this.flameAnimator = new createjs.Sprite(sheet, "flameStart");
+                //this.bulletHandler.playScene.addChild(this.flameAnimator);
+                _this.removeChild(_this.sprite);
+                _this.addChild(_this.flameAnimator);
+            }
+            else if (bulletDirection == config.BulletDirection.EAST) {
+                var sheet = new createjs.SpriteSheet({
+                    images: [objects.Game.getAsset('flameSheetEast')],
+                    frames: { width: 150, height: 40, count: 9 },
+                    animations: {
+                        flameIdle: [7, 8, true, 0.4],
+                        flameStart: [0, 8, "flameIdle", 0.5]
+                    }
+                });
+                _this.flameAnimator = new createjs.Sprite(sheet, "flameStart");
+                _this.removeChild(_this.sprite);
+                _this.addChild(_this.flameAnimator);
+            }
+            else if (bulletDirection == config.BulletDirection.WEST) {
+                var sheet = new createjs.SpriteSheet({
+                    images: [objects.Game.getAsset('flameSheetWest')],
+                    frames: { width: 150, height: 40, count: 9 },
+                    animations: {
+                        flameIdle: [7, 8, true, 0.4],
+                        flameStart: [0, 8, "flameIdle", 0.5]
+                    }
+                });
+                _this.flameAnimator = new createjs.Sprite(sheet, "flameStart");
+                _this.removeChild(_this.sprite);
+                _this.addChild(_this.flameAnimator);
+            }
             return _this;
             //console.log(this.flameAnimator);
             //this.flameAnimator.gotoAndPlay("flameStart");
             //this.flameAnimator.play();
         }
-        FlamethrowerBullet.prototype.checkSpawnItem = function (obj) {
-            var spawnItem = false;
-            var playScene = this.bulletHandler.playScene;
-            if (obj instanceof objects.Jackal) {
-                // TODO: improve upon 'yoink' system with Jackals
-                if (obj.yoinked) {
-                    spawnItem = true;
-                }
-            }
-            else {
-                //let rr = Math.floor(math.randRange(1, 1));
-                var rr = Math.floor(math.randRange(1, 5));
-                if (rr == 1) {
-                    spawnItem = true;
-                }
-            }
-            if (spawnItem) {
-                playScene.AddEnemyItem(obj);
-            }
-        };
         FlamethrowerBullet.prototype.OnCollision = function (obj) {
             var playScene = this.bulletHandler.playScene;
             if (obj instanceof objects.Enemy) {
@@ -77,9 +86,21 @@ var objects;
         };
         FlamethrowerBullet.prototype.Move = function () {
             var player = this.bulletHandler.playScene.player;
+            var x = 0;
+            var y = 0;
             //this.x = this.bulletHandler.playScene.player.x;
-            var x = player.x;
-            var y = player.y - player.height;
+            if (this.bulletDirection == config.BulletDirection.NORTH) {
+                x = player.x;
+                y = player.y - player.height;
+            }
+            else if (this.bulletDirection == config.BulletDirection.EAST) {
+                x = player.x;
+                y = player.y + (player.height / 2);
+            }
+            else if (this.bulletDirection == config.BulletDirection.WEST) {
+                x = player.x - 100;
+                y = player.y + (player.height / 2);
+            }
             //this.y = this.bulletHandler.playScene.player.y;
             //this.y = this.bulletHandler.playScene.player.boxCollider.aabb.min.y
             this.position = new math.Vec2(x, y);
@@ -88,7 +109,7 @@ var objects;
             this.bulletHandler.DestroyBullet(this);
         };
         return FlamethrowerBullet;
-    }(objects.Bullet));
+    }(objects.PlayerBullet));
     objects.FlamethrowerBullet = FlamethrowerBullet;
 })(objects || (objects = {}));
 //# sourceMappingURL=flamethrowerBullet.js.map

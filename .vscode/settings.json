@@ -1,6 +1,15 @@
 {
+<<<<<<< Updated upstream
     "files.exclude": {
         "**/*.js": { "when": "$(basename).ts" },
         "**/*.js.map": true
     }
+=======
+    "files.exclude" : {
+    "**/*.js": true,
+    "**/*.js.map": true,
+    "node_modules/**": true
+    }
+
+>>>>>>> Stashed changes
 }

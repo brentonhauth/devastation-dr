@@ -11,6 +11,30 @@ module objects {
             this.Start();
         }
 
+        public checkSpawnItem(obj: objects.Enemy): void {
+            let spawnItem = false;
+            let playScene = this.bulletHandler.playScene;
+
+            if (obj instanceof objects.Jackal) {
+                // TODO: improve upon 'yoink' system with Jackals
+                if (obj.yoinked) {
+                    spawnItem = true;
+                }
+            } else {
+                //let rr = Math.floor(math.randRange(1, 1));
+                let rr = Math.floor(math.randRange(1, 5));
+                if (rr == 1)
+                {
+                    spawnItem = true;
+                }
+            }
+
+            if (spawnItem) {
+                playScene.AddEnemyItem(obj);
+            }
+        
+        }
+
         public OnCollision(obj: objects.GameObject): void {
             let playScene = this.bulletHandler.playScene;
 
@@ -22,8 +46,8 @@ module objects {
                         spawnItem = true;
                     }
                 } else {
-                    //let rr = Math.floor(math.randRange(1, 1));
-                    let rr = Math.floor(math.randRange(1, 5));
+                    let rr = Math.floor(math.randRange(1, 1));
+                    //let rr = Math.floor(math.randRange(1, 5));
                     if (rr == 1)
                     {
                         spawnItem = true;

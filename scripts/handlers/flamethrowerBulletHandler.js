@@ -18,16 +18,40 @@ var handlers;
         function FlamethrowerBulletHandler(playScene) {
             return _super.call(this, playScene) || this;
         }
-        FlamethrowerBulletHandler.prototype.SpawnBullet = function (position, bulletType) {
+        FlamethrowerBulletHandler.prototype.SpawnBullet = function (position, bulletType, bulletDirection) {
             var bullet;
-            if (!this.isActive) {
-                bullet = new objects.FlamethrowerBullet(position.x, position.y, bulletType, this);
-                this.bullets[bullet.id] = bullet;
-                this.activeFlame = bullet;
-                this.isActive = true;
+            if (bulletDirection == config.BulletDirection.NORTH) {
+                if (!this.isActive) {
+                    bullet = new objects.FlamethrowerBullet(position.x, position.y, bulletDirection, this);
+                    this.bullets[bullet.id] = bullet;
+                    this.activeFlame = bullet;
+                    this.isActive = true;
+                }
+                else {
+                    bullet = this.activeFlame;
+                }
             }
-            else {
-                bullet = this.activeFlame;
+            if (bulletDirection == config.BulletDirection.EAST) {
+                if (!this.isActiveEast) {
+                    bullet = new objects.FlamethrowerBullet(position.x, position.y, bulletDirection, this);
+                    this.bullets[bullet.id] = bullet;
+                    this.activeFlameEast = bullet;
+                    this.isActiveEast = true;
+                }
+                else {
+                    bullet = this.activeFlameEast;
+                }
+            }
+            if (bulletDirection == config.BulletDirection.WEST) {
+                if (!this.isActiveWest) {
+                    bullet = new objects.FlamethrowerBullet(position.x, position.y, bulletDirection, this);
+                    this.bullets[bullet.id] = bullet;
+                    this.activeFlameWest = bullet;
+                    this.isActiveWest = true;
+                }
+                else {
+                    bullet = this.activeFlameWest;
+                }
             }
             return bullet;
         };
@@ -51,9 +75,17 @@ var handlers;
         };
         FlamethrowerBulletHandler.prototype.StopFlame = function () {
             if (this.isActive) {
-                delete this.bullets[this.activeFlame.id];
-                this.playScene.removeChild(this.activeFlame);
+                //delete this.bullets[this.activeFlame.id];
+                for (var key in this.bullets) {
+                    var b = this.bullets[key];
+                    this.playScene.removeChild(b);
+                    delete this.bullets[b.id];
+                }
+                ;
+                //this.playScene.removeChild(this.activeFlame);
                 this.isActive = false;
+                this.isActiveEast = false;
+                this.isActiveWest = false;
             }
         };
         return FlamethrowerBulletHandler;

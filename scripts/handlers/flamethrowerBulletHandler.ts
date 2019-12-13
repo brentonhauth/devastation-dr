@@ -2,24 +2,61 @@ module handlers {
     export class FlamethrowerBulletHandler extends BulletHandler {
 
         public activeFlame: objects.FlamethrowerBullet;
+        public activeFlameEast: objects.FlamethrowerBullet;
+        public activeFlameWest: objects.FlamethrowerBullet;
         public isActive: boolean;
+        public isActiveEast: boolean;
+        public isActiveWest: boolean;
 
         constructor(playScene:scenes.PlayScene) {
             super(playScene);
         }
 
-        public SpawnBullet(position: math.Vec2, bulletType: config.BulletType):objects.PlayerBullet {
+        public SpawnBullet(position: math.Vec2, bulletType: config.BulletType, bulletDirection:config.BulletDirection):objects.PlayerBullet {
+            
             let bullet;
-            if (!this.isActive)
+
+            if (bulletDirection == config.BulletDirection.NORTH)
             {
-                bullet = new objects.FlamethrowerBullet(position.x, position.y, bulletType, this);
-                this.bullets[bullet.id] = bullet;
-                this.activeFlame = bullet;
-                this.isActive = true;
+                if (!this.isActive)
+                {
+                    bullet = new objects.FlamethrowerBullet(position.x, position.y, bulletDirection, this);
+                    this.bullets[bullet.id] = bullet;
+                    this.activeFlame = bullet;
+                    this.isActive = true;
+                }
+                else
+                {
+                    bullet = this.activeFlame;
+                }
             }
-            else
+            if (bulletDirection == config.BulletDirection.EAST)
             {
-                bullet = this.activeFlame;
+                if (!this.isActiveEast)
+                {
+                    bullet = new objects.FlamethrowerBullet(position.x, position.y, bulletDirection, this);
+                    this.bullets[bullet.id] = bullet;
+                    this.activeFlameEast = bullet;
+                    this.isActiveEast = true;
+                }
+                else
+                {
+                    bullet = this.activeFlameEast;
+                }
+            }
+            if (bulletDirection == config.BulletDirection.WEST)
+            {
+                if (!this.isActiveWest)
+                {
+                    bullet = new objects.FlamethrowerBullet(position.x, position.y, bulletDirection, this);
+                    this.bullets[bullet.id] = bullet;
+                    this.activeFlameWest = bullet;
+                    this.isActiveWest = true;
+                }
+                else
+                {
+                    bullet = this.activeFlameWest;
+                }
             }
             
             return bullet;
@@ -44,9 +81,18 @@ module handlers {
         public StopFlame() {
             if (this.isActive)
             {
-                delete this.bullets[this.activeFlame.id];
-                this.playScene.removeChild(this.activeFlame);
+                //delete this.bullets[this.activeFlame.id];
+                for(let key in this.bullets)
+                {
+                    let b = this.bullets[key];
+                    this.playScene.removeChild(b);
+
+                    delete this.bullets[b.id];
+                };
+                //this.playScene.removeChild(this.activeFlame);
                 this.isActive = false;
+                this.isActiveEast = false;
+                this.isActiveWest = false;
             }
         }
     }

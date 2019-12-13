@@ -5,8 +5,18 @@ module handlers {
             super(playScene);
         }
 
-        public SpawnBullet(position: math.Vec2, bulletType: config.BulletType):objects.PlayerBullet {
-            let bullet = new objects.PlayerBullet(position.x, position.y, bulletType, this);
+        public SpawnBullet(position: math.Vec2, bulletType: config.BulletType, bulletDirection = config.BulletDirection.NORTH):objects.PlayerBullet {
+            
+            let bullet;
+
+            if (bulletType == config.BulletType.MACHINEGUN)
+            {
+                bullet = new objects.MachineGunBullet(position.x, position.y, bulletDirection, this);
+            }
+            else
+            {
+                bullet = new objects.PlayerBullet(position.x, position.y, bulletType, this);
+            }
             this.bullets[bullet.id] = bullet;
 
             return bullet;
