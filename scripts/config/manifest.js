@@ -60,6 +60,8 @@ var config;
             { id: "spitVenom", src: "./assets/sounds/spitVenom.mp3" },
             { id: "camelSpit", src: "./assets/sounds/camelSpit.mp3" },
             { id: "monsterGrowl", src: "./assets/sounds/monsterGrowl.mp3" },
+            { id: "laserShoot", src: "./assets/sounds/laser1.wav" },
+            { id: "pistolShoot", src: "./assets/sounds/pistol.wav" },
         ];
     }
     config.getManifest = getManifest;

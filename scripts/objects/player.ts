@@ -120,6 +120,22 @@ module objects {
         }
 
         public ShootWeapon():void {
+            if (this.weapon.weaponType == config.Weapon.LASER)
+            {
+                managers.Sound.sfx("laserShoot");
+            }
+            else if(this.weapon.weaponType == config.Weapon.PISTOL)
+            {
+                managers.Sound.sfx("laserShoot");
+            }
+            else if(this.weapon.weaponType == config.Weapon.MACHINEGUN)
+            {
+                managers.Sound.sfx("laserShoot");
+            }
+            else if(this.weapon.weaponType == config.Weapon.FLAMETHROWER)
+            {
+                managers.Sound.sfx("laserShoot");
+            }
             this.weapon.Shoot();
         }
 
