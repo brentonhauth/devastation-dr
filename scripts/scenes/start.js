@@ -15,35 +15,98 @@ var scenes;
 (function (scenes) {
     var StartScene = /** @class */ (function (_super) {
         __extends(StartScene, _super);
-        // private exitButton: ui.Button;
         // Constructor
         function StartScene() {
             var _this = _super.call(this) || this;
             _this.background = new createjs.Bitmap(objects.Game.assetManager.getResult("menu"));
             _this.logo = new createjs.Bitmap(objects.Game.assetManager.getResult("logo"));
+            _this.helpLabels = [];
             _this.infoLabel = new ui.Label("(c) Rude Rhino", "18px", "Arial", "#e1e1f1", 320, 800, true);
             _this.logo.scaleX *= .65;
             _this.logo.scaleY *= .65;
             _this.logo.x = 350;
-            _this.logo.y = 80;
+            _this.logo.y = 50;
+            //Main Game UI
             _this.startButton = new ui.Button("playButton", 640, 180);
+            _this.settingsButton = new ui.Button("settingsButton", 640, 240);
+            _this.helpButton = new ui.Button("helpButton", 640, 300);
+            _this.mainUIContainer = new createjs.Container();
+            _this.mainUIContainer.addChild(_this.startButton, _this.settingsButton, _this.helpButton);
+            // Volume Settings UI 
+            _this.volumeControlsContainer = new createjs.Container();
+            _this.volumeControlsContainer.x = 530;
+            _this.volumeControlsContainer.y = 130;
+            _this.soundSlider = new ui.Volumeslider("Sound");
+            _this.soundSlider.y = 15;
+            _this.musicSlider = new ui.Volumeslider("Music");
+            _this.musicSlider.y = 60;
+            _this.sfxSlider = new ui.Volumeslider("Sfx");
+            _this.sfxSlider.y = 105;
+            _this.backButton = new ui.Button("backButton", 125, 145);
+            _this.volumeControlsContainer.addChild(_this.soundSlider, _this.musicSlider, _this.sfxSlider, _this.backButton);
+            _this.volumeControlsContainer.visible = false;
+            //Help UI
+            _this.backButtonForHelpUI = new ui.Button("backButton", 590, 325);
+            _this.helpContainer = new createjs.Container();
+            _this.setUpHelpLabels();
+            _this.helpLabels.forEach(function (element) {
+                _this.helpContainer.addChild(element);
+            });
+            _this.helpContainer.addChild(_this.backButtonForHelpUI, _this.helpTitle);
+            _this.helpContainer.visible = false;
             return _this;
-            //this.exitButton = new ui.Button("exitButton", 320, 260);
-            //this.startButton.scaleY *= 2.25;
-            //this.startButton.scaleX *= 2.25;
         }
         StartScene.prototype.Start = function () {
+            var _this = this;
+            //Logo UI
             this.addChild(this.background);
-            this.addChild(this.startButton);
-            //this.addChild(this.exitButton);
             this.addChildAt(this.logo, 2);
             this.addChild(this.infoLabel);
+            //Adding UI to scene
+            this.addChild(this.mainUIContainer);
+            this.addChild(this.volumeControlsContainer);
+            this.addChild(this.helpContainer);
+            //Click event for start button
             this.startButton.on("click", function () {
                 objects.Game.currentState = config.Scene.JUNGLE;
             });
-            // this.exitButton.on("click", () => {
-            //     window.close();
-            // });
+            //Click event for settings button
+            this.settingsButton.on("click", function () {
+                _this.mainUIContainer.visible = false;
+                _this.volumeControlsContainer.visible = true;
+            });
+            //Click event for back button (Setting UI)
+            this.backButton.on("click", function () {
+                _this.volumeControlsContainer.visible = false;
+                _this.mainUIContainer.visible = true;
+            });
+            //Click event for help button
+            this.helpButton.on("click", function () {
+                _this.volumeControlsContainer.visible = false;
+                _this.mainUIContainer.visible = false;
+                _this.helpContainer.visible = true;
+            });
+            //Click event for start button (Help UI)
+            this.backButtonForHelpUI.on("click", function () {
+                _this.volumeControlsContainer.visible = false;
+                _this.mainUIContainer.visible = true;
+                _this.helpContainer.visible = false;
+            });
+        };
+        //Adding KeyBinding Labels for Help UI
+        StartScene.prototype.setUpHelpLabels = function () {
+            this.helpTitle = new ui.Label("Key Bindings", "24px", "Arial", "#008000", 630, 155, true);
+            this.helpTitle.outline = 1.5;
+            this.helpLabels[0] = new ui.Label("Move up - W", "18px", "Arial", "#000800", 630, 190, true);
+            this.helpLabels[0].outline = 1.5;
+            this.helpLabels[1] = new ui.Label("Move down - S", "18px", "Arial", "#000800", 630, 220, true);
+            this.helpLabels[1].outline = 1.5;
+            this.helpLabels[2] = new ui.Label("Move Left - A", "18px", "Arial", "#000800", 630, 250, true);
+            this.helpLabels[2].outline = 1.5;
+            this.helpLabels[3] = new ui.Label("Move  Right - D", "18px", "Arial", "#000800", 630, 280, true);
+            this.helpLabels[3].outline = 1.5;
+            this.helpLabels[4] = new ui.Label("Shoot - Space", "18px", "Arial", "#000800", 630, 310, true);
+            this.helpLabels[4].outline = 1.5;
         };
         return StartScene;
     }(scenes.Scene));
