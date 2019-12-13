@@ -33,7 +33,7 @@ var scenes;
         Retrowave.prototype.Main = function () {
             var _this = this;
             _super.prototype.Main.call(this);
-            this.waveHandler.Add(new objects.Wave([objects.Spider, 1]));
+            this.waveHandler.Add(new objects.Wave([objects.Boss, 1]));
             this.waveHandler.on('complete', function () {
                 _this.dialogHandler.TriggerMany(['Ending...', 2, function () {
                         objects.Game.currentState = config.Scene.START;

@@ -34,6 +34,7 @@ var config;
             { id: "turtleSheet", src: "./assets/images/sheets/enemies/turtleSheet.png" },
             { id: "jackalSheet", src: "./assets/images/sheets/enemies/jackalSheet.png" },
             { id: "camelSheet", src: "./assets/images/sheets/enemies/camelSheet.png" },
+            { id: "bossSheet", src: "./assets/images/sheets/enemies/bossSheet.png" },
             { id: "powerup", src: "./assets/images/powerup.png" },
             { id: "pistol", src: "./assets/images/Pistol.png" },
             { id: "machineGun", src: "./assets/images/MachineGun.png" },

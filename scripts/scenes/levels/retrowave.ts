@@ -23,7 +23,7 @@ module scenes {
 
             this.waveHandler.Add(
                 new objects.Wave(
-                    [objects.Spider, 1]
+                    [objects.Boss, 1]
                 )
             );
 
