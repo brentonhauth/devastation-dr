@@ -58,14 +58,13 @@ var scenes;
         }
         StartScene.prototype.Start = function () {
             var _this = this;
-            //Logo UI
             this.addChild(this.background);
-            this.addChildAt(this.logo, 2);
-            this.addChild(this.infoLabel);
             //Adding UI to scene
             this.addChild(this.mainUIContainer);
             this.addChild(this.volumeControlsContainer);
             this.addChild(this.helpContainer);
+            this.addChildAt(this.logo, 2);
+            this.addChild(this.infoLabel);
             //Click event for start button
             this.startButton.on("click", function () {
                 objects.Game.currentState = config.Scene.JUNGLE;
