@@ -132,10 +132,10 @@ module objects {
             {
                 managers.Sound.sfx("laserShoot");
             }
-            else if(this.weapon.weaponType == config.Weapon.FLAMETHROWER)
-            {
-                managers.Sound.sfx("laserShoot");
-            }
+            // else if(this.weapon.weaponType == config.Weapon.FLAMETHROWER)
+            // {
+            //     managers.Sound.sfx("laserShoot");
+            // }
             this.weapon.Shoot();
         }
 
